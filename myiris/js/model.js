@@ -6,7 +6,7 @@ class IrisModel {
         this.behaviors = behaviors;
         /**
          * here below we fill our Agents array
-         * 
+         *
          * first we extract all the behaviors that
          * have been passed from the object into an array
          */
@@ -20,7 +20,7 @@ class IrisModel {
             }
         });
         /**
-         * in order to have them more omogenous distributed we 
+         * in order to have them more omogenous distributed we
          * shuffle the array containing the bahaviors
          * and than we fill the agents array and we assign their behaviors
          */
@@ -93,8 +93,8 @@ class IrisModel {
      * calculates the global amount of time the agents have for resting
      * it doubles the amount of time needed to finish all the tasks by an agent
      * multiplied by two and by all the agents
-     * @param {Number} num_agents 
-     * @param {Number} num_task 
+     * @param {Number} num_agents
+     * @param {Number} num_task
      * @returns the global amount of time the agents have to rest
      */
     calcGlobalRestTime(num_agents, num_task) {
@@ -140,7 +140,7 @@ class IrisModel {
     show() {
         // console.log('show')
         /**
-         * here we sort the agents array that was shuffled 
+         * here we sort the agents array that was shuffled
          * during the choose agent process of task.js
          */
         background(51);
@@ -169,7 +169,7 @@ class IrisModel {
                 traded: [],
                 brute_force: []
             }
-            // here we extract all the preferences values 
+            // here we extract all the preferences values
             for (const agent of extractedAgents) {
                 const fld = agent.preferenceArchive.map(result => result.feel_like_doing);
                 const rt = agent.preferenceArchive.map(result => result.resting_time);
@@ -220,6 +220,8 @@ class IrisModel {
             // console.log(median, behavior);
             medianValuesByBehavior[behavior] = median;
         }
+        return medianValuesByBehavior;
+        /* TEST JOHAN
         // console.log(medianValuesByBehavior);
         this.infographic(medianValuesByBehavior);
         // console.log(medianValuesByBehavior);
@@ -227,6 +229,8 @@ class IrisModel {
         this.pointIndex++;
         this.agents.sort((a, b) => a.ID - b.ID);
 
+
+          ***************************************/
         // here we have to build the filter to visualize the agents
         // for (let i = this.showFrom; i < this.showTo; i++) {
         //     // for (const agent of this.agents) {
@@ -388,7 +392,7 @@ class IrisModel {
         for (const task of tasks) {
             task.minWage = val;
         }
-        
+
     }
     setAgentsBehavior(behavior) {
         console.log(behavior);

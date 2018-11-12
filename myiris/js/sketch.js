@@ -8,7 +8,7 @@ let irisModel;
 let loops = 1;
 
 function setup() {
-  createCanvas(WIDTH(), HEIGHT());
+  //createCanvas(WIDTH(), HEIGHT());
   let behaviors = {
     curious: 3,
     perfectionist: 3,
@@ -31,7 +31,7 @@ function draw() {
   //instead of drawing with P5 we use a tick to draw with d3.
   //this sounds clumsy but was the best way to ensure compatibility with the current project without
   //having to change significally the current code.
-  
+
   tick();
   // for (let i = 0; i < loops; i++) {
   //   irisModel.update();
@@ -42,7 +42,7 @@ function draw() {
 }
 
 function windowResized() {
-  resizeCanvas(WIDTH(), HEIGHT());
+  // resizeCanvas(WIDTH(), HEIGHT());
   let info = document.getElementById('info-window')
   console.log(info.getBoundingClientRect().width);
 }
@@ -80,7 +80,7 @@ $('#show-sidebar').click(() => {
   $('#show-sidebar').text(showSideBar == false ? 'SHOW SIDEBAR' : 'HIDE SIDEBAR');
   $('#info-window').toggle('fast', () => {
     // whe the window is closed resize the sketch
-    resizeCanvas(WIDTH(), HEIGHT());
+    // resizeCanvas(WIDTH(), HEIGHT());
     let info = document.getElementById('info-window')
     console.log(info.getBoundingClientRect().width);
   });

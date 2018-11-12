@@ -19,3 +19,7 @@ Our work is only on the visualization.
 ### Challenges
 - Use the given code to simulate and use the results to use the viz. We want the coders to be able to modify the simulation without having to modify the viz. It should be an independent module
 - Understand fully how the model works. 
+
+### Contents 
+- design : contains our sketches, our questions we had to design.
+- myiris : contains the original code if the IrisModel and the code for the viz. 
