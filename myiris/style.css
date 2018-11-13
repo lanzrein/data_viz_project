@@ -18,10 +18,10 @@ button{
     font-family: mono;
 }
 
-#p5Sketch{
+/* #p5Sketch{
     position: fixed;
     width: 67%;
-}
+} */
 
 ::-webkit-scrollbar-track {
     /* -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,1); */
@@ -95,7 +95,7 @@ button#close-menu {
     color: #fff;
     background-color: #f00;
     border-radius: 50px;
-    border: solid 2px #fff; 
+    border: solid 2px #fff;
 }
 .menu-content button:hover{
     /* font-style: italic; */
@@ -190,4 +190,20 @@ button#close-menu {
 
 #rest-interaction{
     display: none;
+}
+
+
+
+/************************************VIZ PART ********************/
+/*for the axis*/
+.axis path
+.axis line {
+  fill : none;
+  stroke : black;
+  shape-rendering : crispEdges;
+}
+
+.axis text {
+  font-family : sans-sherif;
+  font-size:11px;
 }

@@ -2,8 +2,10 @@
 const test = -1
 // scale will be first of length 200 but then we
 //need to add the option to slide it.
-const h = 400;
-const w = 600;
+const h = 200;
+const w = 300;
+const paddingX = 50;
+paddingY = 20;
 
 
 const svg = d3.select("body")
@@ -13,17 +15,18 @@ const svg = d3.select("body")
 
 const xScale = d3.scaleBand()
                   .domain([0,1,2,3])
-                  .range([0,w]);
+                  .range([0,w-paddingX]);
 
 const yScale = d3.scaleLinear()
-              .domain([0,1])
-              .range([0,h/2]);
+              .domain([0,0])
+              .range([h-paddingY,0]);
 
 
-const yAxis = d3.axisLeft(yScale);
+let data = [0,0,0,0];
 //setup the iris model.
 // it is already defined in the sketch.js file as irisModel.
 function setup_iris(){
+
 
   //for every agent we need to have them recording at all time. but we will not save the output -> TODO later maybe ?
   // for (const agent of irisModel.agents) {
@@ -33,9 +36,12 @@ function setup_iris(){
 
   //we also need to setup the histograms here so we can have transitions after.
   //here we use a dummy data..
-  data = [0,0,0,0]
+  // data = [0,0,0,0]
   yScale.domain([0,d3.max(data)]);
 
+  const yAxis = d3.axisLeft(yScale)
+                  .ticks(4)
+                  .tickFormat(d3.format(".0s"));
 
 
   // let svg = d3.select("body")
@@ -43,20 +49,21 @@ function setup_iris(){
   //   .attr("width",w)
   //   .attr("height",h);
   // console.log("data : " +data)
-
+  svg.attr("transform","translate(50,50)")
   svg.selectAll("rect")
     .data(data)
     .enter()
     .append("rect")
+    .attr("transform","translate("+paddingX+",0)")
     .attr("x",function(d,i){
       return xScale(i);
     })
     .attr("y",function(d){
-      return h- yScale(d);
+      return h;
     })
     .attr("width",xScale.bandwidth())
     .attr("height",function(d){
-      return yScale(d);
+      return yScale(d)-paddingY;
     })
     .attr("fill",function(d){
       return "rgb("+(d*10)+",0,0)";
@@ -77,20 +84,26 @@ function setup_iris(){
        .attr("y",function(d){
          return h;
        })
+       .attr("transform","translate("+paddingX+",0)")
+
        .attr("font-family","sans-serif")
-       .attr("font-size","20px")
+       .attr("font-size","11px")
        .attr("fill","black");
 
        svg.append("g")
-          .attr("class","axis")
-          .attr("translate","translate(0,0)")
+          .attr("class","y axis")
+          .attr("transform","translate("+paddingX+",0)")
+          .attr("y",h-paddingY)
+          .attr("fill","#000")
           .call(yAxis);
+
 
 
 }
 
 var cnt = 0
 function tick(){
+
   // if (cnt > 400 ){
   //   return ;
   // }
@@ -118,9 +131,16 @@ function tick(){
 
   }
 
-  histogram(stress_data);
+  if (!data.equals(stress_data)){
+    histogram(stress_data);
+    data = stress_data;
+  }
+
 
   //update the historic historic
+
+
+
 
 
 
@@ -145,15 +165,16 @@ function histogram(data){
         return xScale(i);
       })
       .attr("y",function(d){
-        return h- yScale(d);
-      })
-      .attr("width",xScale.bandwidth())
-      .attr("height",function(d){
-        // console.log("h = " + d)
         return yScale(d);
       })
+      .attr("transform","translate("+paddingX+",0)")
+      .attr("width",xScale.bandwidth()-paddingX/data.length)
+      .attr("height",function(d){
+        // console.log("h = " + d)
+        return yScale(0) - yScale(d);
+      })
       .attr("fill",function(d){
-        return "rgb("+(d*10)+",0,0)";
+        return "rgb("+(d*25/255)+",0,0)";
       });
 
       //add values number to make it more readable
@@ -168,16 +189,24 @@ function histogram(data){
          .attr("x",function(d,i){
            return xScale(i)+xScale.bandwidth()/2;
          })
+         .attr("transform","translate("+paddingX+",0)")
+
          .attr("y",function(d){
            return h;
          })
          .attr("font-family","sans-serif")
-         .attr("font-size","20px")
-         .attr("fill","white");
+         .attr("font-size","11px")
+         .attr("fill","black");
+         const yAxis = d3.axisLeft(yScale)
+                          .ticks(3);
+                         // .tickFormat(d3.format(".0s"));;
 
          //add an axis.
-         svg.append("axis")
+         svg.select("g")
             .transition()
+
+            .attr("transform","translate("+paddingX+",0)")
+            .attr("y",h)
             .call(yAxis);
 
 

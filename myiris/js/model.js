@@ -67,16 +67,16 @@ class IrisModel {
          * PLOT
          */
 
-        this.colors = {
-            // skill: color(0, 255, 0),
-            // preference: color(255, 0, 255),
-            fld: color(0, 255, 255),
-            rt: color(255, 0, 0),
-            stress: color(255, 255, 0),
-            aot: color(45, 105, 245),
-            traded: color(0, 255, 100, 150),
-            brute_force: color(255, 125, 0, 150)
-        };
+        // this.colors = {
+        //     // skill: color(0, 255, 0),
+        //     // preference: color(255, 0, 255),
+        //     fld: color(0, 255, 255),
+        //     rt: color(255, 0, 0),
+        //     stress: color(255, 255, 0),
+        //     aot: color(45, 105, 245),
+        //     traded: color(0, 255, 100, 150),
+        //     brute_force: color(255, 125, 0, 150)
+        // };
 
         // this.plot = new Plot(parent, 20, 20, this.colors);
         this.pointIndex = 0;
@@ -143,7 +143,7 @@ class IrisModel {
          * here we sort the agents array that was shuffled
          * during the choose agent process of task.js
          */
-        background(51);
+        // background(51);
         /**
             let fld = this.preferenceArchive.map(result => result.feel_like_doing);
             let rt = this.preferenceArchive.map(result => result.resting_time);
