@@ -1,28 +1,48 @@
 // We need to have the data collected by the underyling model.
-const test = -1
+const historicDiv = document.getElementById("currentsituation");
+const margin = {
+  top:30,
+  right : 20,
+  bottom : 150,
+  left : 20},
+  width = historicDiv.clientWidth-40,
+  height = historicDiv.clientHeight*0.2,
+  contextHeight = 50,
+  contextWidth = width;
+
+
+
+console.log("w " + width);
+console.log("h " + height);
+
+const svg = d3.select("#currentsituation")
+                .append("svg")
+                .attr("width",width+margin.left+margin.right)
+                .attr("height",height*5+margin.top+margin.bottom);
 // scale will be first of length 200 but then we
 //need to add the option to slide it.
-const h = 200;
-const w = 300;
-const paddingX = 50;
-paddingY = 20;
 
 
-const svg = d3.select("body")
-              .append("svg")
-              .attr("width",w)
-              .attr("height",h);
+const outputs = ["fld","rt","stress","aot","traded","brute_force"];
+
 
 const xScale = d3.scaleBand()
                   .domain([0,1,2,3])
-                  .range([0,w-paddingX]);
+                  .range([0,width-(margin.left+margin.right)]);
 
 const yScale = d3.scaleLinear()
               .domain([0,0])
-              .range([h-paddingY,0]);
+              .range([height,0]);
 
 
-let data = [0,0,0,0];
+let data_by_type  = {
+  fld : [0,0,0,0],
+  rt : [0,0,0,0],
+  stress : [0,0,0,0],
+  aot : [0,0,0,0],
+  traded : [0,0,0,0],
+  brute_force : [0,0,0,0]
+}
 //setup the iris model.
 // it is already defined in the sketch.js file as irisModel.
 function setup_iris(){
@@ -37,65 +57,120 @@ function setup_iris(){
   //we also need to setup the histograms here so we can have transitions after.
   //here we use a dummy data..
   // data = [0,0,0,0]
-  yScale.domain([0,d3.max(data)]);
 
   const yAxis = d3.axisLeft(yScale)
                   .ticks(4)
                   .tickFormat(d3.format(".0s"));
+ let idx = 0;
+  for (const type of outputs){
+    //for each type of output prepare the graph.
+    console.log("idx : " + idx)
+    data = data_by_type[type];
+    yScale.domain([0,d3.max(data)]);
+    const yAxis = d3.axisLeft(yScale)
+                    .ticks(4)
+                    .tickFormat(d3.format(".0s"));
+    svg.append("g")
+      .selectAll("rect")
+      .data(data)
+      .enter()
+      .append("rect")
+      .attr("transform","translate("+(margin.left)+","+idx * height+")")
+      .attr("x",function(d,i){
+        return xScale(i);
+      })
+      .attr("y",function(d){
+        return height + idx *height;
+      })
+      .attr("width",xScale.bandwidth())
+      .attr("height",function(d){
+        return yScale(d);
+      })
+      .attr("fill",function(d){
+        return "rgb("+(d*255/100)+",0,0)";
+      });
+
+      //add values number to make it more readable
+      svg.append("t")
+         .selectAll("text")
+         .data(data)
+         .enter()
+         .append("text")
+         .text(function(d){
+           return d;
+         })
+         .attr("text-anchor","middle")
+         .attr("x",function(d,i){
+           return xScale(i)+xScale.bandwidth()/2;
+         })
+         .attr("y",function(d){
+           return height+ idx *height;
+         })
+         .attr("transform","translate("+(margin.left)+","+idx * height+")")
+
+         .attr("font-family","sans-serif")
+         .attr("font-size","11px")
+         .attr("fill","black");
+
+         svg.append("g")
+            .attr("class","y axis")
+            .attr("transform","translate("+(margin.left)+","+idx * height+")")
+            .attr("y",height-(margin.top))
+            .attr("fill","#000")
+            .call(yAxis);
 
 
-  // let svg = d3.select("body")
-  //   .append("svg")
-  //   .attr("width",w)
-  //   .attr("height",h);
-  // console.log("data : " +data)
-  svg.attr("transform","translate(50,50)")
-  svg.selectAll("rect")
-    .data(data)
-    .enter()
-    .append("rect")
-    .attr("transform","translate("+paddingX+",0)")
-    .attr("x",function(d,i){
-      return xScale(i);
-    })
-    .attr("y",function(d){
-      return h;
-    })
-    .attr("width",xScale.bandwidth())
-    .attr("height",function(d){
-      return yScale(d)-paddingY;
-    })
-    .attr("fill",function(d){
-      return "rgb("+(d*10)+",0,0)";
-    });
+        idx++;
 
-    //add values number to make it more readable
-    svg.selectAll("text")
-       .data(data)
-       .enter()
-       .append("text")
-       .text(function(d){
-         return d;
-       })
-       .attr("text-anchor","middle")
-       .attr("x",function(d,i){
-         return xScale(i)+xScale.bandwidth()/2;
-       })
-       .attr("y",function(d){
-         return h;
-       })
-       .attr("transform","translate("+paddingX+",0)")
 
-       .attr("font-family","sans-serif")
-       .attr("font-size","11px")
-       .attr("fill","black");
 
-       svg.append("g")
-          .attr("class","y axis")
-          .attr("transform","translate("+paddingX+",0)")
-          .attr("y",h-paddingY)
-          .attr("fill","#000")
-          .call(yAxis);
+}
+  // svg.selectAll("rect")
+  //   .data(data)
+  //   .enter()
+  //   .append("rect")
+  //   .attr("transform","translate("+(margin.left)+",0)")
+  //   .attr("x",function(d,i){
+  //     return xScale(i);
+  //   })
+  //   .attr("y",function(d){
+  //     return height;
+  //   })
+  //   .attr("width",xScale.bandwidth())
+  //   .attr("height",function(d){
+  //     return yScale(d);
+  //   })
+  //   .attr("fill",function(d){
+  //     return "rgb("+(d*255/100)+",0,0)";
+  //   });
+  //
+  //   //add values number to make it more readable
+  //   svg.selectAll("text")
+  //      .data(data)
+  //      .enter()
+  //      .append("text")
+  //      .text(function(d){
+  //        return d;
+  //      })
+  //      .attr("text-anchor","middle")
+  //      .attr("x",function(d,i){
+  //        return xScale(i)+xScale.bandwidth()/2;
+  //      })
+  //      .attr("y",function(d){
+  //        return height;
+  //      })
+  //      .attr("transform","translate("+(margin.left)+",0)")
+  //
+  //      .attr("font-family","sans-serif")
+  //      .attr("font-size","11px")
+  //      .attr("fill","black");
+  //
+  //      svg.append("g")
+  //         .attr("class","y axis")
+  //         .attr("transform","translate("+(margin.left)+",0)")
+  //         .attr("y",height-(margin.top))
+  //         .attr("fill","#000")
+  //         .call(yAxis);
 
 
 
@@ -123,9 +198,13 @@ function tick(){
     //by behavior get the medians
     medians = medianValuesByBehavior[behavior];
     //note medians is an array and you can access for example stress value by doing medians[stress]
-    med = d3.mean(medians["stress"]);
-    if (med === undefined){
-      med =  0;
+    med = 0
+    //to
+    if (!(medians === undefined )){
+      med = d3.mean(medians["aot"]);
+      if (med === undefined){
+        med =  0;
+      }
     }
     stress_data.push(med);
 
@@ -152,8 +231,6 @@ function histogram(data){
 
     // var yAxis = d3.axisLeft(yScale);
 
-
-
     //update the scales
     // xScale.domain([d3.range(data.length)]);
     yScale.domain([0,d3.max(data)]);
@@ -167,14 +244,14 @@ function histogram(data){
       .attr("y",function(d){
         return yScale(d);
       })
-      .attr("transform","translate("+paddingX+",0)")
-      .attr("width",xScale.bandwidth()-paddingX/data.length)
+      .attr("transform","translate("+(margin.left)+",0)")
+      .attr("width",xScale.bandwidth()-(margin.left)/data.length)
       .attr("height",function(d){
         // console.log("h = " + d)
         return yScale(0) - yScale(d);
       })
       .attr("fill",function(d){
-        return "rgb("+(d*25/255)+",0,0)";
+        return "rgb("+(d*255.0/100)+",0,0)";
       });
 
       //add values number to make it more readable
@@ -189,14 +266,14 @@ function histogram(data){
          .attr("x",function(d,i){
            return xScale(i)+xScale.bandwidth()/2;
          })
-         .attr("transform","translate("+paddingX+",0)")
+         .attr("transform","translate("+(margin.left)+",0)")
 
          .attr("y",function(d){
-           return h;
+           return height;
          })
          .attr("font-family","sans-serif")
          .attr("font-size","11px")
-         .attr("fill","black");
+         .attr("fill","white");
          const yAxis = d3.axisLeft(yScale)
                           .ticks(3);
                          // .tickFormat(d3.format(".0s"));;
@@ -205,8 +282,8 @@ function histogram(data){
          svg.select("g")
             .transition()
 
-            .attr("transform","translate("+paddingX+",0)")
-            .attr("y",h)
+            .attr("transform","translate("+(margin.left)+",0)")
+            .attr("y",height)
             .call(yAxis);
 
 

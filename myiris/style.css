@@ -133,7 +133,8 @@ button#close-menu {
     width: 20%;
     max-width: 250px;
     right: 0px;
-    position: fixed;
+    /* position: fixed; */
+    float : right;
     height: 100vh;
     overflow-y: scroll;
     max-height: none;
@@ -209,40 +210,13 @@ button#close-menu {
 }
 
 
-
-
-.container {
-  width: 100%;
-  height: 100%;
-  background-color: #333333
-}
-
-.leftpane {
-    width: 20%;
-    height: 100%;
-    float: left;
-    border-collapse: collapse;
-}
-
-.middlepane {
-    width: 60%;
-    height: 100%;
-    float: left;
-    background-color: #444444;
-    border-collapse: collapse;
-}
-
-.rightpane {
-  width: 20%;
-  height: 100%;
-  position: relative;
-  float: right;
-  border-collapse: collapse;
-}
-
-.toppane {
-  width: 100%;
-  height: 40px;
-  border-collapse: collapse;
-  background-color: #4da6ff;
+/*** for the current snapshot. */
+#currentsituation{
+    background-color: #f0f;
+    width: 200px;
+    height : 800px;
+    float : right;
+    padding-left: 10px;
+    overflow-y: scroll;
+    padding-right: 10px;
 }
