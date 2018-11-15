@@ -133,7 +133,8 @@ button#close-menu {
     width: 33%;
     max-width: 250px;
     right: 0px;
-    position: fixed;
+    /* position: fixed; */
+    float : right;
     height: 100vh;
     overflow-y: scroll;
     max-height: none;
@@ -206,4 +207,16 @@ button#close-menu {
 .axis text {
   font-family : sans-sherif;
   font-size:11px;
+}
+
+
+/*** for the current snapshot. */
+#currentsituation{
+    background-color: #f0f;
+    width: 200px;
+    height : 800px;
+    float : right;
+    padding-left: 10px;
+    overflow-y: scroll;
+    padding-right: 10px;
 }
