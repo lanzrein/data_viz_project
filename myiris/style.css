@@ -129,8 +129,8 @@ button#close-menu {
     font-style: italic;
 }
 .info{
-    background-color: #fff;
-    width: 33%;
+    background-color: #333;
+    width: 20%;
     max-width: 250px;
     right: 0px;
     /* position: fixed; */
