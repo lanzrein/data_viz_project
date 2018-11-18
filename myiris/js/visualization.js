@@ -1,9 +1,9 @@
 // We need to have the data collected by the underyling model.
 const historicDiv = document.getElementById("currentsituation");
 const margin = {
-  top:30,
+  top:60,
   right : 20,
-  bottom : 150,
+  bottom : 20,
   left : 20},
   width = historicDiv.clientWidth-40,
   height = historicDiv.clientHeight*0.2,
@@ -45,73 +45,36 @@ let data_by_type  = {
 }
 //setup the iris model.
 // it is already defined in the sketch.js file as irisModel.
+let histograms_list = [];
 function setup_iris(){
 
 
-  const yAxis = d3.axisLeft(yScale)
+
+
+ const yAxis = d3.axisLeft(yScale)
                   .ticks(4)
                   .tickFormat(d3.format(".0s"));
  let idx = 0;
   for (const type of outputs){
     //for each type of output prepare the graph.
+
+
     data = data_by_type[type];
-    yScale.domain([0,d3.max(data)]);
-    const yAxis = d3.axisLeft(yScale)
-                    .ticks(4)
-                    .tickFormat(d3.format(".0s"));
-    svg.append("g")
-      .attr("id",type)
-      .selectAll("rect")
-      .data(data)
-      .enter()
-      .append("rect")
-      .attr("class","stress")
-      .attr("transform","translate("+(margin.left)+","+idx * height+")")
-      .attr("x",function(d,i){
-        return xScale(i);
-      })
-      .attr("y",function(d){
-        return height + idx *height;
-      })
-      .attr("width",xScale.bandwidth())
-      .attr("height",function(d){
-        return 0;
-      })
-      .attr("fill",function(d){
-        return "rgb("+(d*255/100)+",0,0)";
-      });
 
-      //add values number to make it more readable
-      svg
-         .selectAll("text")
-         .data(data)
-         .enter()
-         .append("text")
-         .text(function(d){
-           return d;
-         })
-         .attr("text-anchor","middle")
-         .attr("x",function(d,i){
-           return xScale(i)+xScale.bandwidth()/2;
-         })
-         .attr("y",function(d){
-           return idx *height+height+margin.top;
-         })
-         .attr("transform","translate("+(margin.left)+","+idx * height+")")
+    let args = {
+      data : data,
+      width : width,
+      height : height,
+      svg : svg,
+      idx : idx,
+      type : type,
+      margin : margin
 
-         .attr("font-family","sans-serif")
-         .attr("font-size","11px")
-         .attr("fill","white");
+    };
+    hist = new Histogram(args)
 
-         svg.append("g")
-            .attr("class","axis")
-            .attr("transform","translate("+(margin.left)+","+ (margin.top+ idx*(height+margin.top))+")")
-            .attr("y",height+(margin.top))
-            .attr("fill","#fff")
-            .call(yAxis);
-
-
-        idx++;
+    histograms_list.push(hist);
+    idx++;
 
 
 
@@ -121,10 +84,10 @@ function setup_iris(){
 
 var cnt = 0
 function tick(){
-
-  if (cnt > 200 ){
-    return ;
-  }
+  //
+  // if (cnt > 200 ){
+  //   return ;
+  // }
   //represents a tick in the simulation. will need to update :
   //model, graphs.
 
@@ -136,8 +99,18 @@ function tick(){
   //update the current situation
   compute_new_medians();
   //paint the histogram if there is a change.
-  histograms(data_by_type);
+  // histograms(data_by_type);
+  let idx = 0;
+  for (const type of outputs){
+    let h = histograms_list[idx]
+    if(!(h.data.equals(data_by_type[type]))){
+        h.update(data_by_type[type]);
 
+
+    }
+    idx++;
+
+  }
 
   //update the historic historic
 
@@ -147,7 +120,6 @@ function tick(){
 
 
 }
-const digits = d3.format(".3");
 
 function compute_new_medians(){
   //we can use a hacked version of the show method to get the values.
@@ -179,69 +151,4 @@ function compute_new_medians(){
 
     }
   }
-}
-
-function histograms(){
-
-
-    let idx = 0;
-    for (const type of outputs){
-      let data = data_by_type[type];
-      yScale.domain([0,d3.max(data)]);
-      svg.select("g")
-        .selectAll("rect")
-        .data(data)
-        .transition()
-        .attr("x",function(d,i){
-          return xScale(i);
-        })
-        .attr("y",function(d){
-          return yScale(d)+margin.top;
-        })
-        .attr("transform","translate("+(margin.left)+",0)")
-        .attr("width",xScale.bandwidth()-(margin.left)/data.length)
-        .attr("height",function(d){
-          return yScale(0) - yScale(d);
-        })
-        .attr("fill",function(d){
-          return "rgb("+(d*255.0/100)+",0,0)";
-        });
-
-      //add values number to make it more readable
-      svg.selectAll("text")
-         .data(data)
-         // .transition()
-
-         .text(function(d){
-           return digits(d);
-         })
-         // .attr("text-anchor","middle")
-         .attr("x",function(d,i){
-           return xScale(i)+xScale.bandwidth()/2;
-         })
-         .attr("y",function(d){
-           return height+idx*height+margin.top;
-         });
-
-
-
-       const yAxis = d3.axisLeft(yScale)
-                        .ticks(3);
-                       // .tickFormat(d3.format(".0s"));;
-
-       //add an axis.
-       svg.select("g.axis")
-          // .selectAll(".axis")
-          .transition()
-          .attr("transform","translate("+(margin.left)+","+ (margin.top+ idx*(height+margin.top))+")")
-          .attr("y",height*idx+margin.top)
-          .call(yAxis);
-
-
-        idx++;
-
-      }
-
-
-
 }
