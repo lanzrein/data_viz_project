@@ -25,16 +25,28 @@
     Our task was to build a meaningful visualization that would help them to notice the tipping points in the simulation.
   </p>
   <figure>
-  <img src="images/bolo.gif"></img>
-  <<figcaption>Fig.1 - A depiction of an urban 'bolo' </figcaption>
+  <img class="images" src="images/bolo.gif"></img>
+  <figcaption>Fig.1 - A depiction of an urban 'bolo' </figcaption>
   </figure>
   <h2> Objective </h2>
   <p>
     As mentionned above, we were tasked with creating a way to identify tipping points in the simulation.
+    To do this we had to keep in mind two concepts :
+    <ul>
+      <li>Leverage point</li>
+      <p>A leverage point is a parameter or a place in the simulation that can lead to some major changes. </p>
+      <li>Tipping points</li>
+      <p> A tipping point is a the value of a parameter in the simulation where where a major change occurs. </p>
+    </ul>
+
+    With that in mind, we wanted to create a visualization that would help users to identify those points in the simulation and try to tweak them as they wish to observe the results.
+    Such a visualization would require to see all the parameters at the current time and also having a historic snapshot of the simulation. Moreover we want to add before the end of the project, the option for users to get into the simulation themselves and tweak parameters inside of the model.
+
   </p>
   <h2> Target Audience </h2>
   <p>
-    *TODOOO*
+    The main audience we wanted to reach with this visualization was the research group that started the project.
+    //complete.
   </p>
   <h1> Concept </h1>
   <h2> Datasets used </h2>
@@ -78,17 +90,68 @@
   </p>
 
   <h2> Designs </h2>
+  <h2> Inspiration </h2>
+  <p>
+    Agent based modeling is a wide area of research, therefore there are many existing visualization of agent based modeling.
+    The original research team that did the modeling already had created a visualization to see the existing data. Therefore we had a few already existing inspirations to look into.
+
+  </p>
+  <figure>
+  <img class="images" src="images/irissimulation.jpg"></img>
+  <figcaption>Fig.2 - The original simulation visualization </figcaption>
+  </figure>
+
+  <figure>
+  <img class="images"src="images/inspiration1.jpg"></img>
+  <figcaption>Fig.3 - An existing visualization of ABM </figcaption>
+  </figure>
 
 
+  <p>
+     The first exisiting visualization shows the historical evolution of the output values over time. However it does not offer an overview of the current situation.
+     An other option that we would like to improve on is the customization of the parameters.
+
+     The Fig.3 shows an existing visualization of an Agent Based Modeling. We can see on the left side there is the option to modify many parameters, and on the right side the results of the simulation.
+     We wanted to reach a visualization similar to this figure, that would look like a control pannel for the user to work with.
+
+  </p>
   <h2> Differences with initial ideas </h2>
 
   <p>
+    Our first idea was very relient on the inspiration we had in Fig.3. It was a very basic draft of how we could show the visualization.
+    However, as we had not discussed with the person in charge of the project yet, we weren't sure if the direction we were taking was correct.
+    Therefore, we had to modify a little bit our initial idea to have the visualization focus on the tipping points and emerging patterns in the simulation, rather than just depict the current situation.
+
+
+  </p>
+  <figure>
+  <img class="images" src="images/firstdraft.png"></img>
+  <figcaption>Fig.4 -  Our first draft </figcaption>
+  </figure>
+
+  <p>
+    After discussing with the Professor Savic, we decided to take a different path with our visualization and focus mainly on two axis : the current situation , and a historic snapshot.
+    So we had to have three main ideas in our visualization : parameters modification, current situation and historic snapshot.
+    This led us to our second idea for the visualization.
   </p>
 
+  <figure>
+  <img class="images" src="images/seconddraft.png"></img>
+  <figcaption>Fig.5 -  Our wireframe for the project </figcaption>
+  </figure>
+
+
+  <p>
+    While this was a satisfying first goal to reach, we now wanted to add more options into our visualization.
+    //TODO finish writting.
+  </p>
   <h2> Implementation </h2>
 
   <p>
-
+    We mainly worked with the D3.js library up until now. We had full access to the code of the model so our first task was to work a way to have them work together.
+    As the current project uses the P5.js library, removing full usage of it was not deemed acceptable as we want our visualization to be as much as possible compatible with the original code.
+    This will also help future modification on the code of the model. If we implement our visualization as a independent module, future engineers could modify the model as they wish and still have a functionning way to see the results.
+    //TODO finish
   </p>
 
 
