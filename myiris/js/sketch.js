@@ -8,7 +8,9 @@ let irisModel;
 let loops = 1;
 
 function setup() {
-  //createCanvas(WIDTH(), HEIGHT());
+  // createCanvas(WIDTH(), HEIGHT());
+  //to get rid of bottom menu remove it and set HEIGHT ~~ window.innerHeight
+  createCanvas(0,HEIGHT());
   let behaviors = {
     curious: 3,
     perfectionist: 3,

@@ -1,12 +1,13 @@
 // We need to have the data collected by the underyling model.
 const historicDiv = document.getElementById("currentsituation");
+console.log(historicDiv);
 const margin = {
-  top:60,
+  top:30,
   right : 20,
-  bottom : 20,
+  bottom :10,
   left : 20},
-  width = historicDiv.clientWidth-40,
-  height = historicDiv.clientHeight*0.2,
+  width = historicDiv.clientWidth,
+  height = (historicDiv.clientHeight)/6.0,
   contextHeight = 50,
   contextWidth = width;
 
@@ -18,7 +19,7 @@ console.log("h " + height);
 const svg = d3.select("#currentsituation")
                 .append("svg")
                 .attr("width",width+margin.left+margin.right)
-                .attr("height",height*5+margin.top+margin.bottom);
+                .attr("height",historicDiv.clientHeight+margin.top*6.0+margin.bottom*6.0);
 // scale will be first of length 200 but then we
 //need to add the option to slide it.
 

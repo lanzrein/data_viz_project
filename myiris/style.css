@@ -7,6 +7,7 @@
 }
 
 body{
+    height: auto;
     padding: 0;
     margin: 0;
     font-family: mono;
@@ -43,7 +44,7 @@ button{
     left: 0px;
     bottom: 0px;
     width: 100%;
-    height: 50px;
+    height: auto;
     background-color: #00f;
     /* margin: auto 0; */
 }
@@ -68,7 +69,7 @@ button{
     -moz-transform: translate(-50%, -50%);
     -webkit-transform: translate(-50%, -50%);
     width: 80%;
-    height: 80vh;
+    height: auto;
     overflow-y: scroll;
 }
 button#close-menu {
@@ -135,7 +136,7 @@ button#close-menu {
     right: 0px;
     /* position: fixed; */
     float : right;
-    height: 100vh;
+    height: auto;
     overflow-y: scroll;
     max-height: none;
     padding-left: 5px;
@@ -171,13 +172,13 @@ button#close-menu {
     -moz-transform: translate(-50%, -50%);
     -webkit-transform: translate(-50%, -50%);
     width: 65%;
-    height: 33vh;
+    height: auto;
 }
 #player-stats, #player-task{
     min-height: 150px;
     position: relative;
     width: 50%;
-    height: 100%;
+    height: auto;
     float: left;
     overflow-y: scroll;
 }
@@ -213,10 +214,9 @@ button#close-menu {
 /*** for the current snapshot. */
 #currentsituation{
     width: 200px;
-    height : 800px;
+    height : 1800px;
     float : right;
     padding-left: 10px;
-    overflow-y: scroll;
-    overflow-x : scroll;
+
     padding-right: 10px;
 }
