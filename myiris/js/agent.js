@@ -113,6 +113,7 @@ class Agent {
      *
      */
     setInfo() {
+        return ;
         // to update the infos
         document.getElementById(this.ID).innerHTML = this.htmlText();
         if (this.isPlayer) document.getElementById('player-stats').innerHTML = this.htmlText();

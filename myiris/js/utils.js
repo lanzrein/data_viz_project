@@ -64,9 +64,11 @@ function WIDTH() {
   };
 
   function HEIGHT(){
+    return document.body.height;
+    /*
     const footer = document.getElementById('footer');
     const h = footer.getBoundingClientRect().height;
-    return innerHeight - h;
+    return innerHeight - h;*/
   }
 
 function roundPrecision(value, precision) {
@@ -122,7 +124,9 @@ function linearRegression(y, x) {
 
 
 /** This method compares two arrays ... taken from
-https://stackoverflow.com/questions/7837456/how-to-compare-arrays-in-javascript */
+https://stackoverflow.com/questions/7837456/how-to-compare-arrays-in-javascript
+
+**/
 // Warn if overriding existing method
 if(Array.prototype.equals)
     console.warn("Overriding existing Array.prototype.equals. Possible causes: New API defines the method, there's a framework conflict or you've got double inclusions in your code.");

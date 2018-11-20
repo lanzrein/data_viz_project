@@ -2,16 +2,14 @@
 const historicDiv = document.getElementById("currentsituation");
 console.log(historicDiv);
 const margin = {
-  top:30,
+  top: 30,
   right : 20,
   bottom :10,
   left : 20},
   width = historicDiv.clientWidth,
-  height = (historicDiv.clientHeight)/6.0,
+  height = (historicDiv.clientHeight)/6.0-margin.top-margin.bottom,
   contextHeight = 50,
   contextWidth = width;
-
-
 
 console.log("w " + width);
 console.log("h " + height);
@@ -85,10 +83,8 @@ function setup_iris(){
 
 var cnt = 0
 function tick(){
-  //
-  // if (cnt > 200 ){
-  //   return ;
-  // }
+  //nice for debuging..
+
   //represents a tick in the simulation. will need to update :
   //model, graphs.
 
@@ -100,13 +96,11 @@ function tick(){
   //update the current situation
   compute_new_medians();
   //paint the histogram if there is a change.
-  // histograms(data_by_type);
   let idx = 0;
   for (const type of outputs){
     let h = histograms_list[idx]
     if(!(h.data.equals(data_by_type[type]))){
         h.update(data_by_type[type]);
-
 
     }
     idx++;
@@ -143,7 +137,14 @@ function compute_new_medians(){
     for (const type of outputs){
       let med =  0;
       if (!(medians === undefined )){
-        med = d3.mean(medians[type]);
+        if (type == "brute_force" || type == "traded"){
+          //if we are on the brute_force or traded seeing how the average is not very interesting
+          //therefore we will show the cumulative sum
+          med = d3.sum(medians[type]);
+        }else{
+            med = d3.mean(medians[type]);
+        }
+
         if (med === undefined){
           med =  0;
         }

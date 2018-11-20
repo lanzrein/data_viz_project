@@ -220,3 +220,28 @@ button#close-menu {
 
     padding-right: 10px;
 }
+
+
+rect:hover{
+  fill : yellow;
+}
+
+#tooltip{
+  position : absolute;
+  width : 100px;
+  height : auto;
+  padding  : 10px;
+  background-color: white;
+  border-radius : 5px;
+
+}
+
+#tooltip.hidden{
+  display : none;
+}
+
+#tooltip p {
+  font-family : mono;
+  font-size : 11px;
+  line-height : 20px;
+}

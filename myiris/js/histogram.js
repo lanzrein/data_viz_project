@@ -20,36 +20,33 @@ class Histogram{
    this.idx = args.idx;
    this.type = args.type;
    this.margin = args.margin;//margin = {left,top,bottom,right}
-   //setup xScale
 
+   //setup xScale
    this.xScale = d3.scaleBand()
                      .domain([0,1,2,3])
                      .range([0,this.width-(this.margin.left+this.margin.right)]);
 
    //seutp yScale
-
    this.yScale = d3.scaleLinear()
                 .domain([0,0])//at first its only zeroes but we will change the domain afterwards
                 .range([this.height,0]);
 
 
   //setup the axis
-
-   this.yAxis = d3.axisLeft(this.yScale)
+  this.yAxis = d3.axisLeft(this.yScale)
                     .ticks(4)
                     .tickFormat(d3.format(".0s"));
   //setup the bar charts.
   let containerHeight = this.height + this.margin.top + this.margin.bottom;
   this.container = svg.append("g")
                       .attr("class",this.type)
-                      .attr("transform","translate(0,"+containerHeight*this.idx+")");
+                      .attr("transform","translate(0,"+(containerHeight*this.idx+margin.top+margin.bottom)+")");
 
 
   this.container.selectAll("rect")
                 .data(this.data)
                 .enter()
                 .append("rect")
-                .attr("class","stress")
                 .attr("transform","translate("+(this.margin.left)+",0)")
                 .attr("x",(d,i)=>{
                   return this.xScale(i);
@@ -63,6 +60,21 @@ class Histogram{
                 })
                 .attr("fill",function(d){
                   return "rgb("+(d*255/100)+",0,0)";
+                })
+                .on("mouseover",(d,i) => {
+                  let xP = this.xScale(i);
+                  let yP = this.height*this.idx+this.height/2;
+                  let behavior = AGENT_BEHAVIORS[i];
+                  d3.select("#tooltip")
+                    .style("right",xP+"px")
+                    .style("top",yP+"px")
+                    .text("Agent type : " +behavior);
+                  //show
+                  d3.select("#tooltip").classed("hidden",false);
+
+                })
+                .on("mouseout",() =>{
+                  d3.select("#tooltip").classed("hidden",true);
                 });
   // //add the labels.
   this.container.selectAll("text")
@@ -111,7 +123,7 @@ class Histogram{
 }
 
 //a method when we have an update to update the taskValues
-const digits = d3.format(".3");
+const digits = d3.format(".2");
 
 Histogram.prototype.update = function(data){
   this.data = data;
@@ -135,7 +147,8 @@ Histogram.prototype.update = function(data){
     })
     .attr("fill",function(d){
       return "rgb("+(d*255.0/100)+",0,0)";
-    });
+    })
+
 
   //add values number to make it more readable
   this.container.selectAll("text")
@@ -145,12 +158,6 @@ Histogram.prototype.update = function(data){
      })
 
 
-
-
-   // this.yAxis = d3.axisLeft(yScale)
-   //                  .ticks(3);
-   //                 // .tickFormat(d3.format(".0s"));;
-   //
    //add an axis.
    this.container.select("g.axis")
       .transition()
@@ -158,5 +165,10 @@ Histogram.prototype.update = function(data){
       .attr("y",this.margin.top)
       .call(this.yAxis);
 
+
+}
+
+function hist_click(data,type) {
+  console.log("Click on value " + data +" of type "+type);
 
 }

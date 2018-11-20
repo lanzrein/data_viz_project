@@ -43,11 +43,11 @@ function draw() {
   // // noLoop();
 }
 
-function windowResized() {
-  // resizeCanvas(WIDTH(), HEIGHT());
-  let info = document.getElementById('info-window')
-  console.log(info.getBoundingClientRect().width);
-}
+// function windowResized() {
+//   // resizeCanvas(WIDTH(), HEIGHT());
+//   let info = document.getElementById('info-window')
+//   console.log(info.getBoundingClientRect().width);
+// }
 
 // function mouseClicked(){
 //   irisModel.update();
@@ -71,6 +71,8 @@ function drawInfos(agent) {
 /**
  * here we add all the event listeners for the menu
  */
+
+ /*
 let recordData = document.getElementById('record-data')
 recordData.addEventListener('click', () => {
   irisModel.recordData();
@@ -168,4 +170,4 @@ function updateView() {
   // console.log('hello');
   const view = document.getElementById('view');
   irisModel.setView(parseInt(view.value));
-}
+}*/

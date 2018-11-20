@@ -36,15 +36,15 @@ class IrisModel {
             agentsNum++;
         }
         // here we set the max value of the slider that shows the agents
-        const slider = document.getElementById('view')
-        slider.max = agentsNum;
+        //const slider = document.getElementById('view')
+        //slider.max = agentsNum;
 
         this.GLOBAL_RESTING_TIME = this.calcGlobalRestTime(agentsNum, num_task);
         // make the info for all of the agents
-        for (const agent of this.agents) {
-            agent.makeInfo(this.agents);
-            agent.setInfo();
-        }
+        // for (const agent of this.agents) {
+        //     agent.makeInfo(this.agents);
+        //     agent.setInfo();
+        // }
         // add tasks
         let restingTimePerTask = Math.floor(this.GLOBAL_RESTING_TIME / (TASK_LIST.length * num_task))
         for (let i = 0; i < num_task; i++) {
@@ -351,8 +351,8 @@ class IrisModel {
             this.weeks = 0;
         }
         let currentDate = `years: ${this.years}<br>months: ${this.months}<br>days: ${this.days}<br>hours: ${this.hours}`;
-        // console.log(currentDate);
-        document.getElementById('display-date').innerHTML = currentDate;
+        // console.log("Curr date : " +currentDate);
+        // document.getElementById('display-date').innerHTML = currentDate;
     }
 
     getTotalRestingTime() {
