@@ -38,7 +38,7 @@ function setup_iris(){
 
 
 
-  // let svg = d3.select("body")
+  // let svg = d3.  setup_iris();select("body")
   //   .append("svg")
   //   .attr("width",w)
   //   .attr("height",h);
@@ -101,6 +101,7 @@ function tick(){
   irisModel.update();
 
   cnt++;
+  //console.log("Hello this is visualization script  = ");
   //update the current situation
 
   //we can use a hacked version of the show method to get the values.

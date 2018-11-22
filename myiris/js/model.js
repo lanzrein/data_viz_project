@@ -143,7 +143,7 @@ class IrisModel {
          * here we sort the agents array that was shuffled
          * during the choose agent process of task.js
          */
-        background(51);
+        //background(51);
         /**
             let fld = this.preferenceArchive.map(result => result.feel_like_doing);
             let rt = this.preferenceArchive.map(result => result.resting_time);

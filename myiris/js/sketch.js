@@ -9,6 +9,7 @@ let loops = 1;
 
 function setup() {
   //createCanvas(WIDTH(), HEIGHT());
+  createCanvas(0,0);
   let behaviors = {
     curious: 3,
     perfectionist: 3,
@@ -19,6 +20,7 @@ function setup() {
   let min_wage = 0;
   let tasks_num = 2;
   let players = 0; // here you set the players for the game
+  console.log("Loaded model")
   irisModel = new IrisModel(behaviors, min_wage, tasks_num, players);
   textSize(TEXT_SIZE);
   //this is the setup for the visualization
@@ -32,7 +34,7 @@ function draw() {
   //this sounds clumsy but was the best way to ensure compatibility with the current project without
   //having to change significally the current code.
 
-  tick();
+  tick_func();
   // for (let i = 0; i < loops; i++) {
   //   irisModel.update();
   // }
