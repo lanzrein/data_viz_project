@@ -10,7 +10,7 @@ class ScatterPlot {
 		this.plot_width = args.width;
 		this.plot_height = args.height;
 		this.plot = args.svg;
-		this.xScale = d3.scaleLinear().domain([0,100]).range([0,this.plot_width]);	
+		this.xScale = d3.scaleLinear().domain([0,100]).range([0,this.plot_width]);
 		this.yScale = d3.scaleLinear().domain([0,0]).range([this.plot_height,0]);
 		this.color = d3.scaleOrdinal(d3.schemeCategory10);
 
@@ -21,6 +21,8 @@ class ScatterPlot {
 		// x-axis
 		this.plot.append("g")
 				.attr("class", "xaxis")
+				.attr("width",this.plot_width)
+				.attr("height",this.plot_height)
 				.attr("transform", "translate(0," + this.plot_height + ")")
 				.call(xAxis);
 
@@ -36,10 +38,10 @@ class ScatterPlot {
 				.enter()
 					.append("circle")
 					.attr("r", 3.5)
-					.attr("cx", d => this.xScale(d.x) ) 
+					.attr("cx", d => this.xScale(d.x) )
 					.attr("cy", d => this.yScale(d.y) )
 					.attr("fill", d => this.color(d.c) )
-	
+
 
 		var legend = this.plot.selectAll(".legend")
 					.data(this.color.domain())
@@ -65,24 +67,41 @@ class ScatterPlot {
 	}
 
 
-	update_scatter(dataset){
+	update_scatter(dataset,clear=true){
 
 
 		this.yScale.domain([d3.min(dataset, d => d.y), d3.max(dataset, d => d.y)]);
 		this.xScale.domain([0, d3.max(dataset, d => d.x)]);
 
+		if (clear) {
+			let points = this.plot.selectAll('circle')
+							.data(dataset)
+								.attr("cx", d => this.xScale(d.x) )
+								.attr("cy", d => this.yScale(d.y) )
+										.exit()
+								.append("circle")
+								.attr("r", 3.5)
+								.attr("fill", d => this.color(d.c))
+								.attr("cx", d => this.xScale(d.x) )
+								.attr("cy", d => this.yScale(d.y) );
 
-		let points = this.plot.selectAll('circle')
-						.data(dataset)
-							.attr("cx", d => this.xScale(d.x) ) 
-							.attr("cy", d => this.yScale(d.y) )
-	       					.enter()
-							.append("circle")
-							.attr("r", 3.5)
-							.attr("fill", d => this.color(d.c))
-							.attr("cx", d => this.xScale(d.x) ) 
-							.attr("cy", d => this.yScale(d.y) );
-	       		
+
+
+		}else{
+			let points = this.plot.selectAll('circle')
+							.data(dataset)
+								.attr("cx", d => this.xScale(d.x) )
+								.attr("cy", d => this.yScale(d.y) )
+										.enter()
+								.append("circle")
+								.attr("r", 3.5)
+								.attr("fill", d => this.color(d.c))
+								.attr("cx", d => this.xScale(d.x) )
+								.attr("cy", d => this.yScale(d.y) );
+
+		}
+
+
 		const yAxis = d3.axisLeft(this.yScale);
 		const xAxis = d3.axisBottom(this.xScale);
 
@@ -97,5 +116,5 @@ class ScatterPlot {
 
 	}
 
-	
+
 }

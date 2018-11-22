@@ -1,62 +1,63 @@
 var cnt = 0
-const Fields = ['aot','brute_force','fld','rt','stress','traded']
 
 
-var global_dataset = []
-var scatter_plots  = []
+let scatter_plots  = []
 
 
-var margin = {top: 20, right: 20, bottom: 30, left: 40};
 
 
-const p_width = 960 - margin.left - margin.right;
-const p_height = 500 - margin.top - margin.bottom;
 
 
 // initial values of globabl dataset
 
-let data_per_agent = []
+function setup_data_per_agent(){
+	let data_per_agent = []
 
-for (agent_type in AGENT_BEHAVIORS){
+	for (agent_type in AGENT_BEHAVIORS){
 
-	data_per_agent.push( {
-				fld : [{x:0,y:0,c:'fld'}],
-				rt : [{x:0,y:0,c:'rt'}],
-				stress : [{x:0,y:0,c:'stress'}],
-				aot : [{x:0,y:0,c:'aot'}],
-				traded : [{x:0,y:0,c:'traded'}],
-				brute_force : [{x:0,y:0,c:'brute_force'}]
-			})
+		data_per_agent.push( {
+					fld : [{x:0,y:0,c:'fld'}],
+					rt : [{x:0,y:0,c:'rt'}],
+					stress : [{x:0,y:0,c:'stress'}],
+					aot : [{x:0,y:0,c:'aot'}],
+					traded : [{x:0,y:0,c:'traded'}],
+					brute_force : [{x:0,y:0,c:'brute_force'}]
+				})
+
+	};
+
+	return data_per_agent;
 
 }
 
 
+let data_per_agent = setup_data_per_agent();
 
 
 
-function setup_iris(){
+function setup_iris_1(){
 
-	
+
 	// initialize canvas for plot
-	
-	for(var type in AGENT_BEHAVIORS){
 
-		const current_height = p_height 
+	for(const type in AGENT_BEHAVIORS){
 
-		var p_svg =  d3.select("body").append("svg")
-			.attr("width", p_width + margin.left + margin.right)
+		const current_height = height
+
+		var p_svg =  d3.select("#scatter").append("svg")
+			.attr("width", width + margin.left + margin.right)
 			.attr("height", current_height + margin.top + margin.bottom)
 			.append("g")
 			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 		compressed_init = compress_array(data_per_agent[type]) // compress all arrays into one plot to plot a scatter plot
-		
-		objects = {data:compressed_init,width:p_width,height:current_height,svg:p_svg};
+
+		objects = {data:compressed_init,width:width,height:current_height,svg:p_svg};
 		plot_curr = new ScatterPlot(objects)
 		scatter_plots.push(plot_curr)
 	}
 
-	
+
 }
 
 
@@ -64,13 +65,13 @@ function setup_iris(){
 
 
 function tick_func(){
- 	
+
 	if(cnt > 500) {
 		return;
 	}
 
 	irisModel.update();
-	
+
 	cnt++;
 
 	medianValuesByBehavior = irisModel.show();
@@ -78,7 +79,7 @@ function tick_func(){
 	i = 0;
 	for(var agent_type of AGENT_BEHAVIORS){
 
-		console.log(agent_type)		
+		console.log(agent_type)
 
 		medians = medianValuesByBehavior[agent_type];
 		if(medians != null){
@@ -93,15 +94,15 @@ function tick_func(){
 				}
 			}
 			compressed_arr = compress_array(data_per_agent[i])
-			scatter_plots[i].update_scatter(compressed_arr)			
+			scatter_plots[i].update_scatter(compressed_arr)
 		}else{
 			console.log(medians)
 		}
-			
+
 		i = i +1;
 	}
 
-	
+
 }
 
 
@@ -111,7 +112,7 @@ function undef_check(value){
 		return 0;
 	}else{
 		return value;
-	} 
+	}
 
 }
 
@@ -126,9 +127,3 @@ function compress_array(arr){
 
 	return output
 }
-
-
-
-
-
-

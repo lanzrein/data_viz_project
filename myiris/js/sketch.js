@@ -8,19 +8,9 @@ let irisModel;
 let loops = 1;
 
 function setup() {
-<<<<<<< HEAD
   //createCanvas(WIDTH(), HEIGHT());
   createCanvas(0,0);
-=======
-  // createCanvas(WIDTH(), HEIGHT());
   //to get rid of bottom menu remove it and set HEIGHT ~~ window.innerHeight
-<<<<<<< HEAD
-  createCanvas(0,HEIGHT());
->>>>>>> 4eb9af42afa3cfa079a669c164fd65acb729b6e5
-=======
-  createCanvas(0,0);
-  // remove();
->>>>>>> f95c11b7ee71564d8f813baf9dedacaa3c9073a7
   let behaviors = {
     curious: 3,
     perfectionist: 3,
@@ -45,7 +35,8 @@ function draw() {
   //this sounds clumsy but was the best way to ensure compatibility with the current project without
   //having to change significally the current code.
 
-  tick_func();
+  // tick_func();
+  tick();
   // for (let i = 0; i < loops; i++) {
   //   irisModel.update();
   // }

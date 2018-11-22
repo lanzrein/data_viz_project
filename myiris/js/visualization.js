@@ -1,25 +1,24 @@
 // We need to have the data collected by the underyling model.
-const historicDiv = document.getElementById("currentsituation");
-
+const currDiv = document.getElementById("currentsituation");
+const histDiv = document.getElementById("scatter");
 let pause = false;
-console.log(historicDiv);
 const margin = {
   top: 30,
   right : 20,
   bottom :10,
   left : 20},
-  width = historicDiv.clientWidth,
-  height = (historicDiv.clientHeight)/6.0-margin.top-margin.bottom,
-  contextHeight = 50,
-  contextWidth = width;
+  width_curr = currDiv.clientWidth,
+  height_curr = (currDiv.clientHeight)/6.0-margin.top-margin.bottom,
+  width_hist = histDiv.clientWidth,
+  height_hist = histDiv.clientHeight/4.0;
 
-console.log("w " + width);
-console.log("h " + height);
+console.log("w " + width_curr);
+console.log("h " + height_curr);
 
 const svg = d3.select("#currentsituation")
                 .append("svg")
-                .attr("width",width+margin.left+margin.right)
-                .attr("height",historicDiv.clientHeight+margin.top*6.0+margin.bottom*6.0);
+                .attr("width",width_curr+margin.left+margin.right)
+                .attr("height",currDiv.clientHeight+margin.top*6.0+margin.bottom*6.0);
 // scale will be first of length 200 but then we
 //need to add the option to slide it.
 
@@ -27,13 +26,6 @@ const svg = d3.select("#currentsituation")
 const outputs = ["fld","rt","stress","aot","traded","brute_force"];
 
 
-const xScale = d3.scaleBand()
-                  .domain([0,1,2,3])
-                  .range([0,width-(margin.left+margin.right)]);
-                  //here we can use + instead of - to have larger bands..
-const yScale = d3.scaleLinear()
-              .domain([0,0])
-              .range([height,0]);
 
 
 let data_by_type  = {
@@ -47,77 +39,44 @@ let data_by_type  = {
 //setup the iris model.
 // it is already defined in the sketch.js file as irisModel.
 let histograms_list = [];
+
+/**FOR SCATTER PLOTS ***/
+let scatter_plots  = []
+// initial values of globabl dataset
+
+function setup_data_per_agent(){
+	let data_per_agent = []
+
+	for (agent_type in AGENT_BEHAVIORS){
+
+		data_per_agent.push( {
+					fld : [{x:0,y:0,c:'fld'}],
+					rt : [{x:0,y:0,c:'rt'}],
+					stress : [{x:0,y:0,c:'stress'}],
+					aot : [{x:0,y:0,c:'aot'}],
+					traded : [{x:0,y:0,c:'traded'}],
+					brute_force : [{x:0,y:0,c:'brute_force'}]
+				})
+
+	};
+
+	return data_per_agent;
+
+}
+
+
+let data_per_agent = setup_data_per_agent();
+
+
+
+
+/**END SCATTER PLOTS****/
+
 function setup_iris(){
 
-<<<<<<< HEAD
-  //for every agent we need to have them recording at all time. but we will not save the output -> TODO later maybe ?
-  // for (const agent of irisModel.agents) {
-  //     agent.data = []; // empty the data set
-  //     agent.recordData = true;
-  // }
 
-  //we also need to setup the histograms here so we can have transitions after.
-  //here we use a dummy data..
-  data = [0,0,0,0]
-  yScale.domain([0,d3.max(data)]);
-
-
-
-  // let svg = d3.  setup_iris();select("body")
-  //   .append("svg")
-  //   .attr("width",w)
-  //   .attr("height",h);
-  // console.log("data : " +data)
-
-  svg.selectAll("rect")
-    .data(data)
-    .enter()
-    .append("rect")
-    .attr("x",function(d,i){
-      return xScale(i);
-    })
-    .attr("y",function(d){
-      return h- yScale(d);
-    })
-    .attr("width",xScale.bandwidth())
-    .attr("height",function(d){
-      return yScale(d);
-    })
-    .attr("fill",function(d){
-      return "rgb("+(d*10)+",0,0)";
-    });
-
-    //add values number to make it more readable
-    svg.selectAll("text")
-       .data(data)
-       .enter()
-       .append("text")
-       .text(function(d){
-         return d;
-       })
-       .attr("text-anchor","middle")
-       .attr("x",function(d,i){
-         return xScale(i)+xScale.bandwidth()/2;
-       })
-       .attr("y",function(d){
-         return h;
-       })
-       .attr("font-family","sans-serif")
-       .attr("font-size","20px")
-       .attr("fill","black");
-
-       svg.append("g")
-          .attr("class","axis")
-          .attr("translate","translate(0,0)")
-          .call(yAxis);
-=======
-
-
-
- const yAxis = d3.axisLeft(yScale)
-                  .ticks(4)
-                  .tickFormat(d3.format(".0s"));
  let idx = 0;
+ //this is for the histograms.
   for (const type of outputs){
     //for each type of output prepare the graph.
 
@@ -126,8 +85,8 @@ function setup_iris(){
 
     let args = {
       data : data,
-      width : width,
-      height : height,
+      width : width_curr,
+      height : height_curr,
       svg : svg,
       idx : idx,
       type : type,
@@ -139,11 +98,28 @@ function setup_iris(){
     histograms_list.push(hist);
     idx++;
 
->>>>>>> 4eb9af42afa3cfa079a669c164fd65acb729b6e5
-
 
 }
 
+
+//this is for the scatter plots.
+
+	for(const type in AGENT_BEHAVIORS){
+
+		const current_height = height_hist
+
+		var p_svg =  d3.select("#scatter").append("svg")
+			.attr("width", width_hist + margin.left + margin.right)
+			.attr("height", current_height + margin.top + margin.bottom)
+			.append("g")
+			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+		compressed_init = compress_array(data_per_agent[type]) // compress all arrays into one plot to plot a scatter plot
+
+		objects = {data:compressed_init,width:width_hist,height:current_height,svg:p_svg};
+		plot_curr = new ScatterPlot(objects)
+		scatter_plots.push(plot_curr)
+	}
 }
 
 var cnt = 0
@@ -159,14 +135,25 @@ function tick(){
   irisModel.update();
 
   cnt++;
-<<<<<<< HEAD
-  //console.log("Hello this is visualization script  = ");
-=======
 
->>>>>>> 4eb9af42afa3cfa079a669c164fd65acb729b6e5
   //update the current situation
   compute_new_medians();
   //paint the histogram if there is a change.
+  update_histograms();
+
+
+  //update the historic historic
+  update_scatter();
+
+
+
+
+
+}
+
+//HISOGRAMS
+
+function update_histograms(){
   let idx = 0;
   for (const type of outputs){
     let h = histograms_list[idx]
@@ -177,13 +164,6 @@ function tick(){
     idx++;
 
   }
-
-  //update the historic historic
-
-
-
-
-
 
 }
 
@@ -227,7 +207,7 @@ function compute_new_medians(){
 }
 
 
-
+//UTILITY ( PAUSE RESTART ETC..)
 function pause_iris(){
   pause = !pause;
   return;
@@ -247,6 +227,66 @@ function restart_iris(){
   let tasks_num = 2;
   let players = 0; // here you set the players for the game
   irisModel = new IrisModel(behaviors, min_wage, tasks_num, players);
+  //we need to clear the data array of scatter plots !
+  data_per_agent = setup_data_per_agent();
+  let idx = 0
+  for (const behavior in AGENT_BEHAVIORS){
+    compress_arr = compress_array(data_per_agent[i]);
+    scatter_plots[idx].update_scatter(compress_arr,false);
+  }
 
-  
+}
+
+
+//FOR SCATTER PLOTS HERE
+function undef_check(value){
+
+	if(value === undefined){
+		return 0;
+	}else{
+		return value;
+	}
+
+}
+
+function compress_array(arr){
+
+	var output = [];
+
+	for (var key in arr) {
+	    dict = arr[key];
+	    output = output.concat(dict)
+	}
+
+	return output
+}
+function update_scatter(){
+
+  	medianValuesByBehavior = irisModel.show();
+
+  	i = 0;
+  	for(var agent_type of AGENT_BEHAVIORS){
+
+  		medians = medianValuesByBehavior[agent_type];
+  		if(medians != null){
+  			data_of_agent = data_per_agent[i]
+  			for (var key in data_of_agent) {
+  				median_comp = {c:key , y: undef_check(d3.mean(medians[key]))} ;
+  				index =  (data_of_agent[key]).length - 1
+  				prev_dp = (data_of_agent[key])[index]
+  				if( prev_dp.y != median_comp.y ){
+  					median_comp.x = prev_dp.x + 1;
+  					data_per_agent[i][key].push(median_comp)
+  				}
+  			}
+  			compressed_arr = compress_array(data_per_agent[i])
+  			scatter_plots[i].update_scatter(compressed_arr)
+  		}else{
+  			console.log("Error");
+  		}
+
+  		i = i +1;
+  	}
+
+
 }

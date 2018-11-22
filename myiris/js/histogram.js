@@ -141,7 +141,7 @@ Histogram.prototype.update = function(data){
       return this.yScale(d);
     })
     .attr("transform","translate("+(this.margin.left)+",0)")
-    .attr("width",xScale.bandwidth()-(this.margin.left)/this.data.length)
+    .attr("width",this.xScale.bandwidth()-(this.margin.left)/this.data.length)
     .attr("height",(d)=>{
       return this.yScale(0) - this.yScale(d);
     })
