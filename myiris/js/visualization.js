@@ -1,5 +1,7 @@
 // We need to have the data collected by the underyling model.
 const historicDiv = document.getElementById("currentsituation");
+
+let pause = false;
 console.log(historicDiv);
 const margin = {
   top: 30,
@@ -84,7 +86,9 @@ function setup_iris(){
 var cnt = 0
 function tick(){
   //nice for debuging..
-
+  if (pause){
+    return;
+  }
   //represents a tick in the simulation. will need to update :
   //model, graphs.
 
@@ -153,4 +157,29 @@ function compute_new_medians(){
 
     }
   }
+}
+
+
+
+function pause_iris(){
+  pause = !pause;
+  return;
+
+}
+
+function restart_iris(){
+
+  let behaviors = {
+    curious: 3,
+    perfectionist: 3,
+    geniesser: 2,
+    capitalist: 2
+  };
+
+  let min_wage = 0;
+  let tasks_num = 2;
+  let players = 0; // here you set the players for the game
+  irisModel = new IrisModel(behaviors, min_wage, tasks_num, players);
+
+  
 }
