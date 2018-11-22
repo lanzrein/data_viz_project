@@ -14,8 +14,13 @@ function setup() {
 =======
   // createCanvas(WIDTH(), HEIGHT());
   //to get rid of bottom menu remove it and set HEIGHT ~~ window.innerHeight
+<<<<<<< HEAD
   createCanvas(0,HEIGHT());
 >>>>>>> 4eb9af42afa3cfa079a669c164fd65acb729b6e5
+=======
+  createCanvas(0,0);
+  // remove();
+>>>>>>> f95c11b7ee71564d8f813baf9dedacaa3c9073a7
   let behaviors = {
     curious: 3,
     perfectionist: 3,
@@ -28,7 +33,7 @@ function setup() {
   let players = 0; // here you set the players for the game
   console.log("Loaded model")
   irisModel = new IrisModel(behaviors, min_wage, tasks_num, players);
-  textSize(TEXT_SIZE);
+  // textSize(TEXT_SIZE);
   //this is the setup for the visualization
   setup_iris();
 
