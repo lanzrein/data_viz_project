@@ -36,15 +36,15 @@ class IrisModel {
             agentsNum++;
         }
         // here we set the max value of the slider that shows the agents
-        const slider = document.getElementById('view')
-        slider.max = agentsNum;
+        //const slider = document.getElementById('view')
+        //slider.max = agentsNum;
 
         this.GLOBAL_RESTING_TIME = this.calcGlobalRestTime(agentsNum, num_task);
         // make the info for all of the agents
-        for (const agent of this.agents) {
-            agent.makeInfo(this.agents);
-            agent.setInfo();
-        }
+        // for (const agent of this.agents) {
+        //     agent.makeInfo(this.agents);
+        //     agent.setInfo();
+        // }
         // add tasks
         let restingTimePerTask = Math.floor(this.GLOBAL_RESTING_TIME / (TASK_LIST.length * num_task))
         for (let i = 0; i < num_task; i++) {
@@ -67,16 +67,16 @@ class IrisModel {
          * PLOT
          */
 
-        this.colors = {
-            // skill: color(0, 255, 0),
-            // preference: color(255, 0, 255),
-            fld: color(0, 255, 255),
-            rt: color(255, 0, 0),
-            stress: color(255, 255, 0),
-            aot: color(45, 105, 245),
-            traded: color(0, 255, 100, 150),
-            brute_force: color(255, 125, 0, 150)
-        };
+        // this.colors = {
+        //     // skill: color(0, 255, 0),
+        //     // preference: color(255, 0, 255),
+        //     fld: color(0, 255, 255),
+        //     rt: color(255, 0, 0),
+        //     stress: color(255, 255, 0),
+        //     aot: color(45, 105, 245),
+        //     traded: color(0, 255, 100, 150),
+        //     brute_force: color(255, 125, 0, 150)
+        // };
 
         // this.plot = new Plot(parent, 20, 20, this.colors);
         this.pointIndex = 0;
@@ -143,7 +143,11 @@ class IrisModel {
          * here we sort the agents array that was shuffled
          * during the choose agent process of task.js
          */
+<<<<<<< HEAD
         //background(51);
+=======
+        // background(51);
+>>>>>>> 4eb9af42afa3cfa079a669c164fd65acb729b6e5
         /**
             let fld = this.preferenceArchive.map(result => result.feel_like_doing);
             let rt = this.preferenceArchive.map(result => result.resting_time);
@@ -351,8 +355,8 @@ class IrisModel {
             this.weeks = 0;
         }
         let currentDate = `years: ${this.years}<br>months: ${this.months}<br>days: ${this.days}<br>hours: ${this.hours}`;
-        // console.log(currentDate);
-        document.getElementById('display-date').innerHTML = currentDate;
+        // console.log("Curr date : " +currentDate);
+        // document.getElementById('display-date').innerHTML = currentDate;
     }
 
     getTotalRestingTime() {

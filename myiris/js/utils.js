@@ -34,7 +34,7 @@ function randomMinMAx() {
 /**
  * Randomize array element order in-place.
  * Using Durstenfeld shuffle algorithm.
- * @param {Array} array 
+ * @param {Array} array
 */
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -62,11 +62,13 @@ function WIDTH() {
     const w = info.getBoundingClientRect().width;
     return innerWidth - w;
   };
-  
+
   function HEIGHT(){
+    return document.body.height;
+    /*
     const footer = document.getElementById('footer');
     const h = footer.getBoundingClientRect().height;
-    return innerHeight - h;
+    return innerHeight - h;*/
   }
 
 function roundPrecision(value, precision) {
@@ -90,7 +92,7 @@ function modelTime() {
     return TS_FRACTION * TIME_SCALE;
 }
 /**
- * compute the linear regression of a line 
+ * compute the linear regression of a line
  * @param {Array} y positions on the y axis
  * @param {Array} x positions on the x axis
  * @returns Object containing slope, intercept and r2
@@ -119,3 +121,38 @@ function linearRegression(y, x) {
 
     return lr;
 }
+
+
+/** This method compares two arrays ... taken from
+https://stackoverflow.com/questions/7837456/how-to-compare-arrays-in-javascript
+
+**/
+// Warn if overriding existing method
+if(Array.prototype.equals)
+    console.warn("Overriding existing Array.prototype.equals. Possible causes: New API defines the method, there's a framework conflict or you've got double inclusions in your code.");
+// attach the .equals method to Array's prototype to call it on any array
+Array.prototype.equals = function (array) {
+    // if the other array is a falsy value, return
+    if (!array)
+        return false;
+
+    // compare lengths - can save a lot of time
+    if (this.length != array.length)
+        return false;
+
+    for (var i = 0, l=this.length; i < l; i++) {
+        // Check if we have nested arrays
+        if (this[i] instanceof Array && array[i] instanceof Array) {
+            // recurse into the nested arrays
+            if (!this[i].equals(array[i]))
+                return false;
+        }
+        else if (this[i] != array[i]) {
+            // Warning - two different object instances will never be equal: {x:20} != {x:20}
+            return false;
+        }
+    }
+    return true;
+}
+// Hide method from for-in loops
+Object.defineProperty(Array.prototype, "equals", {enumerable: false});

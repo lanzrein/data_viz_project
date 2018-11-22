@@ -8,8 +8,14 @@ let irisModel;
 let loops = 1;
 
 function setup() {
+<<<<<<< HEAD
   //createCanvas(WIDTH(), HEIGHT());
   createCanvas(0,0);
+=======
+  // createCanvas(WIDTH(), HEIGHT());
+  //to get rid of bottom menu remove it and set HEIGHT ~~ window.innerHeight
+  createCanvas(0,HEIGHT());
+>>>>>>> 4eb9af42afa3cfa079a669c164fd65acb729b6e5
   let behaviors = {
     curious: 3,
     perfectionist: 3,
@@ -43,11 +49,11 @@ function draw() {
   // // noLoop();
 }
 
-function windowResized() {
-  // resizeCanvas(WIDTH(), HEIGHT());
-  let info = document.getElementById('info-window')
-  console.log(info.getBoundingClientRect().width);
-}
+// function windowResized() {
+//   // resizeCanvas(WIDTH(), HEIGHT());
+//   let info = document.getElementById('info-window')
+//   console.log(info.getBoundingClientRect().width);
+// }
 
 // function mouseClicked(){
 //   irisModel.update();
@@ -71,6 +77,8 @@ function drawInfos(agent) {
 /**
  * here we add all the event listeners for the menu
  */
+
+ /*
 let recordData = document.getElementById('record-data')
 recordData.addEventListener('click', () => {
   irisModel.recordData();
@@ -168,4 +176,4 @@ function updateView() {
   // console.log('hello');
   const view = document.getElementById('view');
   irisModel.setView(parseInt(view.value));
-}
+}*/
