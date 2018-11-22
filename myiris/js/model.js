@@ -352,6 +352,7 @@ class IrisModel {
         }
         let currentDate = `years: ${this.years}<br>months: ${this.months}<br>days: ${this.days}<br>hours: ${this.hours}`;
         // console.log("Curr date : " +currentDate);
+        return {year : this.years, months : this.months, hours : this.hours};
         // document.getElementById('display-date').innerHTML = currentDate;
     }
 
