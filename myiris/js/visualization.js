@@ -214,18 +214,22 @@ function pause_iris(){
 
 }
 
-function restart_iris(){
 
-  let behaviors = {
-    curious: 3,
-    perfectionist: 3,
-    geniesser: 2,
-    capitalist: 2
+function restart_iris(){
+  const customBehavior = document.getElementsByClassName('custom-behavior');
+  const behaviors = {
+    curious: parseInt(customBehavior.curious.value),
+    perfectionist: parseInt(customBehavior.perfectionist.value),
+    geniesser: parseInt(customBehavior.geniesser.value),
+    capitalist: parseInt(customBehavior.capitalist.value)
   };
 
-  let min_wage = 0;
-  let tasks_num = 2;
-  let players = 0; // here you set the players for the game
+  const minWage = document.getElementById('min-wage');
+  const min_wage = parseInt(minWage.value);
+  const tasksNum = document.getElementById('how-many-task');
+  const tasks_num = parseInt(tasksNum.value);
+  const players = 0; // here you set the players for the game
+
   irisModel = new IrisModel(behaviors, min_wage, tasks_num, players);
   //we need to clear the data array of scatter plots !
   data_per_agent = setup_data_per_agent();
