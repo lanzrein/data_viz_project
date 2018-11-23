@@ -22,4 +22,8 @@ Our work is only on the visualization.
 
 ### Contents 
 - design : contains our sketches, our questions we had to design.
-- myiris : contains the original code if the IrisModel and the code for the viz. 
+- myiris : contains the original code if the IrisModel and the code for the viz.
+- images : images ressources
+
+### Notes : 
+- The display is not friendly with firefox for some reason it won't load the scripts ~~ fix it asap. 
