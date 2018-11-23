@@ -1,0 +1,37 @@
+Exploratory data analysis
+
+Our project aims to study the behavior of people when living in a cohousing community and possible ways of improvement.(The project is a simulation of agents living together)
+Our input consists of data provided in live time (we get the data and directly need to visualize it) from the model developed by the project owners. 
+The model in summary clusters people into 4 types : 
+1) curious : a person who takes the initiative to take upon new task.
+2) perfectionist : a person who would take a task which he is really good at and perform it. 
+3) geniesser : a person who refers to stay relaxed most of the time.
+4) capitalist : 
+
+The idea behind the project is to study the behavior of each agent type while permuting the types of agents living in the same home. So for example: study the behavior of a curious person when grouped with two perfectionists. The model returns values for the following studied parameters :
+
+Feel like doing value : how much the agent is willing to do the task given to him.
+Stress value          : how much is the agent stressed from the number of tasks assigned to him.
+Rest time value       : how much time of rest is the agent getting.
+Amount of time value  : 
+Traded tasks value    : how many tasks are traded between agents.
+Brute force value     : how many tasks is this agent forced to do.
+
+For processing the data we only needed to parse the data from the input model,which is in json format.
+
+
+
+What are the different visualizations you considered? Did you deviate from your initial proposal? (it’s ok). Justify the design decisions you made using the perceptual and design principles. (300 words min)
+
+
+Before meeting the professor responsible for this project, we did not have a clear idea of what the data looks like. Initially we wanted to plot correlations among different parameters present in the model and visualize the model data in runtime.
+While we met the proffessor handling this project, they showed us the visualization they had, they explained to us what they expect from us and this can be split into 4 parts : 
+1) visualizing the agents overall behavior against each other
+2) visualizing the behavior of agents per type
+3) visualizing the tipping points
+4) having a more attractive UI
+
+For this milestone we focused on the first two points. To visualize the overall behavior we plotted the parameters of all agents each in a different scatter plot. On the agent type level we plotted histograms having the overall parameter results per group.
+
+To tackle the perceptual principles we relied on using different colors per visualization to make it easy to detect the differences between the different types of agents.
+With respect to the design principles we focused on having wireframing on how would the visualization look like and present our vision to the team coordinating the project.This helped us : first verifying that our work is correct and second a good vision of what to code. 
