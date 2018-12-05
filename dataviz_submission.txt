@@ -13,7 +13,7 @@ The idea behind the project is to study the behavior of each agent type while pe
 Feel like doing value : how much the agent is willing to do the task given to him.
 Stress value          : how much is the agent stressed from the number of tasks assigned to him.
 Rest time value       : how much time of rest is the agent getting.
-Amount of time value  : 
+Amount of time value  : how much time is spent working. 
 Traded tasks value    : how many tasks are traded between agents.
 Brute force value     : how many tasks is this agent forced to do.
 

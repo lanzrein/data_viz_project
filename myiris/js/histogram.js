@@ -24,7 +24,7 @@ class Histogram{
    //setup xScale
    this.xScale = d3.scaleBand()
                      .domain([0,1,2,3])
-                     .range([0,this.width-(this.margin.left+this.margin.right)]);
+                     .range([0,this.width-(this.margin.left)]);
 
    //seutp yScale
    this.yScale = d3.scaleLinear()

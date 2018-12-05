@@ -25,6 +25,7 @@
     <script src="js/model.js"></script>
     <script src="js/plot.js"></script>
     <script src="js/sketch.js"></script>
+    <script src="js/menu.js"></script>
 
   <div id="pannel">
     <button id="pause" onclick="pause_iris()">Pause</button>
@@ -56,8 +57,9 @@
     <br>
     <u>set model speed:</u> <br>
     <input type="range" value="1" min="1" max="10" id="model-speed">
-    
-    <button id="set_test" onclick="customize_agent()">Custom test</button>
+
+    <button id="menu_display" onclick="show_menu()">Custom test</button>
+
   </div>
 
 
@@ -79,6 +81,55 @@
   			<p><strong>Agent type</strong></p>
   			<p><span id="value">100</span></p>
 	</div>
+
+  <div id='menu'>
+    <h3> Customize the simulation </h3>
+    <p> Here you can chose the values for each category of behavior and restart the simulation with those values as starting values ! </p>
+    <button id ="closemenu" onclick="close_menu()"> Close </button>
+    <div id="container">
+      <div id='capitalist' class='box'>
+        <p> Capitalist agents</p>
+        <input type="number" min="0" max="5"> Number of agents </input>
+        <input type="number" min="0" max="100"> Stress value </input>
+        <input type="number" min="0" max="100"> Rest time </input>
+        <input type="number" min="0" max="100"> Motivation </input>
+        <input type="number" min="0" max="100"> Amount of time </input>
+      </div>
+      <div id='geniesser' class='box'>
+        <p> Geniesser agents</p>
+        <input type="number" min="0" max="5"> Number of agents </input>
+        <input type="number" min="0" max="100"> Stress value </input>
+        <input type="number" min="0" max="100"> Rest time </input>
+        <input type="number" min="0" max="100"> Motivation </input>
+        <input type="number" min="0" max="100"> Amount of time </input>
+      </div>
+      <div id='curious' class='box'>
+        <p> Curious agents</p>
+        <input type="number" min="0" max="5"> Number of agents </input>
+        <input type="number" min="0" max="100"> Stress value </input>
+        <input type="number" min="0" max="100"> Rest time </input>
+        <input type="number" min="0" max="100"> Motivation </input>
+        <input type="number" min="0" max="100"> Amount of time </input>
+      </div>
+      <div id='perfectionist' class='box'>
+        <p> Perfectionist agents</p>
+        <input type="number" min="0" max="5"> Number of agents </input>
+        <input type="number" min="0" max="100"> Stress value </input>
+        <input type="number" min="0" max="100"> Rest time </input>
+        <input type="number" min="0" max="100"> Motivation </input>
+        <input type="number" min="0" max="100"> Amount of time </input>
+      </div>
+    </div>
+
+    <div id="tasks_spec">
+      <p> Specifics about tasks </p>
+      <input type="number" min="0" max="100"> Task sets </input>
+      <input type="number" min="0" max="100"> Amount of tasks </input>
+    </div>
+    <br>
+
+    <button id="custom_start" onclick="custom_start()"> Start with set values ! </button>
+  </div>
 
 </body>
 

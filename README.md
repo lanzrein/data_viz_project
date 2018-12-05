@@ -11,14 +11,16 @@ Our work is only on the visualization.
 
 
 ### Currently doing : 
-- Working on getting an embryo that is fully compatible with the code of the original project
-- Use D3 to first a non interactive viz of the agents ( as soon as it is done we will move to interactive viz) 
-	- One part of the viz will be consacrated to the history of the simulation and how it has evolved
-	- One other part will focus on the current state of the simulation at the current tick
+- Adding a way to start model with specific parameters for each agents
+- Zoom into the historical timeline and use a brush to go over
+- Select a specific tick to display values by agents type
+
 
 ### Challenges
-- Use the given code to simulate and use the results to use the viz. We want the coders to be able to modify the simulation without having to modify the viz. It should be an independent module
-- Understand fully how the model works. 
+- Make the model stable for longer simulation
+- Hack a way around the given code to make it work with our code
+- Do a line plot for historical timeline
+- Make it pretty <3 
 
 ### Contents 
 - design : contains our sketches, our questions we had to design.

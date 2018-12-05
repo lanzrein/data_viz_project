@@ -21,10 +21,6 @@ button{
     font-family: mono;
 }
 
-/* #p5Sketch{
-    position: fixed;
-    width: 67%;
-} */
 
 
 /********************************OMAR LINE PLOT *****************/
@@ -48,7 +44,7 @@ button{
 
 /*** for the current snapshot. */
 #currentsituation{
-    width: 18%;
+    width: 25%;
     height : 1600px;
     padding-left: 10px;
     padding-bottom: 10px;
@@ -59,7 +55,7 @@ button{
 }
 
 #scatter{
-  width : 58%;
+  width : 65%;
   height : 1600px;
 }
 
@@ -67,6 +63,7 @@ rect:hover{
   fill : yellow;
 }
 
+/* For a basic tooltip */
 #tooltip{
   position : absolute;
   width : 100px;
@@ -85,4 +82,54 @@ rect:hover{
   font-family : mono;
   font-size : 11px;
   line-height : 20px;
+}
+
+
+/*This is for the menu for customizing agent values */
+
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+#menu {
+  visibility: hidden;
+  position : absolute;
+  display : inline-block;
+  background-color: #808080;
+  width : 100%;
+  height : 100%
+
+  /* border */
+  border : 2px  solid #000;
+  border-radius : 25px;
+
+}
+#menu #container {
+  width : auto;
+  height: 80%;
+}
+
+#menu text {
+    font-family : mono;
+    font-size : 11px;
+    line-height : 20px;
+}
+
+#menu #closemenu{
+  top : 0;
+  right : 0 ;
+  position : absolute;
+}
+
+#menu .box{
+  border : 1px solid black;
+  background-color: #fff;
+}
+
+#menu #container div{
+    width : 50%;
+    height: 50%;
+    float : left;
 }

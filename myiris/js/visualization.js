@@ -7,7 +7,7 @@ const margin = {
   right : 20,
   bottom :10,
   left : 20},
-  width_curr = currDiv.clientWidth,
+  width_curr = currDiv.clientWidth+40-10,
   height_curr = (currDiv.clientHeight)/6.0-margin.top-margin.bottom,
   width_hist = histDiv.clientWidth,
   height_hist = histDiv.clientHeight/4.0;
@@ -17,7 +17,7 @@ console.log("h " + height_curr);
 
 const svg = d3.select("#currentsituation")
                 .append("svg")
-                .attr("width",width_curr+margin.left+margin.right)
+                .attr("width",width_curr)
                 .attr("height",currDiv.clientHeight+margin.top*6.0+margin.bottom*6.0);
 // scale will be first of length 200 but then we
 //need to add the option to slide it.
@@ -74,7 +74,6 @@ let data_per_agent = setup_data_per_agent();
 
 function setup_iris(){
 
-
  let idx = 0;
  //this is for the histograms.
   for (const type of outputs){
@@ -126,7 +125,7 @@ var cnt = 0
 function tick(){
   //nice for debuging..
   if (pause ){
-    return; 
+    return;
   }
   //represents a tick in the simulation. will need to update :
   //model, graphs.
@@ -294,18 +293,25 @@ function update_scatter(){
 
 
 }
-//agent already in the iris and we set the values here. 
+//agent already in the iris and we set the values here.
 //value_map = {fld,rt,stress,aot}
+
+
+
+//we can use this to customize some agent in the future.
 function customize_agent(/*agent,value_map*/){
 	value_map = {fld : 400, stress : 400, rt : 400, aot : 400}
 	for (var agent of irisModel.agents){
-		//create an agent with specific values at the start. 
+		//create an agent with specific values at the start.
 		agent.FLD = value_map.fld;
 		agent.stress = value_map.stress;
 		agent.mappedAmountOfTime = value_map.aot;
 		agent.restingTime = value_map.rt;
 	}
-	
+
+
+
+
 
 
 }
