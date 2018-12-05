@@ -110,13 +110,13 @@ function setup_iris(){
 
 		var p_svg =  d3.select("#scatter").append("svg")
 			.attr("width", width_hist + margin.left + margin.right)
-			.attr("height", current_height + margin.top + margin.bottom)
+			.attr("height", current_height + 2*margin.top + margin.bottom)
 			.append("g")
 			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 		compressed_init = compress_array(data_per_agent[type]) // compress all arrays into one plot to plot a scatter plot
 
-		objects = {data:compressed_init,width:width_hist,height:current_height,svg:p_svg};
+		objects = {data:compressed_init,width:width_hist-margin.left-margin.right,height:current_height,svg:p_svg};
 		plot_curr = new ScatterPlot(objects)
 		scatter_plots.push(plot_curr)
 	}
@@ -125,8 +125,8 @@ function setup_iris(){
 var cnt = 0
 function tick(){
   //nice for debuging..
-  if (pause){
-    return;
+  if (pause ){
+    return; 
   }
   //represents a tick in the simulation. will need to update :
   //model, graphs.
@@ -151,7 +151,7 @@ function tick(){
 
 }
 
-//HISOGRAMS
+//HISTOGRAMS
 
 function update_histograms(){
   let idx = 0;
@@ -236,7 +236,7 @@ function restart_iris(){
   let idx = 0
   for (const behavior in AGENT_BEHAVIORS){
     compress_arr = compress_array(data_per_agent[i]);
-    scatter_plots[idx].update_scatter(compress_arr,false);
+    scatter_plots[idx].update_scatter(compress_arr,true);
   }
 
 }
@@ -291,6 +291,21 @@ function update_scatter(){
 
   		i = i +1;
   	}
+
+
+}
+//agent already in the iris and we set the values here. 
+//value_map = {fld,rt,stress,aot}
+function customize_agent(/*agent,value_map*/){
+	value_map = {fld : 400, stress : 400, rt : 400, aot : 400}
+	for (var agent of irisModel.agents){
+		//create an agent with specific values at the start. 
+		agent.FLD = value_map.fld;
+		agent.stress = value_map.stress;
+		agent.mappedAmountOfTime = value_map.aot;
+		agent.restingTime = value_map.rt;
+	}
+	
 
 
 }

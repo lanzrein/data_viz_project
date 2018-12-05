@@ -15,7 +15,7 @@ class ScatterPlot {
 		this.color = d3.scaleOrdinal(d3.schemeCategory10);
 
 
-		var xAxis = d3.axisBottom(this.xScale);
+		var xAxis = d3.axisBottom(this.xScale).tickFormat(d3.format("d"));
 		var yAxis = d3.axisLeft(this.yScale);
 
 		// x-axis
@@ -67,7 +67,7 @@ class ScatterPlot {
 	}
 
 
-	update_scatter(dataset,clear=true){
+	update_scatter(dataset,clear=false){
 
 
 		this.yScale.domain([d3.min(dataset, d => d.y), d3.max(dataset, d => d.y)]);
@@ -103,14 +103,15 @@ class ScatterPlot {
 
 
 		const yAxis = d3.axisLeft(this.yScale);
-		const xAxis = d3.axisBottom(this.xScale);
+		const xAxis = d3.axisBottom(this.xScale).tickFormat(d3.format("d"))
+						.ticks(d3.max(dataset,d=>d.x));
 
 		this.plot.selectAll("g.yaxis")
-			.transition()
+			
 				.call(yAxis);
 
 		this.plot.selectAll("g.xaxis")
-			.transition()
+			
 				.call(xAxis);
 
 
