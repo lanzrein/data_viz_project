@@ -210,32 +210,57 @@ function compute_new_medians(){
 function pause_iris(){
   pause = !pause;
   return;
-
 }
 
 
-function restart_iris(){
-  const customBehavior = document.getElementsByClassName('custom-behavior');
-  const behaviors = {
-    curious: parseInt(customBehavior.curious.value),
-    perfectionist: parseInt(customBehavior.perfectionist.value),
-    geniesser: parseInt(customBehavior.geniesser.value),
-    capitalist: parseInt(customBehavior.capitalist.value)
-  };
+function restart_iris(parameters=null,customized=false){
+
+  if(!customized){
+    const customBehavior = document.getElementsByClassName('custom-behavior');
+    const behaviors = {
+      curious: parseInt(customBehavior.curious.value),
+      perfectionist: parseInt(customBehavior.perfectionist.value),
+      geniesser: parseInt(customBehavior.geniesser.value),
+      capitalist: parseInt(customBehavior.capitalist.value)
+    };
+
 
   const minWage = document.getElementById('min-wage');
   const min_wage = parseInt(minWage.value);
   const tasksNum = document.getElementById('how-many-task');
   const tasks_num = parseInt(tasksNum.value);
   const players = 0; // here you set the players for the game
-
   irisModel = new IrisModel(behaviors, min_wage, tasks_num, players);
+
+  }else{
+    //we have a customized setup and need to set the value appropriately.
+    const behaviors = {
+      curious: parameters.curious.agent_cnt,
+      perfectionist: parameters.perfectionist.agent_cnt,
+      geniesser: parameters.geniesser.agent_cnt,
+      capitalist: parameters.capitalist.agent_cnt
+    };
+
+  console.log(behaviors);
+  const tasks_num = parameters.tasks_cnt;
+  console.log(tasks_num);
+  const players = 0; // here you set the players for the game
+  irisModel = new IrisModel(behaviors, 0/*min wage ? */, tasks_num, players);
+  //now we need to set each agents with the given values.
+  for(const agent of irisModel.agents){
+      console.log("hi");
+      customize_agent(agent,parameters[agent.behavior]);
+
+  }
+
+  }
   //we need to clear the data array of scatter plots !
   data_per_agent = setup_data_per_agent();
   let idx = 0
   for (const behavior in AGENT_BEHAVIORS){
-    compress_arr = compress_array(data_per_agent[i]);
+    compress_arr = compress_array(data_per_agent[idx]);
     scatter_plots[idx].update_scatter(compress_arr,true);
+    idx++;
   }
 
 }
@@ -293,25 +318,17 @@ function update_scatter(){
 
 
 }
-//agent already in the iris and we set the values here.
-//value_map = {fld,rt,stress,aot}
-
 
 
 //we can use this to customize some agent in the future.
-function customize_agent(/*agent,value_map*/){
-	value_map = {fld : 400, stress : 400, rt : 400, aot : 400}
-	for (var agent of irisModel.agents){
+function customize_agent(agent,value_map){
+	// value_map = {fld : 400, stress : 400, rt : 400, aot : 400}
+	// for (var agent of irisModel.agents){
 		//create an agent with specific values at the start.
 		agent.FLD = value_map.fld;
 		agent.stress = value_map.stress;
 		agent.mappedAmountOfTime = value_map.aot;
 		agent.restingTime = value_map.rt;
-	}
-
-
-
-
-
+	// }
 
 }
