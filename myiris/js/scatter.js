@@ -66,29 +66,15 @@ class ScatterPlot {
 
 	}
 
-
-	update_scatter(dataset,clear=false){
+	clear_scatter(){
+		this.plot.selectAll('circle').remove();
+	}
+	update_scatter(dataset){
 
 
 		this.yScale.domain([d3.min(dataset, d => d.y), d3.max(dataset, d => d.y)]);
 		this.xScale.domain([0, d3.max(dataset, d => d.x)]);
-
-		if (clear) {
-			let points = this.plot.selectAll('circle')
-							.data(dataset)
-								.attr("cx", d => this.xScale(d.x) )
-								.attr("cy", d => this.yScale(d.y) )
-										.exit()
-								.append("circle")
-								.attr("r", 3.5)
-								.attr("fill", d => this.color(d.c))
-								.attr("cx", d => this.xScale(d.x) )
-								.attr("cy", d => this.yScale(d.y) );
-
-
-
-		}else{
-			let points = this.plot.selectAll('circle')
+		let points = this.plot.selectAll('circle')
 							.data(dataset)
 								.attr("cx", d => this.xScale(d.x) )
 								.attr("cy", d => this.yScale(d.y) )
@@ -99,7 +85,6 @@ class ScatterPlot {
 								.attr("cx", d => this.xScale(d.x) )
 								.attr("cy", d => this.yScale(d.y) );
 
-		}
 
 
 		const yAxis = d3.axisLeft(this.yScale);
@@ -107,11 +92,9 @@ class ScatterPlot {
 						.ticks(d3.max(dataset,d=>d.x));
 
 		this.plot.selectAll("g.yaxis")
-			
 				.call(yAxis);
 
 		this.plot.selectAll("g.xaxis")
-			
 				.call(xAxis);
 
 

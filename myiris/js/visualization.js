@@ -166,10 +166,12 @@ function update_histograms(){
 
 }
 
-function compute_new_medians(){
+function compute_new_medians(debug=false){
   //we can use a hacked version of the show method to get the values.
   medianValuesByBehavior = irisModel.show();
-
+  if(debug){
+    console.log(medianValuesByBehavior);
+  }
   data_by_type = {
     fld : [],
     rt : [],
@@ -248,18 +250,19 @@ function restart_iris(parameters=null,customized=false){
   irisModel = new IrisModel(behaviors, 0/*min wage ? */, tasks_num, players);
   //now we need to set each agents with the given values.
   for(const agent of irisModel.agents){
-      console.log("hi");
       customize_agent(agent,parameters[agent.behavior]);
 
   }
 
   }
+
+
   //we need to clear the data array of scatter plots !
   data_per_agent = setup_data_per_agent();
   let idx = 0
   for (const behavior in AGENT_BEHAVIORS){
     compress_arr = compress_array(data_per_agent[idx]);
-    scatter_plots[idx].update_scatter(compress_arr,true);
+    scatter_plots[idx].clear_scatter();
     idx++;
   }
 
