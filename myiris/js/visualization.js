@@ -8,9 +8,9 @@ const margin = {
   bottom :10,
   left : 20},
   width_curr = currDiv.clientWidth+40-10,
-  height_curr = (currDiv.clientHeight)/6.0-margin.top-margin.bottom,
+  height_curr = /*(currDiv.clientHeight)*/1600/6.0-margin.top-margin.bottom,
   width_hist = histDiv.clientWidth,
-  height_hist = histDiv.clientHeight/4.0;
+  height_hist = /*histDiv.clientHeight*/1600/4.0;
 
 console.log("w " + width_curr);
 console.log("h " + height_curr);
@@ -18,7 +18,7 @@ console.log("h " + height_curr);
 const svg = d3.select("#currentsituation")
                 .append("svg")
                 .attr("width",width_curr)
-                .attr("height",currDiv.clientHeight+margin.top*6.0+margin.bottom*6.0);
+                .attr("height",1600+margin.top*6.0+margin.bottom*6.0);
 // scale will be first of length 200 but then we
 //need to add the option to slide it.
 
@@ -109,7 +109,7 @@ function setup_iris(){
 
 		var p_svg =  d3.select("#scatter").append("svg")
 			.attr("width", width_hist + margin.left + margin.right)
-			.attr("height", current_height + 2*margin.top + margin.bottom)
+			.attr("height", height_hist + 2*margin.top + margin.bottom)
 			.append("g")
 			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
