@@ -12,7 +12,7 @@ body{
   /* justify-content: center;
   align-items: center; */
   padding : 0;
-  /* margin : 10; */
+  margin : 0;
   margin-top: 10px;
   font-family : mono;
   hyphens: auto;
@@ -24,6 +24,9 @@ button{
     font-family: mono;
 }
 
+#pannel {
+  width : 20%;
+}
 
 
 /********************************OMAR LINE PLOT *****************/
@@ -47,7 +50,7 @@ button{
 
 /*** for the current snapshot. */
 #currentsituation{
-    width: 25%;
+    width: 20%;
     height : 100%;
     padding-left: 10px;
     padding-bottom: 10px;
@@ -60,10 +63,28 @@ button{
 }
 
 #scatter{
-  width : 65%;
+  width : auto;
   height : auto;
+  position : relative
+}
+#historic{
+  width : 60%;
+  height : 80%;
   overflow-y: scroll;
   overflow-x: hidden;
+}
+
+#brush{
+  position : absolute;
+  width : inherit;
+  height: 19%;
+  background-color : #ffffff;
+  display : inline-block;
+  bottom : 0px;
+  /* left: 0px; */
+  z-index: 1;
+  font-size: 10px;
+
 }
 
 rect:hover{
@@ -87,7 +108,7 @@ rect:hover{
 
 #tooltip p {
   font-family : mono;
-  font-size : 11px;
+  font-size : 10px;
   line-height : 20px;
 }
 

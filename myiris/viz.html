@@ -11,27 +11,29 @@
   <script src="js/libraries/p5.dom.min.js"></script>
   <script src="js/libraries/grafica.min.js"></script>
   <script src="js/libraries/d3.min.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/const.js"></script>
+  <script src="js/behaviour.js"></script>
+  <script src="js/agent.js"></script>
+  <script src="js/task.js"></script>
+  <script src="js/model.js"></script>
+  <script src="js/plot.js"></script>
+  <script src="js/sketch.js"></script>
+  <script src="js/menu.js"></script>
+  <script src="js/brush.js"></script>
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
 
-    <script src="js/utils.js"></script>
-    <script src="js/const.js"></script>
-    <script src="js/behaviour.js"></script>
-    <script src="js/agent.js"></script>
-    <script src="js/task.js"></script>
-    <script src="js/model.js"></script>
-    <script src="js/plot.js"></script>
-    <script src="js/sketch.js"></script>
-    <script src="js/menu.js"></script>
+
 
   <div id="pannel">
     <button id="pause" onclick="pause_iris()">Pause</button>
     <button id="restart" onclick="restart_iris()">Restart !</button>
 
-    <br>
+    <!-- <br>
     <u>set the model to:</u> <br>
     <select multiple id="select-behavior">
       <option value="curious">ALL CURIOUS</option>
@@ -57,29 +59,31 @@
     <br>
     <br>
     <u>set model speed:</u> <br>
-    <input type="range" value="1" min="1" max="10" id="model-speed">
+    <input type="range" value="1" min="1" max="10" id="model-speed"> -->
 
     <button id="menu_display" onclick="show_menu()">Custom test</button>
 
   </div>
 
 
-
-<div id="scatter">
+<div id="historic">
+  <div id="brush"></div>
+  <div id="scatter"></div>
 </div>
+
 <div id="currentsituation">
+
 </div>
 <script src='js/scatter.js'></script>
 <script src="js/histogram.js"></script>
 <script src='js/visualization.js'></script>
 
 
-
+<!-- Those elements are hidden except on special events. -->
   <div id="tooltip" class="hidden">
   			<p><strong>Agent type</strong></p>
   			<p><span id="value">100</span></p>
 	</div>
-
   <div id='menu'>
     <h3> Customize the simulation </h3>
     <p> Here you can chose the values for each category of behavior and restart the simulation with those values as starting values ! </p>

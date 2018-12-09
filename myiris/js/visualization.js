@@ -7,7 +7,7 @@ const margin = {
   right : 20,
   bottom :10,
   left : 20},
-  width_curr = currDiv.clientWidth+40-10,
+  width_curr = currDiv.clientWidth-10,
   height_curr = /*(currDiv.clientHeight)*/1600/6.0-margin.top-margin.bottom,
   width_hist = histDiv.clientWidth,
   height_hist = /*histDiv.clientHeight*/1600/4.0;
@@ -39,7 +39,7 @@ let data_by_type  = {
 //setup the iris model.
 // it is already defined in the sketch.js file as irisModel.
 let histograms_list = [];
-
+let brush;
 /**FOR SCATTER PLOTS ***/
 let scatter_plots  = []
 // initial values of globabl dataset
@@ -119,12 +119,22 @@ function setup_iris(){
 		plot_curr = new ScatterPlot(objects)
 		scatter_plots.push(plot_curr)
 	}
+
+
+//setup the brush
+let svg_b = d3.select("#brush").append("svg")
+              .attr("width",width_hist)
+              .attr("height",418);
+let args_b = {width : width_hist,height : 418,svg : svg_b,margin : margin,plot : scatter_plots[0]};
+brush = new Brush(args_b);
+
+
 }
 
 var cnt = 0
 function tick(){
   //nice for debuging..
-  if (pause ){
+  if (pause){
     return;
   }
   //represents a tick in the simulation. will need to update :
@@ -140,14 +150,8 @@ function tick(){
   //paint the histogram if there is a change.
   update_histograms();
 
-
   //update the historic historic
   update_scatter();
-
-
-
-
-
 }
 
 //HISTOGRAMS
@@ -213,8 +217,6 @@ function pause_iris(){
   pause = !pause;
   return;
 }
-
-
 function restart_iris(parameters=null,customized=false){
 
   if(!customized){
@@ -271,12 +273,12 @@ function restart_iris(parameters=null,customized=false){
 
 //FOR SCATTER PLOTS HERE
 function undef_check(value){
-
-	if(value === undefined){
-		return 0;
-	}else{
-		return value;
-	}
+  return (value===undefined)? 0 : value;
+	// if(value === undefined){
+	// 	return 0;
+	// }else{
+	// 	return value;
+	// }
 
 }
 
@@ -322,6 +324,15 @@ function update_scatter(){
 
 }
 
+
+//when we have a brushing event..
+function brushed(selection){
+  for (scatter of scatter_plots){
+    scatter.select(selection);
+  }
+
+
+}
 
 //we can use this to customize some agent in the future.
 function customize_agent(agent,value_map){

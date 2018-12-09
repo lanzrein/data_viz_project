@@ -73,12 +73,13 @@ class ScatterPlot {
 
 
 		this.yScale.domain([d3.min(dataset, d => d.y), d3.max(dataset, d => d.y)]);
-		this.xScale.domain([0, d3.max(dataset, d => d.x)]);
-		let points = this.plot.selectAll('circle')
+   	this.xScale.domain([0, d3.max(dataset, d => d.x)]);
+
+	 	let points = this.plot.selectAll('circle')
 							.data(dataset)
 								.attr("cx", d => this.xScale(d.x) )
 								.attr("cy", d => this.yScale(d.y) )
-										.enter()
+								.enter()
 								.append("circle")
 								.attr("r", 3.5)
 								.attr("fill", d => this.color(d.c))
@@ -88,8 +89,11 @@ class ScatterPlot {
 
 
 		const yAxis = d3.axisLeft(this.yScale);
+		const  max = d3.max(dataset,d=>d.x)
+		let val = max > 5 ? 5 : max
 		const xAxis = d3.axisBottom(this.xScale).tickFormat(d3.format("d"))
-						.ticks(d3.max(dataset,d=>d.x));
+										.ticks(val);
+
 
 		this.plot.selectAll("g.yaxis")
 				.call(yAxis);
@@ -100,5 +104,11 @@ class ScatterPlot {
 
 	}
 
+  select(selection){
+		this.xScale.domain(selection);
+		this.plot.select("path").data(this.data).attr("d",this.area);
+		this.plot.select("g.axis").call(this.xScale);
+
+	}
 
 }
