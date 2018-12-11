@@ -9,7 +9,8 @@ let loops = 1;
 
 function setup() {
   //createCanvas(WIDTH(), HEIGHT());
-  createCanvas(0,0);
+  //createCanvas(0,0);
+  noCanvas();
   //to get rid of bottom menu remove it and set HEIGHT ~~ window.innerHeight
   let behaviors = {
     curious: 3,

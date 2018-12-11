@@ -10,19 +10,19 @@ class ScatterPlot {
 		this.plot_width = args.width;
 		this.plot_height = args.height;
 		this.plot = args.svg;
+		this.agent_name = args.agent_name;
 		this.xScale = d3.scaleLinear().domain([0,100]).range([0,this.plot_width]);
-		this.yScale = d3.scaleLinear().domain([0,0]).range([this.plot_height,0]);
+		this.yScale = d3.scaleLinear().domain([0,0.1]).range([this.plot_height,0]);
 		this.color = d3.scaleOrdinal(d3.schemeCategory10);
 
 
-		var xAxis = d3.axisBottom(this.xScale).tickFormat(d3.format("d"));
+
+		var xAxis = d3.axisBottom(this.xScale);
 		var yAxis = d3.axisLeft(this.yScale);
 
 		// x-axis
 		this.plot.append("g")
 				.attr("class", "xaxis")
-				.attr("width",this.plot_width)
-				.attr("height",this.plot_height)
 				.attr("transform", "translate(0," + this.plot_height + ")")
 				.call(xAxis);
 
@@ -32,15 +32,9 @@ class ScatterPlot {
 				.call(yAxis);
 
 
-		// plot initial points
-		this.plot.selectAll('circle')
-				.data(this.init_data)
-				.enter()
-					.append("circle")
-					.attr("r", 3.5)
-					.attr("cx", d => this.xScale(d.x) )
-					.attr("cy", d => this.yScale(d.y) )
-					.attr("fill", d => this.color(d.c) )
+
+		const classes = Object.keys(this.init_data)
+		this.assigned_colors = classes.map(x => this.color(x))
 
 
 		var legend = this.plot.selectAll(".legend")
@@ -64,51 +58,95 @@ class ScatterPlot {
 			.attr("height", 12)
 			.style("fill",this.color);
 
+
+		line = d3.line()
+			.x( (d,i) => this.xScale(i))
+			.y( (d,i) => this.yScale(d))
+			.curve(d3.curveCardinal);
+
+
+		this.plot.selectAll(this.agent_name)
+				.data(Object.entries(this.init_data))
+				.enter()
+					.append('path')
+					.attr('d', (key_val, idx)  => line(idx) )
+					.attr('class', (key_val, idx) =>  this.agent_name + (key_val[0]));
+
+
+		/*this.plot.selectAll(".w")
+				.data(Object.entries(this.init_data))
+				.enter()
+					.append('path')
+					.attr('d', (key_val, idx)  => line(idx) )
+					.attr('class', (key_val, idx) => 'w' + this.agent_name + (key_val[0]));*/
+
 	}
 
-	clear_scatter(){
-		this.plot.selectAll('circle').remove();
-	}
+
 	update_scatter(dataset){
 
-
-		this.yScale.domain([d3.min(dataset, d => d.y), d3.max(dataset, d => d.y)]);
-   	this.xScale.domain([0, d3.max(dataset, d => d.x)]);
-
-	 	let points = this.plot.selectAll('circle')
-							.data(dataset)
-								.attr("cx", d => this.xScale(d.x) )
-								.attr("cy", d => this.yScale(d.y) )
-								.enter()
-								.append("circle")
-								.attr("r", 3.5)
-								.attr("fill", d => this.color(d.c))
-								.attr("cx", d => this.xScale(d.x) )
-								.attr("cy", d => this.yScale(d.y) );
+		const temp = this.find_maximum_vals(dataset);
 
 
+		this.yScale.domain([d3.min(temp, d => d.y), d3.max(temp, d => d.y)]);
+		this.xScale.domain([0, d3.max(temp, d => d.x)]);
 
 		const yAxis = d3.axisLeft(this.yScale);
-		const  max = d3.max(dataset,d=>d.x)
-		let val = max > 5 ? 5 : max
-		const xAxis = d3.axisBottom(this.xScale).tickFormat(d3.format("d"))
-										.ticks(val);
-
+		const xAxis = d3.axisBottom(this.xScale);
 
 		this.plot.selectAll("g.yaxis")
+			.transition()
 				.call(yAxis);
 
 		this.plot.selectAll("g.xaxis")
+			.transition()
 				.call(xAxis);
 
 
+		var i = 0;
+		for(key in dataset){
+			this.plot_line(dataset[key],this.assigned_colors[i],key);
+			i = i +1;
+		}
+
 	}
 
-  select(selection){
-		this.xScale.domain(selection);
-		this.plot.select("path").data(this.data).attr("d",this.area);
-		this.plot.select("g.axis").call(this.xScale);
+
+	find_maximum_vals(arr){
+
+		var output = [];
+		var result = [];
+
+		for (var key in arr) {
+			let dict = arr[key];
+			for(var i=0;i<dict.length;i++){
+				output.push({'x':dict.length,'y':dict[i]})
+			}
+		}
+
+		return output
+	}
+
+
+
+	plot_line(dataset,color,agent){
+
+
+		line = d3.line()
+			.x( (d,i) => this.xScale(i))
+			.y( (d,i) => this.yScale(d))
+			.curve(d3.curveCardinal);
+
+		this.plot.select('.'+ this.agent_name +agent)
+				.datum(dataset)
+					.attr('d', d => line(d))
+					.attr("fill", "none")
+					.attr("stroke", color)
+					.attr("stroke-width", 1.5)
+					.attr("stroke-linejoin", "round")
+					.attr("stroke-linecap", "round");
 
 	}
+
 
 }

@@ -3,33 +3,34 @@ class Brush{
   constructor(args){
     //setup the brush with initial values.
     console.log("hi!")
-
+    this.first = true;
     this.width = args.width;
     this.height = args.height;
     this.svg = args.svg;
     this.margin = args.margin;
     this.plot = args.plot
+    console.log("w"+this.width);
+    console.log("h"+this.height);
+
     this.xScale = d3.scaleLinear()
-                   .range([0,width])
+                   .range([0,this.width])
                    .domain([0,100]);
+
     this.xAxis = d3.axisBottom(this.xScale)
-                   .tickSize(height)
+                   .tickSize(this.height)
                    .tickPadding(-10);
     this.area = d3.area()
-                  .x((d) => {
-                    return this.xScale(d.value)
-                  })
-                  .y0(height)
+                  .x(this.width)
+                  .y0(this.height)
                   .y1(0)
                   .curve(d3.curveLinear);
 
-    console.log("h"+this.height);
     this.brush = d3.brushX()
                    .extent([
                      [this.xScale.range()[0],0],
                      [this.xScale.range()[1],this.height]
                    ])
-                   .on("brush",this.brushed);
+                   .on("brush",brushing(this));
 
   this.context = this.svg.append("g")
                         .attr("class","brush");
@@ -60,10 +61,20 @@ class Brush{
   }
 
 
-  brushed(){
-    console.log("brushing")
-    // let selection = d3.event.selection === null ? this.xScale.domain() : d3.event.selection.map(this.xScale.invert);
-    // brushing_charts(selection);
-  }
 
 }
+
+
+function brushing(brush){
+    console.log("brushing")
+    // return;
+    console.log(brush);
+    if(d3.event === null){
+      return;
+    }
+    console.log(brush.xScale);
+
+    let selection = d3.event.selection === null ? brush.xScale.domain() : d3.event.selection.map(brush.xScale.invert());
+    console.log(selection);
+    // brushing_charts(selection);
+  }

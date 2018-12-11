@@ -23,7 +23,7 @@ class Histogram{
 
    //setup xScale
    this.xScale = d3.scaleBand()
-                     .domain([0,1,2,3])
+                     .domain([0,1,2,3])//TODO AGENT_BEHAVIORS range
                      .range([0,this.width-(this.margin.left)]);
 
    //seutp yScale

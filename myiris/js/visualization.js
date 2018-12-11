@@ -45,24 +45,19 @@ let scatter_plots  = []
 // initial values of globabl dataset
 
 function setup_data_per_agent(){
-	let data_per_agent = []
+  let data_per_agent = []
 
-	for (agent_type in AGENT_BEHAVIORS){
+  for (agent_type in AGENT_BEHAVIORS){
+  	//data_per_agent.push( { fld : [0],rt : [0],stress : [0],aot : [0],traded : [0],brute_force : [0] })
+  	data_per_agent.push( { fld : [0],rt : [0],stress : [0],aot : [0] })
+  }
 
-		data_per_agent.push( {
-					fld : [{x:0,y:0,c:'fld'}],
-					rt : [{x:0,y:0,c:'rt'}],
-					stress : [{x:0,y:0,c:'stress'}],
-					aot : [{x:0,y:0,c:'aot'}],
-					traded : [{x:0,y:0,c:'traded'}],
-					brute_force : [{x:0,y:0,c:'brute_force'}]
-				})
-
-	};
-
-	return data_per_agent;
+  return data_per_agent;
 
 }
+
+
+
 
 
 let data_per_agent = setup_data_per_agent();
@@ -103,19 +98,38 @@ function setup_iris(){
 
 //this is for the scatter plots.
 
-	for(const type in AGENT_BEHAVIORS){
+	// for(const type in AGENT_BEHAVIORS){
+  //
+	// 	const current_height = height_hist
+  //
+	// 	var p_svg =  d3.select("#scatter").append("svg")
+	// 		.attr("width", width_hist + margin.left + margin.right)
+	// 		.attr("height", height_hist + 2*margin.top + margin.bottom)
+	// 		.append("g")
+	// 		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+  //
+	// 	compressed_init = compress_array(data_per_agent[type]) // compress all arrays into one plot to plot a scatter plot
+  //
+	// 	objects = {data:compressed_init,width:width_hist-margin.left-margin.right,height:current_height,svg:p_svg};
+	// 	plot_curr = new ScatterPlot(objects)
+	// 	scatter_plots.push(plot_curr)
+	// }
 
-		const current_height = height_hist
+
+
+
+  for(var type in AGENT_BEHAVIORS){
+
+		const current_height = height_hist;
 
 		var p_svg =  d3.select("#scatter").append("svg")
 			.attr("width", width_hist + margin.left + margin.right)
-			.attr("height", height_hist + 2*margin.top + margin.bottom)
+			.attr("height", current_height + margin.top + margin.bottom)
 			.append("g")
 			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-		compressed_init = compress_array(data_per_agent[type]) // compress all arrays into one plot to plot a scatter plot
 
-		objects = {data:compressed_init,width:width_hist-margin.left-margin.right,height:current_height,svg:p_svg};
+		objects = {data:data_per_agent[type],width:width_hist-margin.left-margin.right,height:current_height,svg:p_svg,agent_name:AGENT_BEHAVIORS[type]};
 		plot_curr = new ScatterPlot(objects)
 		scatter_plots.push(plot_curr)
 	}
@@ -152,6 +166,9 @@ function tick(){
 
   //update the historic historic
   update_scatter();
+
+
+
 }
 
 //HISTOGRAMS
@@ -222,17 +239,17 @@ function restart_iris(parameters=null,customized=false){
   if(!customized){
     const customBehavior = document.getElementsByClassName('custom-behavior');
     const behaviors = {
-      curious: parseInt(customBehavior.curious.value),
-      perfectionist: parseInt(customBehavior.perfectionist.value),
-      geniesser: parseInt(customBehavior.geniesser.value),
-      capitalist: parseInt(customBehavior.capitalist.value)
+      curious: parseInt(irisModel.behaviors.curious),
+      perfectionist: parseInt(irisModel.behaviors.perfectionist),
+      geniesser: parseInt(irisModel.behaviors.geniesser),
+      capitalist: parseInt(irisModel.behaviors.capitalist)
     };
 
 
   const minWage = document.getElementById('min-wage');
-  const min_wage = parseInt(minWage.value);
+  const min_wage = parseInt("0");
   const tasksNum = document.getElementById('how-many-task');
-  const tasks_num = parseInt(tasksNum.value);
+  const tasks_num = parseInt(irisModel.tasks.length);
   const players = 0; // here you set the players for the game
   irisModel = new IrisModel(behaviors, min_wage, tasks_num, players);
 
@@ -293,33 +310,36 @@ function compress_array(arr){
 
 	return output
 }
+let display = 0;
 function update_scatter(){
 
   	medianValuesByBehavior = irisModel.show();
 
-  	i = 0;
-  	for(var agent_type of AGENT_BEHAVIORS){
 
-  		medians = medianValuesByBehavior[agent_type];
-  		if(medians != null){
-  			data_of_agent = data_per_agent[i]
-  			for (var key in data_of_agent) {
-  				median_comp = {c:key , y: undef_check(d3.mean(medians[key]))} ;
-  				index =  (data_of_agent[key]).length - 1
-  				prev_dp = (data_of_agent[key])[index]
-  				if( prev_dp.y != median_comp.y ){
-  					median_comp.x = prev_dp.x + 1;
-  					data_per_agent[i][key].push(median_comp)
-  				}
-  			}
-  			compressed_arr = compress_array(data_per_agent[i])
-  			scatter_plots[i].update_scatter(compressed_arr)
-  		}else{
-  			console.log("Error");
-  		}
+    var j = 0;
+    for(var agent_type of AGENT_BEHAVIORS){
 
-  		i = i +1;
-  	}
+      medians = medianValuesByBehavior[agent_type];
+      if(medians != null){
+        data_of_agent = data_per_agent[j]
+        for (var key in data_of_agent) {
+
+          if(key!='traded' && key!='brute_force'){
+
+            median_comp = undef_check(d3.mean(medians[key]))
+
+            data_per_agent[j][key].push(median_comp);
+            //}
+          }
+        }
+        if(j == display){
+          scatter_plots[j].update_scatter(data_per_agent[j])
+        }
+      }else{
+        console.log(medians)
+      }
+      j = j +1
+    }
 
 
 }

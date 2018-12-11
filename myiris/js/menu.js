@@ -84,3 +84,27 @@ function get_current_values(){
   }
 
 }
+
+function set_default_values(){
+  let idx =  0;
+  for (const behavior of AGENT_BEHAVIORS){
+    let str = "#menu #container #"+behavior;
+    let div = d3.select(str);
+    for (const param of parameters){
+      if(param == "agent_cnt"){
+        //get the current count of agents..
+        div.select("input#"+param).property("value",irisModel.behaviors[behavior]);
+      }else if(param == "fld"){
+        div.select("input#"+param).property("value",100);
+
+
+      }else{
+        //else get the current value of the parameter.
+        div.select("input#"+param).property("value",0);
+      }
+
+    }
+    idx++;
+  }
+
+}

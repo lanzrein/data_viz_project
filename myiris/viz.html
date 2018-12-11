@@ -7,7 +7,6 @@
   <title>Data viz</title>
   <script src="js/libraries/jquery-3.3.1.min.js"></script>
   <script src="js/libraries/p5.min.js"></script>
-  <!-- <script src="js/libraries/p5.js"></script> -->
   <script src="js/libraries/p5.dom.min.js"></script>
   <script src="js/libraries/grafica.min.js"></script>
   <script src="js/libraries/d3.min.js"></script>
@@ -21,6 +20,7 @@
   <script src="js/sketch.js"></script>
   <script src="js/menu.js"></script>
   <script src="js/brush.js"></script>
+  <script src="js/pannel.js"></script>
   <link rel="stylesheet" href="style.css">
 </head>
 
@@ -32,6 +32,21 @@
   <div id="pannel">
     <button id="pause" onclick="pause_iris()">Pause</button>
     <button id="restart" onclick="restart_iris()">Restart !</button>
+    <button id="menu_display" onclick="show_menu()">Custom test</button>
+
+    <div id="left">
+      <div id="agent_list">
+        Sort agent by :
+        <select id=selection_sort onchange="sort_agents()">
+          <option value="fld">fld</option>
+          <option value="rt">rt</option>
+          <option value="stress">stress</option>
+          <option value="aot">aot</option>
+        </select>
+
+      </div>
+      <div id="tasks">tasks</div>
+    </div>
 
     <!-- <br>
     <u>set the model to:</u> <br>
@@ -61,7 +76,6 @@
     <u>set model speed:</u> <br>
     <input type="range" value="1" min="1" max="10" id="model-speed"> -->
 
-    <button id="menu_display" onclick="show_menu()">Custom test</button>
 
   </div>
 
@@ -145,6 +159,8 @@
       <button id="getcurrent_val" onclick="get_current_values()"> Get values of current moment. </button>
 
     </div>
+
+    <button id="set_default" onclick="set_default_values()"> Set default values </button>
     <br>
 
     <button id="custom_start" onclick="custom_start()"> Start with set values ! </button>

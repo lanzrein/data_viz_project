@@ -28,6 +28,20 @@ button{
   width : 20%;
 }
 
+#pannel button{
+  /* position: absolute; */
+  width : 20%;
+  font-size: 10px;
+}
+#pannel #agent-list{
+  background-color: #00ff00;
+  width : auto;
+  height : auto;
+}
+#pannel #tasks{
+  background-color: #ff0000;
+}
+
 
 /********************************OMAR LINE PLOT *****************/
 
