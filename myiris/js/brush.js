@@ -9,6 +9,7 @@ class Brush{
     this.svg = args.svg;
     this.margin = args.margin;
     this.plot = args.plot
+    console.log(args)
     console.log("w"+this.width);
     console.log("h"+this.height);
 
@@ -54,7 +55,7 @@ class Brush{
 
     //add some flavor text.
     this.svg.append("text")
-                .attr("transform","translate(0,120)")
+                .attr("transform","translate(0,20)")
                 .text("Click and drag to zoom in or zoom out")
 
 

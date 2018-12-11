@@ -1,3 +1,15 @@
+//setup hovering..
+
+$("#pannel").hover(function() {
+    console.log("hi");
+    trigger_function();
+}, function() {
+    console.log("Out");
+    trigger_function();
+});
+console.log("setup hover")
+
+
 function sort_agents(){
   console.log("Sort them by....")
   let selection = d3.select("#pannel #left #agent_list #selection_sort")
@@ -7,6 +19,6 @@ function sort_agents(){
 
 
 function setup_agent_display(){
-  //here setup the agent display and show them all. 
+  //here setup the agent display and show them all.
 
 }

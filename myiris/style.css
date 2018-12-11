@@ -25,12 +25,12 @@ button{
 }
 
 #pannel {
-  width : 20%;
+  width : 15%;
 }
 
 #pannel button{
   /* position: absolute; */
-  width : 20%;
+  width : 33%;
   font-size: 10px;
 }
 #pannel #agent-list{
@@ -61,37 +61,38 @@ button{
   font-size:11px;
 }
 
+#main{
+  width : 100%;
+  height : 100%;
 
+}
 /*** for the current snapshot. */
 #currentsituation{
-    width: 20%;
-    height : 100%;
-    padding-left: 10px;
-    padding-bottom: 10px;
-    padding-top: 10px;
-    padding-right: 10px;
+    width: 100%;
+    height : 35%;
+
     font-family: mono;
     font-size: 12px;
     overflow-y: scroll;
     overflow-x: hidden;
 }
 
-#scatter{
+/* #scatter{
   width : auto;
   height : auto;
   position : relative
-}
-#historic{
-  width : 60%;
-  height : 80%;
-  overflow-y: scroll;
-  overflow-x: hidden;
+} */
+#scatter{
+  width : 100%;
+  height : 60%;
+
+  position : relative;
 }
 
 #brush{
-  position : absolute;
+  position : relative;
   width : inherit;
-  height: 19%;
+  height: 5%;
   background-color : #ffffff;
   display : inline-block;
   bottom : 0px;

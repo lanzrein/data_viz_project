@@ -10,6 +10,13 @@ const translation = {
 
 };
 
+const abrevation = {
+  0 : "Cur.",
+  1 : "Per.",
+  2 : "Gen.",
+  3 : "Cap."
+};
+
 class Histogram{
  constructor(args){
    //the args should be given in correct order.
@@ -24,12 +31,13 @@ class Histogram{
    //setup xScale
    this.xScale = d3.scaleBand()
                      .domain([0,1,2,3])//TODO AGENT_BEHAVIORS range
-                     .range([0,this.width-(this.margin.left)]);
+                     .range([0,this.width/6.0-(this.margin.left+margin.right)]);
 
    //seutp yScale
+   let offset = 30;
    this.yScale = d3.scaleLinear()
                 .domain([0,0])//at first its only zeroes but we will change the domain afterwards
-                .range([this.height,0]);
+                .range([this.height-this.margin.bottom-this.margin.top-offset,0]);
 
 
   //setup the axis
@@ -38,9 +46,10 @@ class Histogram{
                     .tickFormat(d3.format(".0s"));
   //setup the bar charts.
   let containerHeight = this.height + this.margin.top + this.margin.bottom;
+  let containerWidth = this.width / 6.0;
   this.container = svg.append("g")
                       .attr("class",this.type)
-                      .attr("transform","translate(0,"+(containerHeight*this.idx+margin.top+margin.bottom)+")");
+                      .attr("transform","translate("+(containerWidth*this.idx)+","+offset+")");
 
 
   this.container.selectAll("rect")
@@ -69,8 +78,6 @@ class Histogram{
                     case 3:
                       return "rgb(0,0,255)"
                   }
-
-                  return "rgb("+(d*255/100)+",0,0)";
                 })
                 .on("mouseover",(d,i) => {
                   let xP = this.xScale(i);
@@ -92,15 +99,15 @@ class Histogram{
      .data(this.data)
      .enter()
      .append("text")
-     .text(function(d){
-       return d;
+     .text(function(d,i){
+       return abrevation[i];
      })
      .attr("text-anchor","middle")
      .attr("x",(d,i) => {
        return this.xScale(i)+this.xScale.bandwidth()/2;
      })
      .attr("y",(d) =>{
-       return this.height+this.margin.bottom;
+       return 0;
      })
      .attr("transform","translate("+(this.margin.left)+",0)")
 
@@ -112,8 +119,27 @@ class Histogram{
      //add title
      this.container.append("text")
                    .attr("class","type-title")
-                   .attr("transform","translate(10,-10)")
+                   .attr("font-size","10px")
+                   .attr("transform","translate(0,"+-offset/2+")")
                    .text(translation[this.type]);
+
+
+      //add info about agent type..
+      // this.container.selectAll("text")
+      //               .data(this.data)
+      //               .enter()
+      //               .text(function(d,i){
+      //                 return abrevation[i];
+      //               })
+      //               // .attr("text-anchor","middle")
+      //               .attr("x",(d,i) => {
+      //                 return this.xScale(i)+this.xScale.bandwidth()/2;
+      //               })
+      //               .attr("y",(d) =>{
+      //                 return 0;
+      //               })
+      //               .attr("font-size","10px")
+
 
 
 
@@ -162,11 +188,11 @@ Histogram.prototype.update = function(data){
 
 
   //add values number to make it more readable
-  this.container.selectAll("text")
-     .data(data)
-     .text(function(d){
-       return digits(d);
-     })
+  // this.container.selectAll("text")
+  //    .data(data)
+  //    .text(function(d){
+  //      return digits(d);
+  //    })
 
 
    //add an axis.

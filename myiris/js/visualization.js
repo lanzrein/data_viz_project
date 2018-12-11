@@ -3,14 +3,14 @@ const currDiv = document.getElementById("currentsituation");
 const histDiv = document.getElementById("scatter");
 let pause = false;
 const margin = {
-  top: 30,
+  top: 20,
   right : 20,
-  bottom :10,
+  bottom :20,
   left : 20},
   width_curr = currDiv.clientWidth-10,
-  height_curr = /*(currDiv.clientHeight)*/1600/6.0-margin.top-margin.bottom,
+  height_curr = (currDiv.clientHeight),
   width_hist = histDiv.clientWidth,
-  height_hist = /*histDiv.clientHeight*/1600/4.0;
+  height_hist = histDiv.clientHeight;
 
 console.log("w " + width_curr);
 console.log("h " + height_curr);
@@ -18,7 +18,7 @@ console.log("h " + height_curr);
 const svg = d3.select("#currentsituation")
                 .append("svg")
                 .attr("width",width_curr)
-                .attr("height",1600+margin.top*6.0+margin.bottom*6.0);
+                .attr("height",height_hist+margin.top+margin.bottom);
 // scale will be first of length 200 but then we
 //need to add the option to slide it.
 
@@ -98,48 +98,37 @@ function setup_iris(){
 
 //this is for the scatter plots.
 
-	// for(const type in AGENT_BEHAVIORS){
-  //
-	// 	const current_height = height_hist
-  //
-	// 	var p_svg =  d3.select("#scatter").append("svg")
-	// 		.attr("width", width_hist + margin.left + margin.right)
-	// 		.attr("height", height_hist + 2*margin.top + margin.bottom)
-	// 		.append("g")
-	// 		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-  //
-	// 	compressed_init = compress_array(data_per_agent[type]) // compress all arrays into one plot to plot a scatter plot
-  //
-	// 	objects = {data:compressed_init,width:width_hist-margin.left-margin.right,height:current_height,svg:p_svg};
-	// 	plot_curr = new ScatterPlot(objects)
-	// 	scatter_plots.push(plot_curr)
-	// }
-
-
-
-
+let debug = false;
   for(var type in AGENT_BEHAVIORS){
-
+    if(debug){
+      break;
+    }
+    debug = true;
 		const current_height = height_hist;
 
 		var p_svg =  d3.select("#scatter").append("svg")
-			.attr("width", width_hist + margin.left + margin.right)
-			.attr("height", current_height + margin.top + margin.bottom)
+			.attr("width", width_hist )
+			.attr("height", height_hist)
 			.append("g")
-			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+			.attr("transform", "translate(" + margin.right + "," + margin.top + ")");
 
 
-		objects = {data:data_per_agent[type],width:width_hist-margin.left-margin.right,height:current_height,svg:p_svg,agent_name:AGENT_BEHAVIORS[type]};
+		objects = {data:data_per_agent[type],width:width_hist-margin.left-margin.right,height:current_height-margin.top-margin.bottom,svg:p_svg,agent_name:AGENT_BEHAVIORS[type]};
 		plot_curr = new ScatterPlot(objects)
 		scatter_plots.push(plot_curr)
 	}
 
 
 //setup the brush
+//get height and width for it.
+let b_elem = document.getElementById("brush");
+let b_width = b_elem.clientWidth;
+let b_height = b_elem.clientHeight;
 let svg_b = d3.select("#brush").append("svg")
-              .attr("width",width_hist)
-              .attr("height",418);
-let args_b = {width : width_hist,height : 418,svg : svg_b,margin : margin,plot : scatter_plots[0]};
+              .attr("width",b_width)
+              .attr("height",b_height);
+
+let args_b = {width : b_width,height : b_height,svg : svg_b,margin : margin,plot : scatter_plots[0]};
 brush = new Brush(args_b);
 
 
@@ -316,8 +305,12 @@ function update_scatter(){
 
 
     var j = 0;
+    let debug = false;
     for(var agent_type of AGENT_BEHAVIORS){
-
+      if(debug){
+        break;;
+      }
+      debug = true;
       medians = medianValuesByBehavior[agent_type];
       if(medians != null){
         data_of_agent = data_per_agent[j]

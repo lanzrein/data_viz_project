@@ -10,6 +10,7 @@
   <script src="js/libraries/p5.dom.min.js"></script>
   <script src="js/libraries/grafica.min.js"></script>
   <script src="js/libraries/d3.min.js"></script>
+  <script src="js/libraries/jquery.sidr.min.js"></script>
   <script src="js/utils.js"></script>
   <script src="js/const.js"></script>
   <script src="js/behaviour.js"></script>
@@ -28,7 +29,7 @@
 
 
 
-
+  <button id="pannel_sidr" href="#sidr">Display menu</button>
   <div id="pannel">
     <button id="pause" onclick="pause_iris()">Pause</button>
     <button id="restart" onclick="restart_iris()">Restart !</button>
@@ -48,46 +49,18 @@
       <div id="tasks">tasks</div>
     </div>
 
-    <!-- <br>
-    <u>set the model to:</u> <br>
-    <select multiple id="select-behavior">
-      <option value="curious">ALL CURIOUS</option>
-      <option value="perfectionist">ALL PERFECTIONISTS</option>
-      <option value="geniesser">ALL GENIESSER</option>
-      <option value="capitalist">ALL CAPITALISTS</option>
-    </select>
-    <br>
-    <br>
-    <u>set custom number of behaviors</u> <br>
-
-    <input type="text" value="3" class="custom-behavior" name="curious"> curious<br>
-    <input type="text" value="3" class="custom-behavior" name="perfectionist"> perfectionists<br>
-    <input type="text" value="2" class="custom-behavior" name="geniesser"> geniesser<br>
-    <input type="text" value="2" class="custom-behavior" name="capitalist"> capitalists<br> <br>
-    <u>set minimum wage to: <span id="set-min-wage">0</span> </u><br>
-    <input type="range" min="0" max="10" value="0" id="min-wage"> <br> <br>
-    <u>Total number of agents:</u> <br>
-    <input type="text" value="10" class="custom" id="how-many-agents"> <br>
-    <u>How many task-sets:</u> <input type="text" value="1" id="how-many-task" class="custom">
-    <br>
-    <i>(each set is composed by 4 tasks)</i>
-    <br>
-    <br>
-    <u>set model speed:</u> <br>
-    <input type="range" value="1" min="1" max="10" id="model-speed"> -->
-
 
   </div>
 
-
-<div id="historic">
+<div id="main">
+    <div id="scatter"></div>
   <div id="brush"></div>
-  <div id="scatter"></div>
+
+  <div id="currentsituation">
+
+  </div>
 </div>
 
-<div id="currentsituation">
-
-</div>
 <script src='js/scatter.js'></script>
 <script src="js/histogram.js"></script>
 <script src='js/visualization.js'></script>
@@ -166,6 +139,20 @@
     <button id="custom_start" onclick="custom_start()"> Start with set values ! </button>
 
   </div>
+
+<script type="text/javascript">
+// This is for the slider at the side.
+$(document).ready(function() {
+    console.log("sidr");
+    $('#pannel_sidr').sidr({
+      name: 'sidr-left',
+      side: 'left', // By default
+      source : '#pannel'
+    });
+
+});
+</script>
+
 
 </body>
 
