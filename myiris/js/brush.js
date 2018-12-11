@@ -67,7 +67,6 @@ class Brush{
 
 function brushing(brush){
     console.log("brushing")
-    // return;
     console.log(brush);
     if(d3.event === null){
       return;

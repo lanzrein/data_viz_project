@@ -58,7 +58,18 @@ class Histogram{
                 .attr("height",function(d){
                   return 0;//at first its 0..
                 })
-                .attr("fill",function(d){
+                .attr("fill",function(d,i){
+                  switch(i){
+                    case 0:
+                      return "rgb(255,0,0)"
+                    case 1:
+                      return "rgb(128,0,128)"
+                    case 2:
+                      return "rgb(0,255,0)"
+                    case 3:
+                      return "rgb(0,0,255)"
+                  }
+
                   return "rgb("+(d*255/100)+",0,0)";
                 })
                 .on("mouseover",(d,i) => {
@@ -145,9 +156,9 @@ Histogram.prototype.update = function(data){
     .attr("height",(d)=>{
       return this.yScale(0) - this.yScale(d);
     })
-    .attr("fill",function(d){
-      return "rgb("+(d*255.0/100)+",0,0)";
-    })
+    // .attr("fill",function(d){
+    //   return "rgb("+(d*255.0/100)+",0,0)";
+    // })
 
 
   //add values number to make it more readable

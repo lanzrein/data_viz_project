@@ -249,7 +249,7 @@ function restart_iris(parameters=null,customized=false){
   const minWage = document.getElementById('min-wage');
   const min_wage = parseInt("0");
   const tasksNum = document.getElementById('how-many-task');
-  const tasks_num = parseInt(irisModel.tasks.length);
+  const tasks_num = (irisModel.tasks.length)/4;
   const players = 0; // here you set the players for the game
   irisModel = new IrisModel(behaviors, min_wage, tasks_num, players);
 
@@ -310,7 +310,6 @@ function compress_array(arr){
 
 	return output
 }
-let display = 0;
 function update_scatter(){
 
   	medianValuesByBehavior = irisModel.show();
@@ -332,9 +331,7 @@ function update_scatter(){
             //}
           }
         }
-        if(j == display){
           scatter_plots[j].update_scatter(data_per_agent[j])
-        }
       }else{
         console.log(medians)
       }

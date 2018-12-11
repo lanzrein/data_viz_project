@@ -111,6 +111,9 @@ class ScatterPlot {
 
 	}
 
+	clear_scatter(){
+		this.plot.selectAll('path').remove();
+	}
 
 	find_maximum_vals(arr){
 

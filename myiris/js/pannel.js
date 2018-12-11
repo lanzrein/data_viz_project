@@ -4,3 +4,9 @@ function sort_agents(){
   let sorted_arg = selection.property("value")
   console.log(sorted_arg)
 }
+
+
+function setup_agent_display(){
+  //here setup the agent display and show them all. 
+
+}
