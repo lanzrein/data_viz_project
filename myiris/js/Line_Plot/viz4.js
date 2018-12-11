@@ -18,7 +18,8 @@ const p_height = 500 - margin.top - margin.bottom;
 let data_per_agent = []
 
 for (agent_type in AGENT_BEHAVIORS){
-	data_per_agent.push( { fld : [0],rt : [0],stress : [0],aot : [0],traded : [0],brute_force : [0] })
+	//data_per_agent.push( { fld : [0],rt : [0],stress : [0],aot : [0],traded : [0],brute_force : [0] })
+	data_per_agent.push( { fld : [0],rt : [0],stress : [0],aot : [0] })
 }
 
 
@@ -53,9 +54,7 @@ function setup_iris(){
 
 function tick_func(){
  	
-	if(cnt > 200) {
-		return;
-	}
+
 
 	irisModel.update();
 	medianValuesByBehavior = irisModel.show();
@@ -68,11 +67,15 @@ function tick_func(){
 		if(medians != null){
 			data_of_agent = data_per_agent[j]
 			for (var key in data_of_agent) {
-				median_comp = undef_check(d3.mean(medians[key]))
-				index =  (data_of_agent[key]).length - 1
-				prev_dp = (data_of_agent[key])[index]
-				if(prev_dp != median_comp){
+
+				if(key!='traded' && key!='brute_force'){					
+
+					median_comp = undef_check(d3.mean(medians[key]))
+					//index =  (data_of_agent[key]).length - 1
+					//prev_dp = (data_of_agent[key])[index]
+					//if(prev_dp != median_comp){
 					data_per_agent[j][key].push(median_comp);
+					//}
 				}
 			}
 			scatter_plots[j].update_scatter(data_per_agent[j])		
