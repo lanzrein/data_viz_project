@@ -11,11 +11,11 @@ class ScatterPlot {
 		this.plot_height = args.height;
 		this.plot = args.svg;
 		this.agent_name = args.agent_name;
-		this.xScale = d3.scaleLinear().domain([0,100]).range([0,this.plot_width]);	
+		this.xScale = d3.scaleLinear().domain([0,100]).range([0,this.plot_width]);
 		this.yScale = d3.scaleLinear().domain([0,0.1]).range([this.plot_height,0]);
 		this.color = d3.scaleOrdinal(d3.schemeCategory10);
 
-	
+
 
 		var xAxis = d3.axisBottom(this.xScale);
 		var yAxis = d3.axisLeft(this.yScale);
@@ -63,14 +63,14 @@ class ScatterPlot {
 			.x( (d,i) => this.xScale(i))
 			.y( (d,i) => this.yScale(d))
 			.curve(d3.curveCardinal);
-		
+
 
 		this.plot.selectAll(this.agent_name)
 				.data(Object.entries(this.init_data))
 				.enter()
 					.append('path')
 					.attr('d', (key_val, idx)  => line(idx) )
-					.attr('class', (key_val, idx) =>  this.agent_name + (key_val[0]));		
+					.attr('class', (key_val, idx) =>  this.agent_name + (key_val[0]));
 
 
 		/*this.plot.selectAll(".w")
@@ -90,7 +90,7 @@ class ScatterPlot {
 
 		this.yScale.domain([d3.min(temp, d => d.y), d3.max(temp, d => d.y)]);
 		this.xScale.domain([0, d3.max(temp, d => d.x)]);
-		
+
 		const yAxis = d3.axisLeft(this.yScale);
 		const xAxis = d3.axisBottom(this.xScale);
 
@@ -101,7 +101,7 @@ class ScatterPlot {
 		this.plot.selectAll("g.xaxis")
 			.transition()
 				.call(xAxis);
-	
+
 
 		var i = 0;
 		for(key in dataset){
@@ -123,10 +123,13 @@ class ScatterPlot {
 				output.push({'x':dict.length,'y':dict[i]})
 			}
 		}
-		
+
 		return output
 	}
 
+	clear_scatter(){
+		this.plot.selectAll('path').remove();
+	}
 
 
 	plot_line(dataset,color,agent){
@@ -148,22 +151,5 @@ class ScatterPlot {
 
 	}
 
-	
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
