@@ -1,0 +1,209 @@
+/* custom scrollbars */
+
+@font-face{
+    font-family: mono;
+    src: url(font/SourceCodePro-Medium.otf);
+}
+
+
+
+body{
+  height : 100vh;
+  display : flex;
+  /* justify-content: center;
+  align-items: center; */
+  padding : 0;
+  margin : 0;
+  margin-top: 10px;
+  font-family : mono;
+  hyphens: auto;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  background-color: #000;
+  color : #252120;
+}
+text {
+  fill : white
+}
+
+button{
+    font-family: mono;
+}
+
+#pannel {
+  width : 15%;
+  display : none;
+}
+
+#pannel button{
+  /* position: absolute; */
+  width : 33%;
+  font-size: 10px;
+}
+#pannel #agent-list{
+  background-color: #00ff00;
+  width : auto;
+  height : auto;
+}
+#pannel #tasks{
+  background-color: #ff0000;
+}
+
+
+/********************************OMAR LINE PLOT *****************/
+
+
+
+/************************************VIZ PART ********************/
+/*for the axis*/
+.axis path
+.axis line {
+  fill : none;
+  stroke : "white";
+  shape-rendering : crispEdges;
+}
+
+.axis text {
+  font-family : sans-sherif;
+  font-size:11px;
+  color: #fff;
+}
+
+#main{
+  width : 100%;
+  height : 100%;
+  color : white;
+
+}
+/*** for the current snapshot. */
+#currentsituation{
+    width: 100%;
+    height : 35%;
+
+    font-family: mono;
+    font-size: 12px;
+    color : white;
+}
+#currentsituation text{
+  color : white;
+}
+
+
+#scatter{
+  width : 100%;
+  height : 60%;
+
+  position : relative;
+  /* stroke : white; */
+}
+
+#brush{
+  position : relative;
+  width : 100%;
+  height: 5%;
+  background-color : #000000;
+  display : inline-block;
+  bottom : 0px;
+  /* left: 0px; */
+  z-index: 1;
+  font-size: 10px;
+  /* stroke : white; */
+
+}
+
+rect:hover{
+  fill : #DAA520	;
+}
+
+/* For a basic tooltip */
+#tooltip{
+  position : absolute;
+  width : auto;
+  height : auto;
+  padding  : 10px;
+  background-color: white;
+  border-radius : 5px;
+  color : black;
+
+
+}
+
+#tooltip.hidden{
+  display : none;
+}
+
+#tooltip p {
+  font-family : mono;
+  font-size : 10px;
+  line-height : 20px;
+}
+
+
+/*This is for the menu for customizing agent values */
+
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+#menu {
+  visibility: hidden;
+  position : absolute;
+  display : inline-block;
+  background-color: #808080;
+  width : 100%;
+  height : 100%
+
+  /* border */
+  border : 2px  solid #000;
+  border-radius : 25px;
+  color : black;
+
+
+}
+#menu #container {
+  width : auto;
+  height: 80%;
+  color : inherit;
+}
+
+#menu p{
+    font-family : mono;
+    font-size : 11px;
+    line-height : 20px;
+    color : inherit;;
+}
+
+#menu #closemenu{
+  top : 0;
+  right : 0 ;
+  position : absolute;
+}
+
+#menu .box{
+  border : 1px solid black;
+  background-color: #fff;
+  color: inherit;
+}
+
+#menu #container div{
+    width : 50%;
+    height: 50%;
+    float : left;
+    color: inherit;
+}
+
+/* Here are the colors for the line plots. */
+path.fld{
+  stroke : #A92F41;
+}
+path.rt{
+  stroke : #E5DFC5
+}
+path.stress{
+  stroke : #848375
+}
+path.aot{
+  stroke : #91C7A9
+}

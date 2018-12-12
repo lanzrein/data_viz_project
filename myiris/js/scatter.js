@@ -13,7 +13,10 @@ class ScatterPlot {
 		this.agent_name = args.agent_name;
 		this.xScale = d3.scaleLinear().domain([0,100]).range([0,this.plot_width]);
 		this.yScale = d3.scaleLinear().domain([0,0.1]).range([this.plot_height,0]);
-		this.color = d3.scaleOrdinal(d3.schemeCategory10);
+		this.color = d3.scaleOrdinal(["#A92F41",
+		 							"#E5DFC5",
+									"#848375",
+	 								"#91C7A9"]);
 
 
 
@@ -70,7 +73,7 @@ class ScatterPlot {
 				.enter()
 					.append('path')
 					.attr('d', (key_val, idx)  => line(idx) )
-					.attr('class', (key_val, idx) =>  this.agent_name + (key_val[0]));
+					.attr('class', (key_val, idx) =>  (key_val[0]));
 
 
 		/*this.plot.selectAll(".w")
@@ -140,11 +143,11 @@ class ScatterPlot {
 			.y( (d,i) => this.yScale(d))
 			.curve(d3.curveCardinal);
 
-		this.plot.select('.'+ this.agent_name +agent)
+		this.plot.select('.'+agent)
 				.datum(dataset)
 					.attr('d', d => line(d))
 					.attr("fill", "none")
-					.attr("stroke", color)
+					// .attr("stroke", color)
 					.attr("stroke-width", 1.5)
 					.attr("stroke-linejoin", "round")
 					.attr("stroke-linecap", "round");

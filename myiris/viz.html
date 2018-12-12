@@ -22,15 +22,15 @@
   <script src="js/menu.js"></script>
   <script src="js/brush.js"></script>
   <script src="js/pannel.js"></script>
-  <link rel="stylesheet" href="style.css">
+  <link id="stylesheet" rel="stylesheet" href="style-dark.css">
 </head>
 
-<body>
+<body onresize=resize_viz()>
 
 
 
   <!-- <button id="pannel_sidr" href="#sidr">Display menu</button> -->
-  <div id="pannel">
+<div id="pannel">
     <button id="pause" onclick="pause_iris()">Pause</button>
     <button id="restart" onclick="restart_iris()">Restart !</button>
     <button id="menu_display" onclick="show_menu()">Custom test</button>
@@ -47,6 +47,9 @@
 
       </div>
       <div id="tasks">tasks</div>
+
+
+      <button id="theme" onclick="change_theme()" >Switch color theme</button>
     </div>
 
 
@@ -69,8 +72,8 @@
 
 <!-- Those elements are hidden except on special events. -->
   <div id="tooltip" class="hidden">
-  			<p><strong>Agent type</strong></p>
-  			<p><span id="value">100</span></p>
+  			<p><strong>Val.</strong></p>
+  			<p><span id="value">-1</span></p>
 	</div>
   <div id='menu'>
     <h3> Customize the simulation </h3>
@@ -142,23 +145,27 @@
   </div>
 
 <script type="text/javascript">
+  //this is the code for the sliding window.
   let hidden = true;
   $("#test").click(function(){
-    $("#pannel").toggle();
-    hidden = !hidden;
+    $("#pannel").toggle("slide",function(){
+      //we use a callback so it has time to slide all the way before resizing.
+      hidden = !hidden;
 
-    if(hidden){
-      console.log("100");
-      d3.select("#main").style("width" , "100%");
+      if(hidden){
+        console.log("100");
+        d3.select("#main").style("width" , "100%");
 
 
-    }else{
-      console.log("85");
-      d3.select("#main").style("width" , "85%");
-    }
+      }else{
+        console.log("85");
+        d3.select("#main").style("width" , "85%");
+      }
 
-    //call the resize of the d3 things.
-    resize_viz();
+      //call the resize of the d3 things.
+      resize_viz();
+    });
+
   })
 
 

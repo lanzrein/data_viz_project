@@ -56,7 +56,7 @@ class Brush{
     //add some flavor text.
     this.svg.append("text")
                 .attr("transform","translate(0,20)")
-                .text("Click and drag to zoom in or zoom out")
+                .text("NOT IMPLEMENTED YET")
 
 
   }

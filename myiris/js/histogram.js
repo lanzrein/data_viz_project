@@ -68,25 +68,29 @@ class Histogram{
                   return 0;//at first its 0..
                 })
                 .attr("fill",function(d,i){
-                  switch(i){
-                    case 0:
-                      return "rgb(255,0,0)"
-                    case 1:
-                      return "rgb(128,0,128)"
-                    case 2:
-                      return "rgb(0,255,0)"
-                    case 3:
-                      return "rgb(0,0,255)"
-                  }
+                  return "#CCCCFF";
+                  // switch(i){
+                  //   case 0:
+                  //     return "rgb(255,0,0)"
+                  //   case 1:
+                  //     return "rgb(128,0,128)"
+                  //   case 2:
+                  //     return "rgb(0,255,0)"
+                  //   case 3:
+                  //     return "rgb(0,0,255)"
+                  // }
                 })
                 .on("mouseover",(d,i) => {
-                  let xP = this.xScale(i);
-                  let yP = this.height*this.idx+this.height/2;
+                  let m = d3.mouse(this.svg.node());
+                  console.log(m)
+                  // return;
+                  let xP = m[0];
+                  let yP = m[1];
                   let behavior = AGENT_BEHAVIORS[i];
                   d3.select("#tooltip")
-                    .style("right",xP+"px")
-                    .style("top",yP+"px")
-                    .text("Agent type : " +behavior);
+                    .style("left",xP+"px")
+                    .style("bottom","0px")
+                    .text(int(d));
                   //show
                   d3.select("#tooltip").classed("hidden",false);
 
@@ -111,10 +115,6 @@ class Histogram{
      })
      .attr("transform","translate("+(this.margin.left)+",0)")
 
-     .attr("font-family","sans-serif")
-     .attr("font-size","11px")
-     .attr("fill","black");
-
 
      //add title
      this.container.append("text")
@@ -122,33 +122,12 @@ class Histogram{
                    .attr("font-size","10px")
                    .attr("transform","translate(0,"+-offset/2+")")
                    .text(translation[this.type]);
-
-
-      //add info about agent type..
-      // this.container.selectAll("text")
-      //               .data(this.data)
-      //               .enter()
-      //               .text(function(d,i){
-      //                 return abrevation[i];
-      //               })
-      //               // .attr("text-anchor","middle")
-      //               .attr("x",(d,i) => {
-      //                 return this.xScale(i)+this.xScale.bandwidth()/2;
-      //               })
-      //               .attr("y",(d) =>{
-      //                 return 0;
-      //               })
-      //               .attr("font-size","10px")
-
-
-
-
      //add the axis
      this.container.append("g")
         .attr("class","axis")
         .attr("transform","translate("+(this.margin.left)+",0)")
         .attr("y",this.height+(this.margin.top))
-        .attr("fill","#fff")
+        // .attr("fill","#fff")
         .call(this.yAxis);
 
 
@@ -160,7 +139,7 @@ class Histogram{
 }
 
 //a method when we have an update to update the taskValues
-const digits = d3.format(".2");
+const digits = d3.format(".1");
 
 Histogram.prototype.update = function(data){
   this.data = data;

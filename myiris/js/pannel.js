@@ -20,5 +20,18 @@ function sort_agents(){
 
 function setup_agent_display(){
   //here setup the agent display and show them all.
+}
+
+let dark = true;
+function change_theme(){
+  let sheet = document.getElementById('stylesheet');
+  if(dark){
+    sheet.href = "style.css";
+  }else{
+    sheet.href = "style-dark.css";
+  }
+  dark = !dark;
+
+
 
 }
