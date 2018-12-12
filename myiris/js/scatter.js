@@ -95,11 +95,11 @@ class ScatterPlot {
 		const xAxis = d3.axisBottom(this.xScale);
 
 		this.plot.selectAll("g.yaxis")
-			.transition()
+			// .transition()
 				.call(yAxis);
 
 		this.plot.selectAll("g.xaxis")
-			.transition()
+			// .transition()
 				.call(xAxis);
 
 
@@ -112,7 +112,7 @@ class ScatterPlot {
 	}
 
 	clear_scatter(){
-		this.plot.selectAll('path').remove();
+		// this.plot.selectAll('path').remove();
 	}
 
 	find_maximum_vals(arr){

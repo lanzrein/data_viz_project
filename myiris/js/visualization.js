@@ -1,24 +1,10 @@
 // We need to have the data collected by the underyling model.
-const currDiv = document.getElementById("currentsituation");
-const histDiv = document.getElementById("scatter");
+
 let pause = false;
-const margin = {
-  top: 20,
-  right : 20,
-  bottom :20,
-  left : 20},
-  width_curr = currDiv.clientWidth-10,
-  height_curr = (currDiv.clientHeight),
-  width_hist = histDiv.clientWidth,
-  height_hist = histDiv.clientHeight;
 
-console.log("w " + width_curr);
-console.log("h " + height_curr);
 
-const svg = d3.select("#currentsituation")
-                .append("svg")
-                .attr("width",width_curr)
-                .attr("height",height_hist+margin.top+margin.bottom);
+
+
 // scale will be first of length 200 but then we
 //need to add the option to slide it.
 
@@ -35,7 +21,7 @@ let data_by_type  = {
   aot : [0,0,0,0],
   traded : [0,0,0,0],
   brute_force : [0,0,0,0]
-}
+};
 //setup the iris model.
 // it is already defined in the sketch.js file as irisModel.
 let histograms_list = [];
@@ -65,12 +51,36 @@ let data_per_agent = setup_data_per_agent();
 
 
 
+const svg_curr = d3.select("#currentsituation")
+                    .append("svg");
+const p_svg =  d3.select("#scatter").append("svg")
+const svg_b = d3.select("#brush").append("svg")
+
 /**END SCATTER PLOTS****/
 
 function setup_iris(){
 
+  let currDiv = document.getElementById("currentsituation");
+  let histDiv = document.getElementById("scatter");
+  let margin = {
+    top: 20,
+    right : 20,
+    bottom :20,
+    left : 20},
+    width_curr = currDiv.clientWidth,
+    height_curr = (currDiv.clientHeight),
+    width_hist = histDiv.clientWidth,
+    height_hist = histDiv.clientHeight;
+
+console.log(width_curr);
+console.log(width_hist);
+svg_curr.attr("width",width_curr)
+        .attr("height",height_hist+margin.top+margin.bottom);
+
  let idx = 0;
  //this is for the histograms.
+ svg_curr.selectAll("*").remove();
+ histograms_list = [];
   for (const type of outputs){
     //for each type of output prepare the graph.
 
@@ -81,12 +91,13 @@ function setup_iris(){
       data : data,
       width : width_curr,
       height : height_curr,
-      svg : svg,
+      svg : svg_curr,
       idx : idx,
       type : type,
       margin : margin
 
     };
+
     hist = new Histogram(args)
 
     histograms_list.push(hist);
@@ -97,7 +108,7 @@ function setup_iris(){
 
 
 //this is for the scatter plots.
-
+scatter_plots = [];
 let debug = false;
   for(var type in AGENT_BEHAVIORS){
     if(debug){
@@ -106,14 +117,14 @@ let debug = false;
     debug = true;
 		const current_height = height_hist;
 
-		var p_svg =  d3.select("#scatter").append("svg")
-			.attr("width", width_hist )
-			.attr("height", height_hist)
+
+			p_svg.attr("width", width_hist+margin.left+margin.right )
+			.attr("height", height_hist+margin.top+margin.bottom)
 			.append("g")
-			.attr("transform", "translate(" + margin.right + "," + margin.top + ")");
+			.attr("transform", "translate(" + margin.right+ "," + margin.top + ")");
 
-
-		objects = {data:data_per_agent[type],width:width_hist-margin.left-margin.right,height:current_height-margin.top-margin.bottom,svg:p_svg,agent_name:AGENT_BEHAVIORS[type]};
+      p_svg.select("g").selectAll("*").remove();
+		objects = {data:data_per_agent[type],width:width_hist-margin.left-margin.right,height:current_height-margin.top-margin.bottom,svg:p_svg.select("g"),agent_name:AGENT_BEHAVIORS[type]};
 		plot_curr = new ScatterPlot(objects)
 		scatter_plots.push(plot_curr)
 	}
@@ -124,8 +135,9 @@ let debug = false;
 let b_elem = document.getElementById("brush");
 let b_width = b_elem.clientWidth;
 let b_height = b_elem.clientHeight;
-let svg_b = d3.select("#brush").append("svg")
-              .attr("width",b_width)
+
+svg_b.selectAll("*").remove();
+svg_b.attr("width",b_width)
               .attr("height",b_height);
 
 let args_b = {width : b_width,height : b_height,svg : svg_b,margin : margin,plot : scatter_plots[0]};
@@ -251,9 +263,7 @@ function restart_iris(parameters=null,customized=false){
       capitalist: parameters.capitalist.agent_cnt
     };
 
-  console.log(behaviors);
   const tasks_num = parameters.tasks_cnt;
-  console.log(tasks_num);
   const players = 0; // here you set the players for the game
   irisModel = new IrisModel(behaviors, 0/*min wage ? */, tasks_num, players);
   //now we need to set each agents with the given values.
@@ -268,7 +278,13 @@ function restart_iris(parameters=null,customized=false){
   //we need to clear the data array of scatter plots !
   data_per_agent = setup_data_per_agent();
   let idx = 0
+  let debug = false;
   for (const behavior in AGENT_BEHAVIORS){
+    if(debug){
+      break;
+    }
+    debug = true;
+    console.log("clear"+behavior)
     compress_arr = compress_array(data_per_agent[idx]);
     scatter_plots[idx].clear_scatter();
     idx++;
@@ -321,7 +337,6 @@ function update_scatter(){
             median_comp = undef_check(d3.mean(medians[key]))
 
             data_per_agent[j][key].push(median_comp);
-            //}
           }
         }
           scatter_plots[j].update_scatter(data_per_agent[j])
@@ -334,6 +349,20 @@ function update_scatter(){
 
 }
 
+
+
+function resize_viz(){
+  // resize histograms.
+  //its fairly similar to the setup of the iris except we need to have different sizes..
+  console.log("resize")
+  //first we need to delete everything..
+  d3.selectAll("#scatter#g").remove();
+  // d3.select("#brush").remove();
+  // d3.select("#currentsituation.parent").remove();
+  setup_iris();
+
+
+}
 
 //when we have a brushing event..
 function brushed(selection){

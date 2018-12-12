@@ -29,7 +29,7 @@
 
 
 
-  <button id="pannel_sidr" href="#sidr">Display menu</button>
+  <!-- <button id="pannel_sidr" href="#sidr">Display menu</button> -->
   <div id="pannel">
     <button id="pause" onclick="pause_iris()">Pause</button>
     <button id="restart" onclick="restart_iris()">Restart !</button>
@@ -53,7 +53,8 @@
   </div>
 
 <div id="main">
-    <div id="scatter"></div>
+  <button id="test">Hide/Display side bar</button>
+  <div id="scatter"></div>
   <div id="brush"></div>
 
   <div id="currentsituation">
@@ -141,16 +142,26 @@
   </div>
 
 <script type="text/javascript">
-// This is for the slider at the side.
-$(document).ready(function() {
-    console.log("sidr");
-    $('#pannel_sidr').sidr({
-      name: 'sidr-left',
-      side: 'left', // By default
-      source : '#pannel'
-    });
+  let hidden = true;
+  $("#test").click(function(){
+    $("#pannel").toggle();
+    hidden = !hidden;
 
-});
+    if(hidden){
+      console.log("100");
+      d3.select("#main").style("width" , "100%");
+
+
+    }else{
+      console.log("85");
+      d3.select("#main").style("width" , "85%");
+    }
+
+    //call the resize of the d3 things.
+    resize_viz();
+  })
+
+
 </script>
 
 

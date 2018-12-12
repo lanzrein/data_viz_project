@@ -31,7 +31,7 @@ class Histogram{
    //setup xScale
    this.xScale = d3.scaleBand()
                      .domain([0,1,2,3])//TODO AGENT_BEHAVIORS range
-                     .range([0,this.width/6.0-(this.margin.left+margin.right)]);
+                     .range([0,this.width/6.0-(this.margin.left+this.margin.right)]);
 
    //seutp yScale
    let offset = 30;
@@ -47,7 +47,7 @@ class Histogram{
   //setup the bar charts.
   let containerHeight = this.height + this.margin.top + this.margin.bottom;
   let containerWidth = this.width / 6.0;
-  this.container = svg.append("g")
+  this.container = this.svg.append("g")
                       .attr("class",this.type)
                       .attr("transform","translate("+(containerWidth*this.idx)+","+offset+")");
 
@@ -165,7 +165,6 @@ const digits = d3.format(".2");
 Histogram.prototype.update = function(data){
   this.data = data;
   this.yScale.domain([0,d3.max(data)]);
-
 
   this.container.selectAll("rect")
     .data(data)

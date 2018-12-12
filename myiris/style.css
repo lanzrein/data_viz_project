@@ -26,6 +26,7 @@ button{
 
 #pannel {
   width : 15%;
+  display : none;
 }
 
 #pannel button{
@@ -73,8 +74,7 @@ button{
 
     font-family: mono;
     font-size: 12px;
-    overflow-y: scroll;
-    overflow-x: hidden;
+
 }
 
 /* #scatter{
@@ -91,7 +91,7 @@ button{
 
 #brush{
   position : relative;
-  width : inherit;
+  width : 100%;
   height: 5%;
   background-color : #ffffff;
   display : inline-block;
