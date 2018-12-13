@@ -34,8 +34,8 @@ function setup_data_per_agent(){
   let data_per_agent = []
 
   for (agent_type in AGENT_BEHAVIORS){
-  	//data_per_agent.push( { fld : [0],rt : [0],stress : [0],aot : [0],traded : [0],brute_force : [0] })
-  	data_per_agent.push( { fld : [0],rt : [0],stress : [0],aot : [0] })
+  	data_per_agent.push( { fld : [0],rt : [0],stress : [0],aot : [0],traded : [0],brute_force : [0] })
+  	// data_per_agent.push( { fld : [0],rt : [0],stress : [0],aot : [0] })
   }
 
   return data_per_agent;
@@ -72,8 +72,7 @@ function setup_iris(setup=true){
     width_hist = histDiv.clientWidth,
     height_hist = histDiv.clientHeight;
 
-console.log(width_curr);
-console.log(width_hist);
+
 svg_curr.attr("width",width_curr)
         .attr("height",height_hist+margin.top+margin.bottom);
 
@@ -120,6 +119,7 @@ let debug = false;
 
 			p_svg.attr("width", width_hist+margin.left+margin.right )
 			.attr("height", height_hist+margin.top+margin.bottom)
+      .on("click",function(){line_plot_click(this)})
 			.append("g")
 			.attr("transform", "translate(" + margin.right+ "," + margin.top + ")");
 
@@ -139,7 +139,10 @@ let b_height = b_elem.clientHeight;
 svg_b.selectAll("*").remove();
 svg_b.attr("width",b_width)
               .attr("height",b_height)
-              .style("visibility","hidden");
+if(!pause){
+  svg_b.style("visibility","hidden");
+}
+
 let args_b = {width : b_width,height : b_height,svg : svg_b,margin : margin,plot : scatter_plots[0]};
 brush = new Brush(args_b);
 
@@ -191,9 +194,7 @@ function update_histograms(forced=false){
 function compute_new_medians(debug=false){
   //we can use a hacked version of the show method to get the values.
   medianValuesByBehavior = irisModel.show();
-  if(debug){
-    console.log(medianValuesByBehavior);
-  }
+
   data_by_type = {
     fld : [],
     rt : [],
@@ -338,23 +339,23 @@ function update_scatter(){
     var j = 0;
     let debug = false;
     for(var agent_type of AGENT_BEHAVIORS){
-      if(debug){
-        break;;
-      }
-      debug = true;
+
       medians = medianValuesByBehavior[agent_type];
       if(medians != null){
         data_of_agent = data_per_agent[j]
         for (var key in data_of_agent) {
 
-          if(key!='traded' && key!='brute_force'){
 
             median_comp = undef_check(d3.mean(medians[key]))
 
             data_per_agent[j][key].push(median_comp);
-          }
+
         }
+        if(!debug){
           scatter_plots[j].update_scatter(data_per_agent[j])
+        }
+        debug = true;
+
       }else{
         console.log(medians)
       }
@@ -384,18 +385,12 @@ function resize_viz(){
 
     //update the historic historic
     update_scatter();
+    brush.update_brush(scatter_plots[0].xScale);
   }
 
 }
 
-//when we have a brushing event..
-function brushed(selection){
-  for (scatter of scatter_plots){
-    scatter.select(selection);
-  }
 
-
-}
 
 function customize_agent(agent,value_map){
 
@@ -408,9 +403,7 @@ function customize_agent(agent,value_map){
 
 
 function brushing(){
-    console.log(d3.event.selection);
     let selection = d3.event.selection === undefined ? brush.xScale.domain() : d3.event.selection.map(brush.xScale.invert);
-    console.log(selection)
     brushing_chart(selection);
 }
 
@@ -420,4 +413,39 @@ function brushing_chart(selection){
 
   plt.xScale.domain(selection);
   scatter_plots[0].update_scatter(data_per_agent[0],resize=true);
+}
+
+
+function line_plot_click(ctx){
+  let coord = d3.mouse(ctx)
+  let x = coord[0];
+  if (x < 20 || x > scatter_plots[0].plot.node().getBoundingClientRect().width){
+    //we are out of the graph
+    console.log("oob")
+    return;
+  }
+  x -= 20;//shift.
+  let tick = int(scatter_plots[0].xScale.invert(x));
+  console.log(x + " : " + tick);
+  //we have the tick whrere the thing happened now we need to get the info about it .
+  data_by_type = {
+    fld : [],
+    rt : [],
+    stress : [],
+    aot : [],
+    traded : [],
+    brute_force : []
+  };
+
+  for(const type of outputs){
+    for(const idx in AGENT_BEHAVIORS){
+      data_by_type[type].push(data_per_agent[idx][type][tick]);
+    }
+
+    update_histograms(forced=true);
+  }
+
+
+
+
 }

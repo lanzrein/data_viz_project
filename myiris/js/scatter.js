@@ -22,7 +22,6 @@ class ScatterPlot {
 
 		this.xAxis = d3.axisBottom(this.xScale);
 		this.yAxis = d3.axisLeft(this.yScale);
-
 		// x-axis
 		this.plot.append("g")
 				.attr("class", "xaxis")
@@ -32,7 +31,8 @@ class ScatterPlot {
 		// y-axis
 		this.plot.append("g")
 				.attr("class", "yaxis")
-				.call(this.yAxis);
+				.call(this.yAxis)
+
 
 
 
@@ -73,10 +73,11 @@ class ScatterPlot {
 				.enter()
 					.append('path')
 					.attr('d', (key_val, idx)  => line(idx) )
-					.attr('class', (key_val, idx) =>  (key_val[0]));
+					.attr('class', (key_val, idx) =>  (key_val[0]))
 
 
 	}
+
 
 
 	update_scatter(dataset,resize=false){
@@ -143,7 +144,9 @@ class ScatterPlot {
 					// .attr("stroke", color)
 					.attr("stroke-width", 1.5)
 					.attr("stroke-linejoin", "round")
-					.attr("stroke-linecap", "round");
+					.attr("stroke-linecap", "round")
+
+;
 
 	}
 
