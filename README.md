@@ -1,5 +1,18 @@
 # A study of work patterns in co-housing communities
 ## Data vizualisation project 
+!! This readme is outdated except for the part about current issues and WIP. 
+
+# Current issues : 
+- Menu is not good looking
+- find a library to have prettier button
+- when you pause and open the menu simulation resumes
+- make it more clear that the brush can be used when its pause. 
+
+# WIP 
+- Side bar ~ having a list of agents that can be selected to focus on one agent
+- Add option to export , import current values of the simulation 
+- put the option to change category of agents in line plot. 
+
 ### Authors 
 - Johan Lanzrein
 - Omar Meiho
