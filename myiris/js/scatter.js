@@ -6,7 +6,15 @@ class ScatterPlot {
 	constructor(args){
 
 
-		this.init_data = args.data;
+		this.init_data = {};
+		for(const type of outputs){
+			if (type == 'brute_force' || type=='traded'){
+				continue;
+			}
+			this.init_data[type]  = args.data[type];
+		}
+		console.log(this.init_data)
+		console.log(args.data)
 		this.plot_width = args.width;
 		this.plot_height = args.height;
 		this.plot = args.svg;

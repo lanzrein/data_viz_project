@@ -124,6 +124,7 @@ let debug = false;
 			.attr("transform", "translate(" + margin.right+ "," + margin.top + ")");
 
       p_svg.select("g").selectAll("*").remove();
+      
 		objects = {data:data_per_agent[type],width:width_hist-margin.left-margin.right,height:current_height-margin.top-margin.bottom,svg:p_svg.select("g"),agent_name:AGENT_BEHAVIORS[type]};
 		plot_curr = new ScatterPlot(objects)
 		scatter_plots.push(plot_curr)
