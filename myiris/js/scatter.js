@@ -20,19 +20,19 @@ class ScatterPlot {
 
 
 
-		var xAxis = d3.axisBottom(this.xScale);
-		var yAxis = d3.axisLeft(this.yScale);
+		this.xAxis = d3.axisBottom(this.xScale);
+		this.yAxis = d3.axisLeft(this.yScale);
 
 		// x-axis
 		this.plot.append("g")
 				.attr("class", "xaxis")
 				.attr("transform", "translate(0," + this.plot_height + ")")
-				.call(xAxis);
+				.call(this.xAxis);
 
 		// y-axis
 		this.plot.append("g")
 				.attr("class", "yaxis")
-				.call(yAxis);
+				.call(this.yAxis);
 
 
 
@@ -76,34 +76,27 @@ class ScatterPlot {
 					.attr('class', (key_val, idx) =>  (key_val[0]));
 
 
-		/*this.plot.selectAll(".w")
-				.data(Object.entries(this.init_data))
-				.enter()
-					.append('path')
-					.attr('d', (key_val, idx)  => line(idx) )
-					.attr('class', (key_val, idx) => 'w' + this.agent_name + (key_val[0]));*/
-
 	}
 
 
-	update_scatter(dataset){
+	update_scatter(dataset,resize=false){
 
 		const temp = this.find_maximum_vals(dataset);
 
+		if(!resize){
+			this.yScale.domain([d3.min(temp, d => d.y), d3.max(temp, d => d.y)]);
+			this.xScale.domain([0, d3.max(temp, d => d.x)]);
+		}
 
-		this.yScale.domain([d3.min(temp, d => d.y), d3.max(temp, d => d.y)]);
-		this.xScale.domain([0, d3.max(temp, d => d.x)]);
 
-		const yAxis = d3.axisLeft(this.yScale);
-		const xAxis = d3.axisBottom(this.xScale);
 
 		this.plot.selectAll("g.yaxis")
 			// .transition()
-				.call(yAxis);
+				.call(this.yAxis);
 
 		this.plot.selectAll("g.xaxis")
 			// .transition()
-				.call(xAxis);
+				.call(this.xAxis);
 
 
 		var i = 0;

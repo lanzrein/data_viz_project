@@ -33,6 +33,11 @@ button{
 #pannel {
   width : 15%;
   display : none;
+  background-color: 	#333333;
+  fill : white;
+}
+#pannel #agen_list{
+  fill : inherit;
 }
 
 #pannel button{
@@ -40,11 +45,7 @@ button{
   width : 33%;
   font-size: 10px;
 }
-#pannel #agent-list{
-  background-color: #00ff00;
-  width : auto;
-  height : auto;
-}
+
 #pannel #tasks{
   background-color: #ff0000;
 }
@@ -151,14 +152,14 @@ rect:hover{
   visibility: hidden;
   position : absolute;
   display : inline-block;
-  background-color: #808080;
+  background-color: #333333;
   width : 100%;
-  height : 100%
-
+  height : 100%;
+  z-index : 2;
   /* border */
   border : 2px  solid #000;
   border-radius : 25px;
-  color : black;
+  /* color : black; */
 
 
 }

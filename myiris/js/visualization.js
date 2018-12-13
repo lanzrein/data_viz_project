@@ -58,7 +58,7 @@ const svg_b = d3.select("#brush").append("svg")
 
 /**END SCATTER PLOTS****/
 
-function setup_iris(){
+function setup_iris(setup=true){
 
   let currDiv = document.getElementById("currentsituation");
   let histDiv = document.getElementById("scatter");
@@ -138,8 +138,8 @@ let b_height = b_elem.clientHeight;
 
 svg_b.selectAll("*").remove();
 svg_b.attr("width",b_width)
-              .attr("height",b_height);
-
+              .attr("height",b_height)
+              .style("visibility","hidden");
 let args_b = {width : b_width,height : b_height,svg : svg_b,margin : margin,plot : scatter_plots[0]};
 brush = new Brush(args_b);
 
@@ -174,11 +174,11 @@ function tick(){
 
 //HISTOGRAMS
 
-function update_histograms(){
+function update_histograms(forced=false){
   let idx = 0;
   for (const type of outputs){
     let h = histograms_list[idx]
-    if(!(h.data.equals(data_by_type[type]))){
+    if(forced || !(h.data.equals(data_by_type[type]))){
         h.update(data_by_type[type]);
 
     }
@@ -233,6 +233,21 @@ function compute_new_medians(debug=false){
 //UTILITY ( PAUSE RESTART ETC..)
 function pause_iris(){
   pause = !pause;
+
+  if(!pause){
+    svg_b.style("visibility","hidden");
+
+  }else{
+    console.log("pausing");
+    svg_b.style("visibility","visible");
+    brush.update_brush(scatter_plots[0].xScale);
+
+
+  }
+
+
+
+
   return;
 }
 function restart_iris(parameters=null,customized=false){
@@ -359,8 +374,17 @@ function resize_viz(){
   d3.selectAll("#scatter#g").remove();
   // d3.select("#brush").remove();
   // d3.select("#currentsituation.parent").remove();
-  setup_iris();
+  setup_iris(setup=false);
 
+  if(pause){
+    //update the current situation
+    compute_new_medians();
+    //paint the histogram if there is a change.
+    update_histograms(forced=true);
+
+    //update the historic historic
+    update_scatter();
+  }
 
 }
 
@@ -373,15 +397,27 @@ function brushed(selection){
 
 }
 
-//we can use this to customize some agent in the future.
 function customize_agent(agent,value_map){
-	// value_map = {fld : 400, stress : 400, rt : 400, aot : 400}
-	// for (var agent of irisModel.agents){
-		//create an agent with specific values at the start.
+
 		agent.FLD = value_map.fld;
 		agent.stress = value_map.stress;
 		agent.mappedAmountOfTime = value_map.aot;
 		agent.restingTime = value_map.rt;
-	// }
 
+}
+
+
+function brushing(){
+    console.log(d3.event.selection);
+    let selection = d3.event.selection === undefined ? brush.xScale.domain() : d3.event.selection.map(brush.xScale.invert);
+    console.log(selection)
+    brushing_chart(selection);
+}
+
+
+function brushing_chart(selection){
+  let plt = scatter_plots[0];
+
+  plt.xScale.domain(selection);
+  scatter_plots[0].update_scatter(data_per_agent[0],resize=true);
 }

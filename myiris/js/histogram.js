@@ -69,20 +69,10 @@ class Histogram{
                 })
                 .attr("fill",function(d,i){
                   return "#CCCCFF";
-                  // switch(i){
-                  //   case 0:
-                  //     return "rgb(255,0,0)"
-                  //   case 1:
-                  //     return "rgb(128,0,128)"
-                  //   case 2:
-                  //     return "rgb(0,255,0)"
-                  //   case 3:
-                  //     return "rgb(0,0,255)"
-                  // }
+
                 })
                 .on("mouseover",(d,i) => {
                   let m = d3.mouse(this.svg.node());
-                  console.log(m)
                   // return;
                   let xP = m[0];
                   let yP = m[1];

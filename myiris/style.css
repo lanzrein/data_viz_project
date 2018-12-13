@@ -176,3 +176,16 @@ rect:hover{
     height: 50%;
     float : left;
 }
+
+path.fld{
+  stroke : #A92F41;
+}
+path.rt{
+  stroke : #E5DFC5
+}
+path.stress{
+  stroke : #848375
+}
+path.aot{
+  stroke : #91C7A9
+}
