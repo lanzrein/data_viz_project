@@ -114,6 +114,7 @@ let debug = false;
       break;
     }
     debug = true;
+
 		const current_height = height_hist;
 
 
@@ -124,7 +125,8 @@ let debug = false;
 			.attr("transform", "translate(" + margin.right+ "," + margin.top + ")");
 
       p_svg.select("g").selectAll("*").remove();
-      
+      //add some flavor text.
+
 		objects = {data:data_per_agent[type],width:width_hist-margin.left-margin.right,height:current_height-margin.top-margin.bottom,svg:p_svg.select("g"),agent_name:AGENT_BEHAVIORS[type]};
 		plot_curr = new ScatterPlot(objects)
 		scatter_plots.push(plot_curr)
@@ -387,6 +389,7 @@ function resize_viz(){
     //update the historic historic
     update_scatter();
     brush.update_brush(scatter_plots[0].xScale);
+
   }
 
 }
@@ -404,7 +407,17 @@ function customize_agent(agent,value_map){
 
 
 function brushing(){
+
     let selection = d3.event.selection === undefined ? brush.xScale.domain() : d3.event.selection.map(brush.xScale.invert);
+    if(!(d3.event.selection === undefined)){
+      console.log(selection);
+      brush.handle.attr("display",null).attr("transform",function(d,i){
+
+      return "translate("+brush.xScale(selection[i])+","+brush.height/2+")";
+    })
+  }else{
+    brush.handle.attr("display","none")
+  }
     brushing_chart(selection);
 }
 

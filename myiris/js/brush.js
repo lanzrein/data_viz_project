@@ -19,41 +19,57 @@ class Brush{
                    .tickSize(this.height)
                    .tickPadding(-10);
     this.area = d3.area()
-                  .x((this.width-this.margin.left-this.margin.right)/2)
-                  .y0(this.height)
+                  .x((this.width-this.margin.left-this.margin.right))
+                  .y0(this.height/3)
                   .y1(0)
                   .curve(d3.curveLinear);
 
     this.brush = d3.brushX()
                    .extent([
                      [this.xScale.range()[0],0],
-                     [this.xScale.range()[1],this.height]
+                     [this.xScale.range()[1],this.height/2]
                    ]);
+
+
+
+
+
+
   this.context = this.svg.append("g")
+
                         .attr("class","brush")
                         .attr("transform","translate("+this.margin.left+",0)")
                         .on("click",brushing);//check if need some translation..
 
-   //add the axis
-   // this.context.append("g")
-   //             .attr("class","x axis top")
-   //             .attr("transform","translate(0,120)")
-   //             .call(this.xAxis);
+
   //add the brush
    this.xbrushhandle = this.context.append("g")
               .attr("class", "x brush")
-              .attr("transform","translate(0,20)")
+              // .attr("transform","translate(0,20)")
               .call(this.brush);
 
               // .selectAll("rect")
               // .attr("y",0)
               // .attr("height",this.height)
               // .attr("width",this.width);
+  this.handle = this.xbrushhandle.selectAll(".handle--custom")
+                      .data([{type: "w"}, {type: "e"}])
+                      .enter()
+                      .append("path")
+                      .attr("class", "handle--custom")
+                      .attr("fill", "#666")
+                      .attr("fill-opacity", 0.8)
+                      .attr("stroke", "#fff")
+                      .attr("stroke-width", 1.5)
+                      .attr("cursor", "ew-resize")
+                      .attr("transform","translate("+this.width/2+","+this.height/2+")")
+                      .attr("d", d3.arc()
+                          .innerRadius(0)
+                          .outerRadius(this.height/2)
+                          .startAngle(0)
+                          .endAngle(function(d, i) { return i ? Math.PI : -Math.PI; }));
 
-    //add some flavor text.
-    this.svg.append("text")
-                .attr("transform","translate(0,20)")
-                .text("Brush around the line plot to uncover interesting areas ! ")
+
 
 
   }

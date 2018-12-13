@@ -68,7 +68,7 @@ class Histogram{
                   return 0;//at first its 0..
                 })
                 .attr("fill",function(d,i){
-                  return "#CCCCFF";
+                  return "#E5DFC5";
 
                 })
                 .on("mouseover",(d,i) => {
@@ -150,17 +150,7 @@ Histogram.prototype.update = function(data){
     .attr("height",(d)=>{
       return this.yScale(0) - this.yScale(d);
     })
-    // .attr("fill",function(d){
-    //   return "rgb("+(d*255.0/100)+",0,0)";
-    // })
 
-
-  //add values number to make it more readable
-  // this.container.selectAll("text")
-  //    .data(data)
-  //    .text(function(d){
-  //      return digits(d);
-  //    })
 
 
    //add an axis.

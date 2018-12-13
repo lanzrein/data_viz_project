@@ -22,7 +22,7 @@ class ScatterPlot {
 		this.xScale = d3.scaleLinear().domain([0,100]).range([0,this.plot_width]);
 		this.yScale = d3.scaleLinear().domain([0,0.1]).range([this.plot_height,0]);
 		this.color = d3.scaleOrdinal(["#A92F41",
-		 							"#E5DFC5",
+		 							"#CCCCFF",
 									"#848375",
 	 								"#91C7A9"]);
 
