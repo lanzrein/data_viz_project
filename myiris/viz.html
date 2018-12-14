@@ -81,7 +81,7 @@
   			<p><strong>Val.</strong></p>
   			<p><span id="value">-1</span></p>
 	</div>
-  <div id='menu'>
+  <div id='menu' ondrop='drop_json(event)' ondragover='allowDrop(event)'>
     <h3> Customize the simulation </h3>
     <p> Here you can chose the values for each category of behavior and restart the simulation with those values as starting values ! </p>
     <button id ="closemenu" onclick="close_menu()"> Close </button>
@@ -147,6 +147,8 @@
     <br>
 
     <button id="custom_start" onclick="custom_start()"> Start with set values ! </button>
+    <button id="save_values" onclick="save_current_state()"> Save current state as JSON</button>
+
 
   </div>
 

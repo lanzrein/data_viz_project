@@ -234,4 +234,9 @@ rect:hover{
   color : white
 }
 
+#menu #save_values,#getcurrent_val{
+  right : 0px;
+  position : absolute;
+}
+
 /********************************/

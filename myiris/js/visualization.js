@@ -143,7 +143,6 @@ brush = new Brush(args_b);
 
 }
 
-var cnt = 0
 function tick(){
   //nice for debuging..
   if (pause){
@@ -155,7 +154,6 @@ function tick(){
   //update model
   irisModel.update();
 
-  cnt++;
 
   //update the current situation
   compute_new_medians();
@@ -371,7 +369,7 @@ function resize_viz(){
 
     //update the historic historic
     update_scatter();
-    brush.update_brush(scatter_plots[0].xScale);
+    brush.update_brush(scatter_plots.xScale);
 
   }
 
