@@ -27,7 +27,6 @@ class Histogram{
    this.idx = args.idx;
    this.type = args.type;
    this.margin = args.margin;//margin = {left,top,bottom,right}
-
    //setup xScale
    this.xScale = d3.scaleBand()
                      .domain([0,1,2,3])//TODO AGENT_BEHAVIORS range
@@ -37,7 +36,7 @@ class Histogram{
    let offset = 30;
    this.yScale = d3.scaleLinear()
                 .domain([0,0])//at first its only zeroes but we will change the domain afterwards
-                .range([this.height-this.margin.bottom-this.margin.top-offset,0]);
+                .range([this.height-this.margin.top-offset*2.5,0]);
 
 
   //setup the axis
@@ -49,6 +48,7 @@ class Histogram{
   let containerWidth = this.width / 6.0;
   this.container = this.svg.append("g")
                       .attr("class",this.type)
+                      .attr("height",containerHeight)
                       .attr("transform","translate("+(containerWidth*this.idx)+","+offset+")");
 
 
@@ -61,7 +61,7 @@ class Histogram{
                   return this.xScale(i);
                 })
                 .attr("y",(d)=>{
-                  return this.height;
+                  return this.height-this.margin.top-this.margin.bottom-offset*20;
                 })
                 .attr("width",this.xScale.bandwidth())
                 .attr("height",function(d){
@@ -116,8 +116,7 @@ class Histogram{
      this.container.append("g")
         .attr("class","axis")
         .attr("transform","translate("+(this.margin.left)+",0)")
-        .attr("y",this.height+(this.margin.top))
-        // .attr("fill","#fff")
+        .attr("y",this.height-this.margin.top-offset)
         .call(this.yAxis);
 
 
@@ -157,7 +156,7 @@ Histogram.prototype.update = function(data){
    this.container.select("g.axis")
       .transition()
       .attr("transform","translate("+(this.margin.left)+",0)")
-      .attr("y",this.margin.top)
+      .attr("y",this.height-this.margin.top)
       .call(this.yAxis);
 
 

@@ -56,7 +56,11 @@
   </div>
 
 <div id="main">
-  <button id="test">Hide/Display side bar</button>
+  <button id="display_pannel">Hide/Display side bar</button>
+  <button id="curious" onclick=line_plot_change(0) class="selected">Curious</button>
+  <button id="perfectionist" onclick=line_plot_change(1)>Perfectionist</button>
+  <button id="geniesser" onclick=line_plot_change(2)>Geniesser</button>
+  <button id="capitalist" onclick=line_plot_change(3)>Capitalist</button>
   <div id="scatter"></div>
   <div id="brush">
     Pause the simulation to brush around the line plot to uncover interesting areas !
@@ -134,7 +138,7 @@
 
     <div id="tasks_spec">
       <p> Specifics about tasks </p>
-      <input id = "tasks_cnt" type="number" min="0" max="10" value="1"> Amount of tasks </input>
+      <input id = "tasks_cnt" type="number" min="0" max="10" value="1">  <text>Amount of tasks</text></input>
       <button id="getcurrent_val" onclick="get_current_values()"> Get values of current moment. </button>
 
     </div>
@@ -149,7 +153,7 @@
 <script type="text/javascript">
   //this is the code for the sliding window.
   let hidden = true;
-  $("#test").click(function(){
+  $("#display_pannel").click(function(){
     $("#pannel").toggle("slide",function(){
       //we use a callback so it has time to slide all the way before resizing.
       hidden = !hidden;

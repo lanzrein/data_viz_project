@@ -13,8 +13,7 @@ class ScatterPlot {
 			}
 			this.init_data[type]  = args.data[type];
 		}
-		console.log(this.init_data)
-		console.log(args.data)
+
 		this.plot_width = args.width;
 		this.plot_height = args.height;
 		this.plot = args.svg;
@@ -73,7 +72,7 @@ class ScatterPlot {
 		line = d3.line()
 			.x( (d,i) => this.xScale(i))
 			.y( (d,i) => this.yScale(d))
-			.curve(d3.curveCardinal);
+			.curve(d3.curveBasis);
 
 
 		this.plot.selectAll(this.agent_name)
@@ -143,7 +142,7 @@ class ScatterPlot {
 		line = d3.line()
 			.x( (d,i) => this.xScale(i))
 			.y( (d,i) => this.yScale(d))
-			.curve(d3.curveCardinal);
+			.curve(d3.curveBasis);
 
 		this.plot.select('.'+agent)
 				.datum(dataset)
@@ -151,8 +150,8 @@ class ScatterPlot {
 					.attr("fill", "none")
 					// .attr("stroke", color)
 					.attr("stroke-width", 1.5)
-					.attr("stroke-linejoin", "round")
-					.attr("stroke-linecap", "round")
+					// .attr("stroke-linejoin", "round")
+					// .attr("stroke-linecap", "round")
 
 ;
 

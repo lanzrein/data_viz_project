@@ -2,7 +2,9 @@ const parameters = ["stress","fld","rt","aot","agent_cnt"];
 
 function show_menu(){
   //pause the simulation first so it doesnt run in the bg..
-  pause_iris();
+  if(!pause){
+    pause_iris();
+  }
   let menu = d3.select("#menu");
   menu.style("visibility", "visible");
   return;

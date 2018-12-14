@@ -27,7 +27,8 @@ let data_by_type  = {
 let histograms_list = [];
 let brush;
 /**FOR SCATTER PLOTS ***/
-let scatter_plots  = []
+let scatter_plots;
+let choosen_type = 0 ;
 // initial values of globabl dataset
 
 function setup_data_per_agent(){
@@ -73,12 +74,14 @@ function setup_iris(setup=true){
     height_hist = histDiv.clientHeight;
 
 
-svg_curr.attr("width",width_curr)
-        .attr("height",height_hist+margin.top+margin.bottom);
+
 
  let idx = 0;
  //this is for the histograms.
  svg_curr.selectAll("*").remove();
+ svg_curr.attr("width",width_curr)
+         .attr("height",height_curr+margin.top+margin.bottom);
+console.log(height_hist)
  histograms_list = [];
   for (const type of outputs){
     //for each type of output prepare the graph.
@@ -107,30 +110,18 @@ svg_curr.attr("width",width_curr)
 
 
 //this is for the scatter plots.
-scatter_plots = [];
-let debug = false;
-  for(var type in AGENT_BEHAVIORS){
-    if(debug){
-      break;
-    }
-    debug = true;
+p_svg.attr("width", width_hist+margin.left+margin.right )
+.attr("height", height_hist+margin.top+margin.bottom)
+.on("click",function(){line_plot_click(this)})
+.append("g")
+.attr("transform", "translate(" + margin.right+ "," + margin.top + ")");
 
-		const current_height = height_hist;
+p_svg.select("g").selectAll("*").remove();
+//add some flavor text.
 
-
-			p_svg.attr("width", width_hist+margin.left+margin.right )
-			.attr("height", height_hist+margin.top+margin.bottom)
-      .on("click",function(){line_plot_click(this)})
-			.append("g")
-			.attr("transform", "translate(" + margin.right+ "," + margin.top + ")");
-
-      p_svg.select("g").selectAll("*").remove();
-      //add some flavor text.
-
-		objects = {data:data_per_agent[type],width:width_hist-margin.left-margin.right,height:current_height-margin.top-margin.bottom,svg:p_svg.select("g"),agent_name:AGENT_BEHAVIORS[type]};
-		plot_curr = new ScatterPlot(objects)
-		scatter_plots.push(plot_curr)
-	}
+objects = {data:data_per_agent[choosen_type],width:width_hist-margin.left-margin.right,height:height_hist-margin.top-margin.bottom,svg:p_svg.select("g"),agent_name:AGENT_BEHAVIORS[choosen_type]};
+plot_curr = new ScatterPlot(objects)
+scatter_plots = (plot_curr)
 
 
 //setup the brush
@@ -244,7 +235,7 @@ function pause_iris(){
   }else{
     console.log("pausing");
     svg_b.style("visibility","visible");
-    brush.update_brush(scatter_plots[0].xScale);
+    brush.update_brush(scatter_plots.xScale);
 
 
   }
@@ -297,17 +288,13 @@ function restart_iris(parameters=null,customized=false){
   //we need to clear the data array of scatter plots !
   data_per_agent = setup_data_per_agent();
   let idx = 0
-  let debug = false;
   for (const behavior in AGENT_BEHAVIORS){
-    if(debug){
-      break;
-    }
-    debug = true;
-    console.log("clear"+behavior)
+
     compress_arr = compress_array(data_per_agent[idx]);
-    scatter_plots[idx].clear_scatter();
     idx++;
   }
+  scatter_plots.clear_scatter();
+
 
 }
 
@@ -340,7 +327,6 @@ function update_scatter(){
 
 
     var j = 0;
-    let debug = false;
     for(var agent_type of AGENT_BEHAVIORS){
 
       medians = medianValuesByBehavior[agent_type];
@@ -354,16 +340,14 @@ function update_scatter(){
             data_per_agent[j][key].push(median_comp);
 
         }
-        if(!debug){
-          scatter_plots[j].update_scatter(data_per_agent[j])
-        }
-        debug = true;
+
 
       }else{
         console.log(medians)
       }
       j = j +1
     }
+    scatter_plots.update_scatter(data_per_agent[choosen_type])
 
 
 }
@@ -373,7 +357,6 @@ function update_scatter(){
 function resize_viz(){
   // resize histograms.
   //its fairly similar to the setup of the iris except we need to have different sizes..
-  console.log("resize")
   //first we need to delete everything..
   d3.selectAll("#scatter#g").remove();
   // d3.select("#brush").remove();
@@ -410,7 +393,6 @@ function brushing(){
 
     let selection = d3.event.selection === undefined ? brush.xScale.domain() : d3.event.selection.map(brush.xScale.invert);
     if(!(d3.event.selection === undefined)){
-      console.log(selection);
       brush.handle.attr("display",null).attr("transform",function(d,i){
 
       return "translate("+brush.xScale(selection[i])+","+brush.height/2+")";
@@ -423,24 +405,23 @@ function brushing(){
 
 
 function brushing_chart(selection){
-  let plt = scatter_plots[0];
+  let plt = scatter_plots;
 
   plt.xScale.domain(selection);
-  scatter_plots[0].update_scatter(data_per_agent[0],resize=true);
+  scatter_plots.update_scatter(data_per_agent[choosen_type],resize=true);
 }
 
 
 function line_plot_click(ctx){
   let coord = d3.mouse(ctx)
   let x = coord[0];
-  if (x < 20 || x > scatter_plots[0].plot.node().getBoundingClientRect().width){
+  if (x < 20 || x > scatter_plots.plot.node().getBoundingClientRect().width){
     //we are out of the graph
     console.log("oob")
     return;
   }
   x -= 20;//shift.
-  let tick = int(scatter_plots[0].xScale.invert(x));
-  console.log(x + " : " + tick);
+  let tick = int(scatter_plots.xScale.invert(x));
   //we have the tick whrere the thing happened now we need to get the info about it .
   data_by_type = {
     fld : [],
@@ -460,6 +441,18 @@ function line_plot_click(ctx){
   }
 
 
+}
 
 
+function line_plot_change(choice){
+  //remove color for current one.
+  d3.select('.selected').classed('selected',false);
+
+  //add color to the new one.
+  d3.select('button#'+AGENT_BEHAVIORS[choice]).classed('selected',true);
+
+  //change current color.
+  choosen_type = choice;
+  //then we need to change
+  scatter_plots.update_scatter(data_per_agent[choosen_type],resize=true)
 }

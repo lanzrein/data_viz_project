@@ -2,7 +2,6 @@
 class Brush{
   constructor(args){
     //setup the brush with initial values.
-    console.log("hi!")
     this.first = true;
     this.width = args.width;
     this.height = args.height;
@@ -77,7 +76,6 @@ class Brush{
 
   update_brush(scatter_xScale){
     //update the brush so that it reflects on the current plot.
-    console.log(scatter_xScale.domain());
     this.xScale.domain(scatter_xScale.domain());
 
     // this.xAxis.call(this.xScale);
