@@ -22,6 +22,7 @@
   <script src="js/menu.js"></script>
   <script src="js/brush.js"></script>
   <script src="js/pannel.js"></script>
+  <script src="js/agent_sorting.js"></script>
   <link id="stylesheet" rel="stylesheet" href="style-dark.css">
 </head>
 
@@ -31,25 +32,34 @@
 
   <!-- <button id="pannel_sidr" href="#sidr">Display menu</button> -->
 <div id="pannel">
+  <div id="options">
     <button id="pause" onclick="pause_iris()">Pause</button>
     <button id="restart" onclick="restart_iris()">Restart !</button>
     <button id="menu_display" onclick="show_menu()">Custom test</button>
+    <button id="theme" onclick="change_theme()" >Switch color theme</button>
 
+  </div>
     <div id="left">
-      <div id="agent_list">
+      <div id="sort_display_agents">
+        <div id="sorting">
         Sort agent by :
-        <select id=selection_sort onchange="sort_agents()">
-          <option value="fld">fld</option>
-          <option value="rt">rt</option>
-          <option value="stress">stress</option>
-          <option value="aot">aot</option>
-        </select>
+        <button id="fld_sort" onclick="agent_sort.sort_by('FLD')">fld</button>
+        <button id="rt_sort" onclick="agent_sort.sort_by('restingTime')">rt</button>
+        <button id="aot_sort" onclick="agent_sort.sort_by('mappedAmountOfTime')">aot</button>
+        <button id="stress_sort" onclick="agent_sort.sort_by('stress')">stress</button>
 
+        <button id="category_sort" onclick="agent_sort.sort_by('category')">category</button>
+        <button id="id_sort" onclick="agent_sort.sort_by('ID')">id</button>
+        <!-- <button id="fld" onclik="sort_by(fld)">fld</button>
+        <button id="fld" onclik="sort_by(fld)">fld</button> -->
       </div>
-      <div id="tasks">tasks</div>
+        <div id="agent_list">
+
+        </div>
+      </div>
+      <div id="single_agent">single agent view ~~ TODO </div>
 
 
-      <button id="theme" onclick="change_theme()" >Switch color theme</button>
     </div>
 
 
@@ -164,6 +174,7 @@
         d3.select("#main").style("width" , "100%");
       }else{
         d3.select("#main").style("width" , "85%");
+
       }
 
       //call the resize of the d3 things.

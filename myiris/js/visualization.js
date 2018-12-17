@@ -59,6 +59,8 @@ const svg_b = d3.select("#brush").append("svg")
 
 /**END SCATTER PLOTS****/
 
+let agent_sort;
+
 function setup_iris(setup=true){
 
   let currDiv = document.getElementById("currentsituation");
@@ -139,6 +141,13 @@ if(!pause){
 
 let args_b = {width : b_width,height : b_height,svg : svg_b,margin : margin,plot : scatter_plots[0]};
 brush = new Brush(args_b);
+
+
+//setup the agent sorting list..
+let div = d3.select("#pannel #left #sort_display_agents #agent_list");
+let single_agent = d3.select("#single_agent");
+let args_sort = {div : div, agents : irisModel.agents, single_agent:single_agent}
+agent_sort = new AgentList(args_sort);
 
 
 }

@@ -41,18 +41,43 @@ button.selected{
   border-color: #C0C0C0;
   border-right-style:solid;
 }
-#pannel #agen_list{
-  fill : inherit;
+#pannel #options{
+  height : 15%;
+  width : 100%;
 }
+
 
 #pannel button{
   /* position: absolute; */
   width : 33%;
   font-size: 10px;
 }
-
-#pannel #tasks{
+#pannel #left{
+  height: 85%;
+  width : 100%;
+}
+#pannel #single_agent{
+  height : 40%;
   background-color: #ff0000;
+}
+#pannel #sort_display_agents{
+  height : 70%
+}
+#pannel #left #sorting{
+  height : 30%;
+}
+
+#pannel #agent_list{
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height : 70%;
+}
+
+#pannel #agent_list p{
+  margin : 0px;
+  background-color: #00ff00;
+  border-width: thin;
+  border-style:solid;
 }
 
 /***********************************************/
