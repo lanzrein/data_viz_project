@@ -36,7 +36,7 @@ function setup_data_per_agent(){
 
   for (agent_type in AGENT_BEHAVIORS){
   	data_per_agent.push( { fld : [0],rt : [0],stress : [0],aot : [0],traded : [0],brute_force : [0] })
-  	// data_per_agent.push( { fld : [0],rt : [0],stress : [0],aot : [0] })
+
   }
 
   return data_per_agent;
@@ -153,7 +153,7 @@ agent_sort = new AgentList(args_sort);
 }
 
 function tick(){
-  //nice for debuging..
+
   if (pause){
     return;
   }
@@ -300,7 +300,9 @@ function restart_iris(parameters=null,customized=false){
     compress_arr = compress_array(data_per_agent[idx]);
     idx++;
   }
-  scatter_plots.clear_scatter();
+
+  //setup again..
+  setup_iris();
 
 
 }
@@ -424,7 +426,7 @@ function line_plot_click(ctx){
   let x = coord[0];
   if (x < 20 || x > scatter_plots.plot.node().getBoundingClientRect().width){
     //we are out of the graph
-    console.log("oob")
+
     return;
   }
   x -= 20;//shift.

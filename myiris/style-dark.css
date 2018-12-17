@@ -58,7 +58,15 @@ button.selected{
 }
 #pannel #single_agent{
   height : 40%;
-  background-color: #ff0000;
+  background-color: #778899;
+  border-radius : 5px;
+}
+
+#pannel #single_agent p{
+  margin : 0px;
+  font-size : 10px;
+
+
 }
 #pannel #sort_display_agents{
   height : 70%

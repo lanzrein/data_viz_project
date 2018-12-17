@@ -72,9 +72,9 @@ class Histogram{
 
                 })
                 .on("mouseover",(d,i) => {
-                  let m = d3.mouse(this.svg.node());
+                  let m = d3.mouse(d3.select("body"));
                   // return;
-                  let xP = m[0];
+                  let xP = d3.event;
                   let yP = m[1];
                   let behavior = AGENT_BEHAVIORS[i];
                   d3.select("#tooltip")
