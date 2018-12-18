@@ -5,6 +5,10 @@
     src: url(font/SourceCodePro-Medium.otf);
 }
 
+::-webkit-scrollbar {
+    display: block;
+}
+
 
 
 body{
@@ -34,11 +38,13 @@ button.selected{
 /*****************************FOR THE SIDE PANNEL ***********************/
 #pannel {
   width : 15%;
-  display : none;
+  /* display : none; */
   background-color: 	#333333;
   fill : white;
   border-color: #C0C0C0;
+  left: -14%;
   border-right-style:solid;
+  position: relative;
 }
 #pannel #options{
   height : 15%;
@@ -110,10 +116,11 @@ button.selected{
 }
 
 #main{
-  width : 100%;
+  width: 99%;
   height : 100%;
   color : white;
-
+  position: absolute;
+  left: 1%;
 }
 
 

@@ -37,7 +37,12 @@ function draw() {
   //having to change significally the current code.
 
   // tick_func();
-  tick();
+  if(!pause){
+    irisModel.update()
+    if(frameCount % 30 == 0){
+      tick();
+    }
+  }
   // for (let i = 0; i < loops; i++) {
   //   irisModel.update();
   // }

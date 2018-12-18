@@ -114,7 +114,7 @@ console.log(height_hist)
 //this is for the scatter plots.
 p_svg.attr("width", width_hist+margin.left+margin.right )
 .attr("height", height_hist+margin.top+margin.bottom)
-.on("click",function(){line_plot_click(this)})
+.on("mousemove",function(){line_plot_click(this)})
 .append("g")
 .attr("transform", "translate(" + margin.right+ "," + margin.top + ")");
 
@@ -150,6 +150,22 @@ let single_agent = d3.select("#single_agent");
 let args_sort = {div : div, agents : irisModel.agents, single_agent:single_agent}
 agent_sort = new AgentList(args_sort);
 
+//setup the red line so its already here.
+p_svg.selectAll(".cursor")
+.data([0])
+.enter()
+.append("line")
+.attr("class","cursor")
+.attr("x1", (d)=>{return d;})  //<<== change your code here
+.attr("y1", 20)
+.attr("x2", (d)=>{return d;})  //<<== and here
+.attr("y2", scatter_plots.plot_height+20)
+.style("stroke-width", 2)
+.style("stroke", "red")
+.style("fill", "none")
+.style("visibility","hidden")
+.style("z-level","3");
+
 
 }
 
@@ -162,7 +178,7 @@ function tick(){
   //model, graphs.
 
   //update model
-  irisModel.update();
+  // irisModel.update();
 
 
   //update the current situation
@@ -239,7 +255,7 @@ function pause_iris(){
 
   if(!pause){
     svg_b.style("visibility","hidden");
-
+    p_svg.selectAll(".cursor").style("visibility","hidden")
   }else{
     console.log("pausing");
     svg_b.style("visibility","visible");
@@ -423,6 +439,9 @@ function brushing_chart(selection){
 
 
 function line_plot_click(ctx){
+  if(!pause){
+    return;
+  }
   let coord = d3.mouse(ctx)
   let x = coord[0];
   if (x < 20 || x > scatter_plots.plot.node().getBoundingClientRect().width){
@@ -430,6 +449,7 @@ function line_plot_click(ctx){
 
     return;
   }
+  draw_line(x);
   x -= 20;//shift.
   let tick = int(scatter_plots.xScale.invert(x));
   //we have the tick whrere the thing happened now we need to get the info about it .
@@ -453,6 +473,18 @@ function line_plot_click(ctx){
 
 }
 
+function draw_line(x){
+  let g = p_svg;
+  g.selectAll(".cursor")
+  .data([x])
+  .attr("class","cursor")
+  .attr("x1", (d)=>{return d;})  //<<== change your code here
+  .attr("y1", 20)
+  .attr("x2", (d)=>{return d;})  //<<== and here
+  .attr("y2", scatter_plots.plot_height+20)
+  .style("visibility","visible");
+
+}
 
 function line_plot_change(choice){
   //remove color for current one.

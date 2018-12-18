@@ -66,7 +66,6 @@
 
 <div id="main">
   <div id="buttons">
-  <button id="display_pannel">Hide/Display side bar</button>
   <button id="curious" onclick=line_plot_change(0) class="selected">Curious</button>
   <button id="perfectionist" onclick=line_plot_change(1)>Perfectionist</button>
   <button id="geniesser" onclick=line_plot_change(2)>Geniesser</button>
@@ -168,24 +167,39 @@
 
 <script type="text/javascript">
   //this is the code for the sliding window.
-  let hidden = true;
-  $("#display_pannel").click(function(){
-    $("#pannel").toggle("slide",function(){
-      //we use a callback so it has time to slide all the way before resizing.
-      hidden = !hidden;
+  $("#pannel").mouseenter(function(){
+    //first animate it to move to the left..
+    console.log("enter")
+    $("#pannel").animate({
+      left : "0%"
+    })
 
-      if(hidden){
-        d3.select("#main").style("width" , "100%");
-      }else{
-        d3.select("#main").style("width" , "85%");
 
-      }
-
-      //call the resize of the d3 things.
+      //then we modify the width..
+      d3.select("#main").style("width" , "85%").style("left","15%");
+      //resize..
       resize_viz();
-    });
+
+
+  });
+
+  //when mouse leaves...
+  $("#pannel").mouseleave(function(){
+    //first animate it to move to the left..
+    console.log("exit")
+    $("#pannel").animate({
+      left : "-14%"
+    },function(){
+      //then we modify the width..
+      d3.select("#main").style("width" , "99%").style("left","1%");
+      //resize..
+      resize_viz();
+    })
 
   })
+
+
+
 
 
 </script>
