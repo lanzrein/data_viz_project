@@ -33,22 +33,23 @@ class Histogram{
                      .range([0,this.width/6.0-(this.margin.left+this.margin.right)]);
 
    //seutp yScale
+   //the offset is to have space for the names + category.
    let offset = 30;
    this.yScale = d3.scaleLinear()
                 .domain([0,0])//at first its only zeroes but we will change the domain afterwards
-                .range([this.height-this.margin.top-offset*2.5,0]);
+                .range([this.height-offset*1.5,0]);
 
 
   //setup the axis
   this.yAxis = d3.axisLeft(this.yScale)
                     .ticks(4)
-                    .tickFormat(d3.format(".0s"));
+                    .tickFormat(d3.format(".0"));
   //setup the bar charts.
-  let containerHeight = this.height + this.margin.top + this.margin.bottom;
+  let containerHeight = this.height;
   let containerWidth = this.width / 6.0;
   this.container = this.svg.append("g")
                       .attr("class",this.type)
-                      .attr("height",containerHeight)
+                      .attr("height",containerHeight-offset*2)
                       .attr("transform","translate("+(containerWidth*this.idx)+","+offset+")");
 
 
@@ -61,7 +62,7 @@ class Histogram{
                   return this.xScale(i);
                 })
                 .attr("y",(d)=>{
-                  return this.height-this.margin.top-this.margin.bottom-offset*20;
+                  return this.height-offset*2;
                 })
                 .attr("width",this.xScale.bandwidth())
                 .attr("height",function(d){
@@ -72,9 +73,9 @@ class Histogram{
 
                 })
                 .on("mouseover",(d,i) => {
-                  let m = d3.mouse(d3.select("body"));
+                  let m = d3.mouse((this.svg.node()));
                   // return;
-                  let xP = d3.event;
+                  let xP =m[0];
                   let yP = m[1];
                   let behavior = AGENT_BEHAVIORS[i];
                   d3.select("#tooltip")
@@ -107,16 +108,16 @@ class Histogram{
 
 
      //add title
-     this.container.append("text")
+     this.svg.append("text")
                    .attr("class","type-title")
                    .attr("font-size","10px")
-                   .attr("transform","translate(0,"+-offset/2+")")
+                   .attr("transform","translate("+(containerWidth*this.idx)+","+offset/2+")")
                    .text(translation[this.type]);
      //add the axis
      this.container.append("g")
         .attr("class","axis")
         .attr("transform","translate("+(this.margin.left)+",0)")
-        .attr("y",this.height-this.margin.top-offset)
+        .attr("y",this.height-offset*2)
         .call(this.yAxis);
 
 
@@ -155,8 +156,6 @@ Histogram.prototype.update = function(data){
    //add an axis.
    this.container.select("g.axis")
       .transition()
-      .attr("transform","translate("+(this.margin.left)+",0)")
-      .attr("y",this.height-this.margin.top)
       .call(this.yAxis);
 
 

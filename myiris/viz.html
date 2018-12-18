@@ -36,7 +36,7 @@
     <button id="pause" onclick="pause_iris()">Pause</button>
     <button id="restart" onclick="restart_iris()">Restart !</button>
     <button id="menu_display" onclick="show_menu()">Custom test</button>
-    <button id="theme" onclick="change_theme()" >Switch color theme</button>
+    <button id="theme" onclick="change_theme()" disabled>Switch color theme</button>
 
   </div>
     <div id="left">
@@ -66,14 +66,16 @@
   </div>
 
 <div id="main">
+  <div id="buttons">
   <button id="display_pannel">Hide/Display side bar</button>
   <button id="curious" onclick=line_plot_change(0) class="selected">Curious</button>
   <button id="perfectionist" onclick=line_plot_change(1)>Perfectionist</button>
   <button id="geniesser" onclick=line_plot_change(2)>Geniesser</button>
   <button id="capitalist" onclick=line_plot_change(3)>Capitalist</button>
+</div>
   <div id="scatter"></div>
   <div id="brush">
-    Pause the simulation to brush around the line plot to uncover interesting areas !
+    TODO remove txt here~~
 </div>
 
   <div id="currentsituation">

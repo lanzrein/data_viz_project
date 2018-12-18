@@ -14,7 +14,6 @@ body{
   align-items: center; */
   padding : 0;
   margin : 0;
-  margin-top: 10px;
   font-family : mono;
   hyphens: auto;
   overflow-x: hidden;
@@ -57,19 +56,19 @@ button.selected{
   width : 100%;
 }
 #pannel #single_agent{
-  height : 40%;
+  height : 50%;
   background-color: #778899;
   border-radius : 5px;
 }
 
 #pannel #single_agent p{
   margin : 0px;
-  font-size : 10px;
+  font-size : 11px;
 
 
 }
 #pannel #sort_display_agents{
-  height : 70%
+  height : 50%
 }
 #pannel #left #sorting{
   height : 30%;
@@ -89,7 +88,10 @@ button.selected{
 }
 
 /***********************************************/
-
+#main #buttons{
+  width : 100%;
+  height : 5%;
+}
 
 
 /************************************VIZ PART ********************/
@@ -118,9 +120,11 @@ button.selected{
 /*****************FOR THE LINE PLOT *****************/
 #scatter{
   width : 100%;
-  height : 60%;
+  height : 45%;
+  margin: 8px;
 
   position : relative;
+  background-color: #333333;
   /* stroke : white; */
 }
 /* Here are the colors for the line plots. */
@@ -140,11 +144,12 @@ path.aot{
 /*******************BRUSH PART ***********************/
 #brush{
   position : relative;
-  width : 100%;
-  height: 5%;
+  width : 98%;
+  height: 8%;
   background-color : #000000;
   display : inline-block;
   bottom : 0px;
+  margin : 1%;
   /* left: 0px; */
   z-index: 1;
   font-size: 10px;
@@ -157,12 +162,14 @@ path.aot{
 /*** for the current snapshot. */
 
 #currentsituation{
-    width: 100%;
-    height : 35%;
+    width: 98%;
+    height : 32%;
 
     font-family: mono;
     font-size: 12px;
     color : white;
+    margin : 1%;
+    background-color: #333333;
 }
 #currentsituation text{
   color : white;

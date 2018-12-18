@@ -8,6 +8,7 @@ class AgentList{
     this.agents.sort(function(a,b){
         return value_sort(a,b,"ID");
       });
+this.div.selectAll("p").remove();
     this.div.selectAll("p")
             .data(this.agents)
             .enter()
@@ -15,18 +16,18 @@ class AgentList{
             .text(function(d,i){
               return d.behavior+d.ID;
             })
-	    .style("background-color",(d,i)=>{
-		return color_back[AGENT_BEHAVIORS.indexOf(d.behavior)];
-	    })
+	           .style("background-color",(d,i)=>{
+		             return color_back[AGENT_BEHAVIORS.indexOf(d.behavior)];
+	              })
 
             .on("click",(d,i)=>{
               this.display_agent(d);
             });;
-	
+
     this.single_agent = args.single_agent;
 
     //append the first agent because we choose it randomly at first.
-    
+
     let sel = this.single_agent.selectAll("p")
 		     .data(build_string(this.agents[0]).split("\n"))
 	 	     .enter()
@@ -101,7 +102,7 @@ function build_string(agent){
 	for(const type of tasks){
 		str+= "-"+preferences[type].task_name
 		if(preferences[type].task_name.length == 4){
-			str+=" ";//just to be all aligne...		
+			str+=" ";//just to be all aligne...
 		}
 		str+="(Done :"+preferences[type].completed+"). \n--Skill :"+int(preferences[type].skill_level)+" Preference : "+int(preferences[type].task_preference)+"\n";
 	}
@@ -109,9 +110,9 @@ function build_string(agent){
 	//other things...
 //	str+="-Solidarity:"+agent.solidarity;
 	str+="\n-Master task : "+agent.masterTask;
-	
+
 	return str;
-	
+
 
 }
 

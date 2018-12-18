@@ -68,8 +68,8 @@ function setup_iris(setup=true){
   let margin = {
     top: 20,
     right : 20,
-    bottom :20,
-    left : 20},
+    bottom :30,
+    left : 40},
     width_curr = currDiv.clientWidth,
     height_curr = (currDiv.clientHeight),
     width_hist = histDiv.clientWidth,
@@ -82,7 +82,7 @@ function setup_iris(setup=true){
  //this is for the histograms.
  svg_curr.selectAll("*").remove();
  svg_curr.attr("width",width_curr)
-         .attr("height",height_curr+margin.top+margin.bottom);
+         .attr("height",height_curr);
 console.log(height_hist)
  histograms_list = [];
   for (const type of outputs){
@@ -145,6 +145,7 @@ brush = new Brush(args_b);
 
 //setup the agent sorting list..
 let div = d3.select("#pannel #left #sort_display_agents #agent_list");
+
 let single_agent = d3.select("#single_agent");
 let args_sort = {div : div, agents : irisModel.agents, single_agent:single_agent}
 agent_sort = new AgentList(args_sort);
@@ -257,10 +258,10 @@ function restart_iris(parameters=null,customized=false){
   if(!customized){
     const customBehavior = document.getElementsByClassName('custom-behavior');
     const behaviors = {
-      curious: parseInt(irisModel.behaviors.curious),
-      perfectionist: parseInt(irisModel.behaviors.perfectionist),
-      geniesser: parseInt(irisModel.behaviors.geniesser),
-      capitalist: parseInt(irisModel.behaviors.capitalist)
+      curious: parseInt("2"),
+      perfectionist: parseInt("2"),
+      geniesser: parseInt("2"),
+      capitalist: parseInt("2")
     };
 
 
