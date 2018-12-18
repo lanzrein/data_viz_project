@@ -24,6 +24,7 @@
   <script src="js/pannel.js"></script>
   <script src="js/agent_sorting.js"></script>
   <link id="stylesheet" rel="stylesheet" href="style-dark.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body onresize=resize_viz()>
@@ -33,11 +34,7 @@
   <!-- <button id="pannel_sidr" href="#sidr">Display menu</button> -->
 <div id="pannel">
   <div id="options">
-    <button id="pause" onclick="pause_iris()">Pause</button>
-    <button id="restart" onclick="restart_iris()">Restart !</button>
     <button id="menu_display" onclick="show_menu()">Custom test</button>
-    <button id="theme" onclick="change_theme()" >Switch color theme</button>
-
   </div>
     <div id="left">
       <div id="sort_display_agents">
@@ -65,7 +62,12 @@
 
   </div>
 
+
+
 <div id="main">
+  <div id="option_selection">
+	<i class="fa fa-save" style="font-size:36px;color:red"></i>
+  </div>
   <button id="display_pannel">Hide/Display side bar</button>
   <button id="curious" onclick=line_plot_change(0) class="selected">Curious</button>
   <button id="perfectionist" onclick=line_plot_change(1)>Perfectionist</button>

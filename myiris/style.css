@@ -67,6 +67,14 @@ button{
   height : 100%;
 
 }
+
+
+#option_selection{
+
+	right:0;
+}
+
+
 /*** for the current snapshot. */
 #currentsituation{
     width: 100%;

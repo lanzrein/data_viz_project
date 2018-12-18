@@ -1,5 +1,9 @@
 //setup hovering..
 
+let play_restart_counter = 0; // for play and pause counter to keep in which mode
+let flip_agents = 0; // to choose which agent is to be viewed
+
+
 $("#pannel").hover(function() {
     console.log("hi");
     trigger_function();
@@ -35,3 +39,38 @@ function change_theme(){
 
 
 }
+
+
+document.addEventListener('keypress', (event) => {
+  const keyName = event.key;
+  if (keyName == ' '){
+	
+	play_restart_counter +=1;
+	if (play_restart_counter%2 == 0){
+		pause_iris()
+	}
+	else{
+		pause_iris()
+	}
+	 //alert('keypress event\n\n' + 'key: ' + keyName);
+  }
+  else if (keyName == 'r'){
+	restart_iris()
+  }
+  else if (keyName == 'Tab'){
+
+
+	flip_agents +=1;
+	agent_id_new = flip_agents%4;
+	line_plot_change(agent_id_new);
+
+  }
+ 
+});
+
+
+
+
+
+
+
