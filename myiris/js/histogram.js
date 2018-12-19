@@ -1,5 +1,5 @@
 /*This file holds the logic to visualize the histograms for each type of value */
-
+//translation of accronyms into real words.
 const translation = {
   fld : "Feel like doing",
   rt : "Rest time",
@@ -9,15 +9,20 @@ const translation = {
   brute_force : "Brute Forced"
 
 };
-
+//abreviation of type of agents.
 const abrevation = {
   0 : "Cur.",
   1 : "Per.",
   2 : "Gen.",
   3 : "Cap."
 };
-
+//colors for the bars.
+const colors=["#BD8C7D","#D1BFA7","#8E8E90","#49494B"];
 class Histogram{
+ /*
+  * Constructs a histogram, should have in the args : data, width, height, svg, idx, type (of agent), margin.
+  *
+  */
  constructor(args){
    //the args should be given in correct order.
    this.data = args.data;
@@ -69,19 +74,18 @@ class Histogram{
                   return 0;//at first its 0..
                 })
                 .attr("fill",function(d,i){
-                  return "#E5DFC5";
+                  return colors[i];
 
                 })
                 .on("mouseover",(d,i) => {
                   let m = d3.mouse((this.svg.node()));
-                  // return;
                   let xP =m[0];
                   let yP = m[1];
                   let behavior = AGENT_BEHAVIORS[i];
                   d3.select("#tooltip")
                     .style("left",xP+"px")
                     .style("bottom","0px")
-                    .text(int(d));
+                    .text(digits(d));
                   //show
                   d3.select("#tooltip").classed("hidden",false);
 
@@ -89,22 +93,22 @@ class Histogram{
                 .on("mouseout",() =>{
                   d3.select("#tooltip").classed("hidden",true);
                 });
-  // //add the labels.
-  this.container.selectAll("text")
-     .data(this.data)
-     .enter()
-     .append("text")
-     .text(function(d,i){
-       return abrevation[i];
-     })
-     .attr("text-anchor","middle")
-     .attr("x",(d,i) => {
-       return this.xScale(i)+this.xScale.bandwidth()/2;
-     })
-     .attr("y",(d) =>{
-       return 0;
-     })
-     .attr("transform","translate("+(this.margin.left)+",0)")
+  // // //add the labels. ~~~ we dont do that its not that nice.
+  // this.container.selectAll("text")
+  //    .data(this.data)
+  //    .enter()
+  //    .append("text")
+  //    .text(function(d,i){
+  //      return abrevation[i];
+  //    })
+  //    .attr("text-anchor","middle")
+  //    .attr("x",(d,i) => {
+  //      return this.xScale(i)+this.xScale.bandwidth()/2;
+  //    })
+  //    .attr("y",(d) =>{
+  //      return 0;
+  //    })
+  //    .attr("transform","translate("+(this.margin.left)+",0)")
 
 
      //add title
@@ -130,26 +134,28 @@ class Histogram{
 
 //a method when we have an update to update the taskValues
 const digits = d3.format(".1");
-
+/*
+ * Updates the histogram according to the given data.
+ *
+ */
 Histogram.prototype.update = function(data){
   this.data = data;
   this.yScale.domain([0,d3.max(data)]);
 
   this.container.selectAll("rect")
-    .data(data)
-    .transition()
-    .attr("x",(d,i)=>{
-      return this.xScale(i);
-    })
-    .attr("y",(d) => {
-      // return 0;
-      return this.yScale(d);
-    })
-    .attr("transform","translate("+(this.margin.left)+",0)")
-    .attr("width",this.xScale.bandwidth()-(this.margin.left)/this.data.length)
-    .attr("height",(d)=>{
-      return this.yScale(0) - this.yScale(d);
-    })
+                .data(data)
+                .transition()
+                .attr("x",(d,i)=>{
+                  return this.xScale(i);
+                })
+                .attr("y",(d) => {
+                  return this.yScale(d);
+                })
+                .attr("transform","translate("+(this.margin.left)+",0)")
+                .attr("width",this.xScale.bandwidth()-(this.margin.left)/this.data.length)
+                .attr("height",(d)=>{
+                  return this.yScale(0) - this.yScale(d);
+                });
 
 
 
@@ -158,10 +164,5 @@ Histogram.prototype.update = function(data){
       .transition()
       .call(this.yAxis);
 
-
-}
-
-function hist_click(data,type) {
-  console.log("Click on value " + data +" of type "+type);
 
 }

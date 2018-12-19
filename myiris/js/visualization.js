@@ -1,20 +1,17 @@
-// We need to have the data collected by the underyling model.
+// This file contains the main functions for handling the VIZ
 
+
+
+//a pause options
 let pause = false;
-
-
-
-
-// scale will be first of length 200 but then we
-//need to add the option to slide it.
-
+//a time parser to d3 ( not used )
 let init_time = d3.timeParse("%Y-%m-%d-%H")("2018-01-01-00");
-
+//different type of outputs.
 const outputs = ["fld","rt","stress","aot","traded","brute_force"];
 
 
 
-
+//an array used for the histograms.
 let data_by_type  = {
   fld : [0,0,0,0],
   rt : [0,0,0,0],
@@ -23,17 +20,23 @@ let data_by_type  = {
   traded : [0,0,0,0],
   brute_force : [0,0,0,0]
 };
-//setup the iris model.
-// it is already defined in the sketch.js file as irisModel.
 let histograms_list = [];
+
+//handle for the brush.
 let brush;
+
+
 /**FOR SCATTER PLOTS ***/
 let scatter_plots;
 let choosen_type = 0 ;
-// initial values of globabl dataset
 
+
+/**
+ * Clear the array. Used in start and restart.
+ */
 function setup_data_per_agent(){
-  let data_per_agent = []
+
+  let data_per_agent = [];
 
   for (agent_type in AGENT_BEHAVIORS){
   	data_per_agent.push( { fld : [0],rt : [0],stress : [0],aot : [0],traded : [0],brute_force : [0] })
@@ -47,23 +50,27 @@ function setup_data_per_agent(){
 
 
 
-
+//array of data per type of agent.
 let data_per_agent = setup_data_per_agent();
 
 
 
-
+//svg handles for the histogram, line plot and the brush.
 const svg_curr = d3.select("#currentsituation")
                     .append("svg");
 const p_svg =  d3.select("#scatter").append("svg")
 const svg_b = d3.select("#brush").append("svg")
 
 /**END SCATTER PLOTS****/
-
+//handle for the agent sorting.
 let agent_sort;
 
+/**
+ * This method sets up the viz so it can be used in tick() afterwards.
+ *
+ */
 function setup_iris(setup=true){
-
+  //some sizing..
   let currDiv = document.getElementById("currentsituation");
   let histDiv = document.getElementById("scatter");
   let margin = {
@@ -84,12 +91,9 @@ function setup_iris(setup=true){
  svg_curr.selectAll("*").remove();
  svg_curr.attr("width",width_curr)
          .attr("height",height_curr);
-console.log(height_hist)
  histograms_list = [];
   for (const type of outputs){
     //for each type of output prepare the graph.
-
-
     data = data_by_type[type];
 
     let args = {
@@ -100,30 +104,28 @@ console.log(height_hist)
       idx : idx,
       type : type,
       margin : margin
-
     };
 
     hist = new Histogram(args)
 
     histograms_list.push(hist);
     idx++;
-
-
 }
 
 
 //this is for the scatter plots.
+//setup the svg.
 p_svg.attr("width", width_hist+margin.left+margin.right )
 .attr("height", height_hist+margin.top+margin.bottom)
 .on("mousemove",function(){line_plot_click(this)})
 .append("g")
 .attr("transform", "translate(" + margin.right+ "," + margin.top + ")");
-
+//clear it in case its a restart.
 p_svg.select("g").selectAll("*").remove();
-
+//create the line plot.
 objects = {data:data_per_agent[choosen_type],width:width_hist-margin.left-margin.right,height:height_hist-margin.top-margin.bottom,svg:p_svg.select("g"),agent_name:AGENT_BEHAVIORS[choosen_type]};
-plot_curr = new ScatterPlot(objects)
-scatter_plots = (plot_curr)
+scatter_plots = new ScatterPlot(objects);
+
 
 
 //setup the brush
@@ -136,6 +138,7 @@ svg_b.selectAll("*").remove();
 svg_b.attr("width",b_width)
               .attr("height",b_height)
 if(!pause){
+  //of its not pause we dont want it to be seen.
   svg_b.style("visibility","hidden");
 }
 
@@ -150,36 +153,34 @@ let single_agent = d3.select("#single_agent");
 let args_sort = {div : div, agents : irisModel.agents, single_agent:single_agent}
 agent_sort = new AgentList(args_sort);
 
-//setup the red line so its already here.
+//setup the red line so its already here but hidden.
 p_svg.selectAll(".cursor")
 .data([0])
 .enter()
 .append("line")
 .attr("class","cursor")
-.attr("x1", (d)=>{return d;})  //<<== change your code here
+.attr("x1", (d)=>{return d;})
 .attr("y1", 20)
-.attr("x2", (d)=>{return d;})  //<<== and here
+.attr("x2", (d)=>{return d;})
 .attr("y2", scatter_plots.plot_height+20)
 .style("stroke-width", 2)
 .style("stroke", "red")
-.style("fill", "none")
 .style("visibility","hidden")
 .style("z-level","3");
 
 
 }
 
+/**
+ * The main method used in the viz.
+ * When called will compute the new medians, update the histograms, and the line plot.
+ * Since the simulation update is done in the base code ( in sketch.js ) we dont need to worry about updatin the agetn.
+ */
 function tick(){
 
   if (pause){
     return;
   }
-  //represents a tick in the simulation. will need to update :
-  //model, graphs.
-
-  //update model
-  // irisModel.update();
-
 
   //update the current situation
   compute_new_medians();
@@ -194,9 +195,14 @@ function tick(){
 }
 
 //HISTOGRAMS
-
+/**
+ *Update the histograms. We check if the data is different from the current one to optimize
+ * the performance
+ * You can use the forced parameter to force a redraw even if the values are the same. useful in case of restart.
+ */
 function update_histograms(forced=false){
   let idx = 0;
+
   for (const type of outputs){
     let h = histograms_list[idx]
     if(forced || !(h.data.equals(data_by_type[type]))){
@@ -209,6 +215,10 @@ function update_histograms(forced=false){
 
 }
 
+/**
+ * Recompute the medians of the model.
+ * This code compute the medians and in some specific cases the sum of the parameters.
+ **/
 function compute_new_medians(debug=false){
   //we can use a hacked version of the show method to get the values.
   medianValuesByBehavior = irisModel.show();
@@ -250,6 +260,12 @@ function compute_new_medians(debug=false){
 
 
 //UTILITY ( PAUSE RESTART ETC..)
+
+/**
+ * Pause or unpause the iris.
+ * If it is paused, the brush appears and so will the red line if used.
+ * if unpause they are hidden.
+ */
 function pause_iris(){
   pause = !pause;
 
@@ -257,7 +273,6 @@ function pause_iris(){
     svg_b.style("visibility","hidden");
     p_svg.selectAll(".cursor").style("visibility","hidden")
   }else{
-    console.log("pausing");
     svg_b.style("visibility","visible");
     brush.update_brush(scatter_plots.xScale);
 
@@ -269,12 +284,19 @@ function pause_iris(){
 
   return;
 }
+
+/**
+ * Restart the simulaiton.
+ * Can either be restartartefd with the same parameters as before.
+ * Or if you set customized to true, then you can pass some parameters to customize the restart.
+ *
+ */
 function restart_iris(parameters=null,customized=false){
 
   if(!customized){
     const customBehavior = document.getElementsByClassName('custom-behavior');
     const behaviors = {
-      curious: parseInt("2"),
+      curious: parseInt("2"),//we do a 2-2-2-2 classic restart with 2 of each agents..
       perfectionist: parseInt("2"),
       geniesser: parseInt("2"),
       capitalist: parseInt("2")
@@ -326,16 +348,19 @@ function restart_iris(parameters=null,customized=false){
 
 
 //FOR SCATTER PLOTS HERE
+
+/*
+ * Check if a value is undefined. returns 0 if it is undefined.
+ *
+ */
 function undef_check(value){
   return (value===undefined)? 0 : value;
-	// if(value === undefined){
-	// 	return 0;
-	// }else{
-	// 	return value;
-	// }
-
 }
 
+
+/**
+ * TODO omar comment this.
+ */
 function compress_array(arr){
 
 	var output = [];
@@ -347,6 +372,9 @@ function compress_array(arr){
 
 	return output
 }
+/**
+ * TODO omar comment this.
+ */
 function update_scatter(){
 
   	medianValuesByBehavior = irisModel.show();
@@ -379,7 +407,9 @@ function update_scatter(){
 }
 
 
-
+/**
+ * This method is called when you resize the viz. It will resize the line and histograms.
+ */
 function resize_viz(){
   // resize histograms.
   //its fairly similar to the setup of the iris except we need to have different sizes..
@@ -404,7 +434,10 @@ function resize_viz(){
 }
 
 
-
+/**
+ * You can give an agent and a value map as parameter. and the agent will take the
+ * values given in the value_map.
+ */
 function customize_agent(agent,value_map){
 
 		agent.FLD = value_map.fld;
@@ -414,7 +447,10 @@ function customize_agent(agent,value_map){
 
 }
 
-
+/*
+ * This is called when there is a brush event.
+ * It will check if there is an event and update the line plots accordingly.
+ */
 function brushing(){
 
     let selection = d3.event.selection === undefined ? brush.xScale.domain() : d3.event.selection.map(brush.xScale.invert);
@@ -429,7 +465,9 @@ function brushing(){
     brushing_chart(selection);
 }
 
-
+/*
+ * Update the line plot according to the selection ( a list of two values. )
+ */
 function brushing_chart(selection){
   let plt = scatter_plots;
 
@@ -437,7 +475,12 @@ function brushing_chart(selection){
   scatter_plots.update_scatter(data_per_agent[choosen_type],resize=true);
 }
 
-
+/*
+ * handles move event on the line plot.
+ * if the simulaiton is paused, it will detect where it was clicked and make histogram display the value
+ * at this moment.
+ * moreover it will move a red line wher ethe move is.
+ */
 function line_plot_click(ctx){
   if(!pause){
     return;
@@ -472,7 +515,9 @@ function line_plot_click(ctx){
 
 
 }
-
+/*
+ * Draw a vertical red line given the x parameter ( x being the x coordinate where to draw it. )
+ */
 function draw_line(x){
   let g = p_svg;
   g.selectAll(".cursor")
@@ -497,7 +542,9 @@ function draw_line(x){
 
 
 }
-
+/*
+ * Change the line plot currently displayed.
+ */
 function line_plot_change(choice){
   //remove color for current one.
   d3.select('.selected').classed('selected',false);
@@ -508,5 +555,14 @@ function line_plot_change(choice){
   //change current color.
   choosen_type = choice;
   //then we need to change
-  scatter_plots.update_scatter(data_per_agent[choosen_type],resize=true)
+  scatter_plots.update_scatter(data_per_agent[choosen_type],resize=true);
+}
+/*
+ *TODO displays all line plot in a window.
+ */
+function show_all_line_plots(){
+ //TODO if time allows....
+
+
+
 }

@@ -1,4 +1,7 @@
-
+/**
+ * Class to create brushes for our visualization. They can be used tozoom in
+ * and focus on a specific part of the line plot..
+ */
 class Brush{
   constructor(args){
     //setup the brush with initial values.
@@ -19,10 +22,7 @@ class Brush{
                    .tickSize(this.height/2)
                    .tickPadding(0);
     this.area = d3.area()
-                  .x(function(d){
-                    console.log("d : " + d)
-                    return 400;
-                  })
+                  .x(0)
                   .y0(this.height/3)
                   .y1(0)
                   .curve(d3.curveLinear);
@@ -41,8 +41,7 @@ class Brush{
   this.context = this.svg.append("g")
                         .attr("class","brush")
                         .attr("transform","translate("+this.height+",0)")
-                        // .on("click",brushing);
-
+  //add axis..
   this.context.append("g")
               .attr("class","xaxis")
               .attr("transform","translate(0,"+this.height+")")
@@ -52,11 +51,11 @@ class Brush{
   //add the brush
    this.xbrushhandle = this.context.append("g")
               .attr("class", "x brush")
-              .call(this.brush);
+              .call(this.brush)
+              .attr("fill","#CCCC99");
 
-  // this.brushxhandle.selectAll("rect")
-  //                  .attr("y",0)
-  //                  .attr("height",this.height);
+  //this is for custom handles.. they are not necessary but make it easier to see there is a
+  //brush.
   this.handle = this.xbrushhandle.selectAll(".handle--custom")
                       .data([{type: "w"}, {type: "e"}])
                       .enter()
@@ -79,29 +78,14 @@ class Brush{
 
   }
 
-
+  /**
+   * Update the brush according to the scatter_xScale.
+   */
   update_brush(scatter_xScale){
     //update the brush so that it reflects on the current plot.
     this.xScale.domain(scatter_xScale.domain());
 
     this.context.select(".xaxis").call(this.xAxis);
-
-    // this.area = d3.area()
-    //               .x((this.width-this.margin.left-this.margin.right)/2)
-    //               .y0(this.height)
-    //               .y1(0)
-    //               .curve(d3.curveLinear);
-
-    //
-    // this.brush.extent([
-    //                  [this.xScale.range()[0],0],
-    //                  [this.xScale.range()[1],this.height]
-    //                ])
-              // .on("brush",brushing)
-              ;
-
-    // this.xbrushhandle.call(this.brush)
-    //                  .call(this.brush.move,this.xScale.range());
 
     return ;
   }

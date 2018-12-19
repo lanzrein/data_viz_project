@@ -33,7 +33,21 @@ button{
     font-family: mono;
 }
 button.selected{
-  background-color: #3CB371
+  background-color: #3CB371;
+}
+
+button#curious{
+  background-color: #BD8C7D;
+}
+button#perfectionist{
+  background-color: #D1BFA7;
+}
+button#geniesser{
+  background-color: #8E8E90
+}
+
+button#capitalist{
+ background-color: #49494B;
 }
 /*****************************FOR THE SIDE PANNEL ***********************/
 #pannel {
@@ -185,9 +199,6 @@ rect:hover{
   fill : #DAA520	;
 }
 
-rect{
-  fill : #CCCC99;
-}
 /*******************************************/
 /* For a basic tooltip */
 #tooltip{

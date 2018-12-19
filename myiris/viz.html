@@ -5,6 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0>
   <title>Data viz</title>
+  <!--  Lots of javascript files....-->
   <script src="js/libraries/jquery-3.3.1.min.js"></script>
   <script src="js/libraries/p5.min.js"></script>
   <script src="js/libraries/p5.dom.min.js"></script>
@@ -31,7 +32,6 @@
 
 
 
-  <!-- <button id="pannel_sidr" href="#sidr">Display menu</button> -->
 <div id="pannel">
   <div id="options">
     <button id="menu_display" onclick="show_menu()">Custom test</button>
@@ -44,19 +44,13 @@
         <button id="rt_sort" onclick="agent_sort.sort_by('restingTime')">rt</button>
         <button id="aot_sort" onclick="agent_sort.sort_by('mappedAmountOfTime')">aot</button>
         <button id="stress_sort" onclick="agent_sort.sort_by('stress')">stress</button>
-
         <button id="category_sort" onclick="agent_sort.sort_by('category')">category</button>
         <button id="id_sort" onclick="agent_sort.sort_by('ID')">id</button>
-        <!-- <button id="fld" onclik="sort_by(fld)">fld</button>
-        <button id="fld" onclik="sort_by(fld)">fld</button> -->
-      </div>
-        <div id="agent_list">
 
-        </div>
+      </div>
+        <div id="agent_list"></div>
       </div>
       <div id="single_agent"></div>
-
-
     </div>
 
 
@@ -70,6 +64,7 @@
   <button id="perfectionist" onclick=line_plot_change(1)>Perfectionist</button>
   <button id="geniesser" onclick=line_plot_change(2)>Geniesser</button>
   <button id="capitalist" onclick=line_plot_change(3)>Capitalist</button>
+  <button id="overall" onclick="show_all_line_plots()">Overall view</button>
   <div id="option_selection">
   <i class="fa fa-save" style="font-size:36px;color:red"></i>
   </div>
