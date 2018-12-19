@@ -24,6 +24,7 @@
   <script src="js/brush.js"></script>
   <script src="js/pannel.js"></script>
   <script src="js/agent_sorting.js"></script>
+  <script src="js/modal.js"></script>
   <link id="stylesheet" rel="stylesheet" href="style-dark.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
@@ -61,10 +62,59 @@
   <button id="perfectionist" onclick=line_plot_change(1)>Perfectionist</button>
   <button id="geniesser" onclick=line_plot_change(2)>Geniesser</button>
   <button id="capitalist" onclick=line_plot_change(3)>Capitalist</button>
+<<<<<<< HEAD
+
+  <i class="fa fa-save" style="font-size:20px;right:0" onclick="save_current_state()"></i>
+  <i class="fa fa-file" style="font-size:20px;right:0" onclick="browse_fileload()" ></i>
+  <i class="fa fa-question-circle" style="font-size:20px;right:0" onclick="browse_shortcuts()"></i>	 
+  <i class="fa fa-cog" style="font-size:20px;right:0" onclick="show_menu()"></i>
+
+  <div id="myModal" class="modal">
+
+	  <!-- Modal content -->
+	  <div class="modal-content">
+	    <span class="close">&times;</span>
+		 <table style="width:100%">
+		  <tr>
+		    <th>Shortcut</th>
+		    <th>Action</th> 
+		  </tr>
+		  <tr>
+		    <td class="info_short" >SPACE</td>
+		    <td class="info_short" >Pause/Unpause</td>
+		  </tr>
+		  <tr>
+		    <td class="info_short" >R</td>
+		    <td class="info_short" >Restart</td>
+		  </tr>
+		  <tr>
+		    <td class="info_short" >S</td>
+		    <td class="info_short" >Save</td>
+		  </tr>
+		</table>
+	  </div>
+
+   </div>
+
+  <div id="fileModal" class="modal">
+
+	  <!-- Modal content -->
+	  <div class="modal-content">
+	    <span class="close">&times;</span>
+	    <div class='inner'>
+	    	<p class='drag'> Drag file here </p>
+	    </div>
+	  </div>
+
+   </div>
+
+
+=======
   <button id="overall" onclick="show_all_line_plots()">Overall view</button>
   <div id="option_selection">
   <i class="fa fa-save" style="font-size:36px;color:red"></i>
   </div>
+>>>>>>> fdedf27341aad0c141f1efdc7974d9e3ea235ca1
 </div>
   <div id="scatter"></div>
   <div id="brush"></div>
