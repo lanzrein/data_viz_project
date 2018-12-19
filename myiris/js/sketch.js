@@ -7,6 +7,8 @@ let tasks = [];
 let irisModel;
 let loops = 1;
 
+let speed = 64;
+
 function setup() {
   //createCanvas(WIDTH(), HEIGHT());
   //createCanvas(0,0);
@@ -28,6 +30,8 @@ function setup() {
   //this is the setup for the visualization
   setup_iris();
 
+  add_key_listeners();
+
 }
 
 
@@ -39,10 +43,11 @@ function draw() {
   // tick_func();
   if(!pause){
     irisModel.update()
-    if(frameCount % 30 == 0){
+  };
+  if(frameCount % speed == 0){
       tick();
-    }
   }
+
   // for (let i = 0; i < loops; i++) {
   //   irisModel.update();
   // }

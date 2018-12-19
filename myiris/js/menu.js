@@ -1,5 +1,8 @@
 const parameters = ["stress","fld","rt","aot","agent_cnt"];
 
+/**
+ * Show the menu. If the sim is not paused , pause it.
+ */
 function show_menu(){
   //pause the simulation first so it doesnt run in the bg..
   if(!pause){
@@ -9,10 +12,11 @@ function show_menu(){
   menu.style("visibility", "visible");
   return;
 
-
-
 }
 
+/*
+ * Close the menu, if the sim was paused, unpaused it.
+ */
 function close_menu(){
   //unpause.
   if(pause){
@@ -22,6 +26,10 @@ function close_menu(){
   menu.style("visibility","hidden");
   return ;
 }
+
+/*
+ * Setup a map containing for each category of agent the parameters. ( agent_cnt, stress, fld, rt, aot..)
+ */
 function setup_map(){
   let map = {capitalist : 0, curious:0,geniesser : 0,perfectionist:0};
 
@@ -33,7 +41,10 @@ function setup_map(){
 
 }
 
-
+/*
+ * Do a custom start according to the given values in the input cells.
+ *
+ */
 function custom_start(){
 
   //retrieve the values.
@@ -41,6 +52,7 @@ function custom_start(){
   for (const behavior of AGENT_BEHAVIORS){
     let str = "#menu #container #"+behavior;
     let div = d3.select(str);
+    //retrieve all the values..
     for (const param of parameters){
       let input = div.select("input#"+param).property("value");
       let value = isNaN(parseInt(input)) ? 0 : parseInt(input);
@@ -55,19 +67,21 @@ function custom_start(){
   map.tasks_cnt = task_cnt;
   restart_iris(map,true);
   compute_new_medians(true);
-  console.log("heya")
-  //remove the menu
-  close_menu();
 
   //we need to force to redraw once in case the values are not all 0..
   update_histograms(forced=true);
   update_scatter()
 
+  //remove the menu
+  close_menu();
 
 
 }
 
-
+/**
+ * get the current values of the irisModel and input them in the html inputs.
+ *
+ */
 function get_current_values(){
   let idx =  0;
   for (const behavior of AGENT_BEHAVIORS){
@@ -88,6 +102,12 @@ function get_current_values(){
 
 }
 
+
+/**
+ * Set the values in the html inputs as default values.
+ * all agents are 2.
+ * all parameters are 0 except fld which is 100
+ */
 function set_default_values(){
   let idx =  0;
   for (const behavior of AGENT_BEHAVIORS){
@@ -95,8 +115,8 @@ function set_default_values(){
     let div = d3.select(str);
     for (const param of parameters){
       if(param == "agent_cnt"){
-        //get the current count of agents..
-        div.select("input#"+param).property("value",irisModel.behaviors[behavior]);
+        //set the number as two..
+        div.select("input#"+param).property("value",2);
       }else if(param == "fld"){
         div.select("input#"+param).property("value",100);
 
@@ -112,16 +132,24 @@ function set_default_values(){
 
 }
 
-
+/**
+ * Save the current state in a json file.
+ */
 function save_current_state(){
   saveJSON(irisModel,'irisModel');
   return ;
 }
 
+/*
+ * just to allow drop events..
+ */
 function allowDrop(event){
   event.preventDefault();
 }
-
+/*
+ * Load the dropped json file and try to make it into a irisModel. If it doesnt work will display an alert menu saying
+ * the file is corrupted. else will show that it is successfully.
+ */
 function drop_json(event){
   event.preventDefault();
   let file = event.dataTransfer.files[0];

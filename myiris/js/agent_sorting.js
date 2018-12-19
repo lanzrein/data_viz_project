@@ -1,4 +1,5 @@
 let color_back=["#BD8C7D","#D1BFA7","#8E8E90","#49494B"];
+// This class allows to have an agent list and to sort them. 
 class AgentList{
 
   constructor(args){
@@ -8,7 +9,11 @@ class AgentList{
     this.agents.sort(function(a,b){
         return value_sort(a,b,"ID");
       });
-this.div.selectAll("p").remove();
+
+    //remove everything so its clear.
+    this.div.selectAll("p").remove();
+
+    //add all agents.
     this.div.selectAll("p")
             .data(this.agents)
             .enter()
@@ -23,11 +28,10 @@ this.div.selectAll("p").remove();
             .on("click",(d,i)=>{
               this.display_agent(d);
             });;
-
+    //the single selected agent.
     this.single_agent = args.single_agent;
 
     //append the first agent because we choose it randomly at first.
-
     let sel = this.single_agent.selectAll("p")
 		     .data(build_string(this.agents[0]).split("\n"))
 	 	     .enter()
@@ -39,7 +43,9 @@ this.div.selectAll("p").remove();
 
   }
 
-
+/**
+ * Displays an agent in a paragraph.
+ */
   display_agent(agent){
      this.single_agent.selectAll("p")
 		     .data(build_string(agent).split("\n"))
@@ -48,7 +54,10 @@ this.div.selectAll("p").remove();
 
   }
 
-
+  /**
+   * sort by the given argument.
+   * will sort the list how it is asked and then update the div according
+   */
   sort_by(by){
 
     if(by == "category"){
@@ -68,25 +77,21 @@ this.div.selectAll("p").remove();
     this.div.selectAll("p")
             .data(this.agents)
             .transition()
-            // .append("p")
             .text(function(d,i){
               return d.behavior+d.ID;
             })
-	    .style("background-color",(d,i)=>{
-		return color_back[AGENT_BEHAVIORS.indexOf(d.behavior)];
-	});
+	          .style("background-color",(d,i)=>{
+		             return color_back[AGENT_BEHAVIORS.indexOf(d.behavior)];
+	           });
 
   }
 
 
 
-
-
-
-
-
 }
-
+/*
+ * builds an agent into a string.
+ */
 function build_string(agent){
 
 	//build a string to display for the given agent
@@ -120,7 +125,7 @@ function build_string(agent){
 function value_sort(a,b,value){
   return a[value] - b[value];
 }
-
+//sort by category.
 function category_sort(a,b){
   return AGENT_BEHAVIORS.indexOf(a.behavior) - AGENT_BEHAVIORS.indexOf(b.behavior);
 }
