@@ -262,7 +262,7 @@ rect:hover{
 
 #menu p,h3{
     font-family : mono;
-    font-size : 11px;
+    font-size: 15px;
     line-height : 20px;
     color: white;
 }
@@ -284,16 +284,21 @@ rect:hover{
 
 
 #menu #container div{
-    width : 50%;
-    height: 25%;
+    width: 48%;
+    height: 10%;
     float : left;
     color: white;
-    font-size: 11px;
+    font-size: 14px;
+    margin: 10px;
+    border-radius: 3px;
+    border: 2px  solid #000;
 }
 #menu input {
   width : 20%;
   height :25%;
   color : black;
+  margin: 2px;
+  border-style: outset;
 }
 #menu text{
   color : white;
