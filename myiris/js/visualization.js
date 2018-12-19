@@ -8,6 +8,7 @@ let pause = false;
 // scale will be first of length 200 but then we
 //need to add the option to slide it.
 
+let init_time = d3.timeParse("%Y-%m-%d-%H")("2018-01-01-00");
 
 const outputs = ["fld","rt","stress","aot","traded","brute_force"];
 
@@ -119,7 +120,6 @@ p_svg.attr("width", width_hist+margin.left+margin.right )
 .attr("transform", "translate(" + margin.right+ "," + margin.top + ")");
 
 p_svg.select("g").selectAll("*").remove();
-//add some flavor text.
 
 objects = {data:data_per_agent[choosen_type],width:width_hist-margin.left-margin.right,height:height_hist-margin.top-margin.bottom,svg:p_svg.select("g"),agent_name:AGENT_BEHAVIORS[choosen_type]};
 plot_curr = new ScatterPlot(objects)
@@ -139,7 +139,7 @@ if(!pause){
   svg_b.style("visibility","hidden");
 }
 
-let args_b = {width : b_width,height : b_height,svg : svg_b,margin : margin,plot : scatter_plots[0]};
+let args_b = {width : b_width,height : b_height/2,svg : svg_b,margin : margin,plot : scatter_plots[0]};
 brush = new Brush(args_b);
 
 
@@ -483,6 +483,18 @@ function draw_line(x){
   .attr("x2", (d)=>{return d;})  //<<== and here
   .attr("y2", scatter_plots.plot_height+20)
   .style("visibility","visible");
+
+
+  //add the time where it is....
+  let scaled_x = scatter_plots.xScale.invert(x);
+
+  curr_time = parse_time(irisModel.setModelTime());
+
+  let scale = d3.scaleTime().range([init_time,curr_time]).domain([0,data_per_agent[0]["fld"].length]);
+  // let scale1 = d3.scaleLinear().domain([])
+  let day = scale(scaled_x);
+
+
 
 }
 

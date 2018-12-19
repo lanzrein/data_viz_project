@@ -184,6 +184,10 @@ path.aot{
 rect:hover{
   fill : #DAA520	;
 }
+
+rect{
+  fill : #CCCC99;
+}
 /*******************************************/
 /* For a basic tooltip */
 #tooltip{

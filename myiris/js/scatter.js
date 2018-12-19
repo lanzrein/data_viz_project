@@ -159,3 +159,16 @@ class ScatterPlot {
 
 
 }
+
+function parse_time(date){
+	//we need to modify the date slightly to get a proper string..
+	y = date["year"] + 2018;
+	m = date["months"] + 1;
+	d = date["days"]+1;
+	h = date["hours"]
+	string = y+"-"+m+"-"+d+"-"+h;
+	let parser = d3.timeParse("%Y-%m-%d-%H")
+
+	return parser(string);
+
+}

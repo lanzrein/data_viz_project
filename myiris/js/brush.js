@@ -11,14 +11,18 @@ class Brush{
 
 
     this.xScale = d3.scaleLinear()
-                   .range([0,this.width-this.margin.left-this.margin.right])
-                   .domain([0,100]);
+                   .range([0,this.width-this.height-40])
+                   .domain([0,data_per_agent[0]["fld"]]);
 
     this.xAxis = d3.axisBottom(this.xScale)
-                   .tickSize(this.height)
-                   .tickPadding(-10);
+                   .ticks(5)
+                   .tickSize(this.height/2)
+                   .tickPadding(0);
     this.area = d3.area()
-                  .x((this.width-this.margin.left-this.margin.right))
+                  .x(function(d){
+                    console.log("d : " + d)
+                    return 400;
+                  })
                   .y0(this.height/3)
                   .y1(0)
                   .curve(d3.curveLinear);
@@ -26,8 +30,8 @@ class Brush{
     this.brush = d3.brushX()
                    .extent([
                      [this.xScale.range()[0],0],
-                     [this.xScale.range()[1],this.height/2]
-                   ]);
+                     [this.xScale.range()[1],this.height]
+                   ]).on("brush",brushing);
 
 
 
@@ -35,22 +39,24 @@ class Brush{
 
 
   this.context = this.svg.append("g")
-
                         .attr("class","brush")
-                        .attr("transform","translate("+this.margin.left+",0)")
-                        .on("click",brushing);//check if need some translation..
+                        .attr("transform","translate("+this.height+",0)")
+                        // .on("click",brushing);
+
+  this.context.append("g")
+              .attr("class","xaxis")
+              .attr("transform","translate(0,"+this.height+")")
+              .call(this.xAxis);
 
 
   //add the brush
    this.xbrushhandle = this.context.append("g")
               .attr("class", "x brush")
-              // .attr("transform","translate(0,20)")
               .call(this.brush);
 
-              // .selectAll("rect")
-              // .attr("y",0)
-              // .attr("height",this.height)
-              // .attr("width",this.width);
+  // this.brushxhandle.selectAll("rect")
+  //                  .attr("y",0)
+  //                  .attr("height",this.height);
   this.handle = this.xbrushhandle.selectAll(".handle--custom")
                       .data([{type: "w"}, {type: "e"}])
                       .enter()
@@ -78,24 +84,24 @@ class Brush{
     //update the brush so that it reflects on the current plot.
     this.xScale.domain(scatter_xScale.domain());
 
-    // this.xAxis.call(this.xScale);
+    this.context.select(".xaxis").call(this.xAxis);
 
-    this.area = d3.area()
-                  .x((this.width-this.margin.left-this.margin.right)/2)
-                  .y0(this.height)
-                  .y1(0)
-                  .curve(d3.curveLinear);
+    // this.area = d3.area()
+    //               .x((this.width-this.margin.left-this.margin.right)/2)
+    //               .y0(this.height)
+    //               .y1(0)
+    //               .curve(d3.curveLinear);
 
-
-    this.brush.extent([
-                     [this.xScale.range()[0],0],
-                     [this.xScale.range()[1],this.height]
-                   ])
-              .on("brush",brushing)
+    //
+    // this.brush.extent([
+    //                  [this.xScale.range()[0],0],
+    //                  [this.xScale.range()[1],this.height]
+    //                ])
+              // .on("brush",brushing)
               ;
 
-    this.xbrushhandle.call(this.brush)
-                     .call(this.brush.move,this.xScale.range());
+    // this.xbrushhandle.call(this.brush)
+    //                  .call(this.brush.move,this.xScale.range());
 
     return ;
   }
