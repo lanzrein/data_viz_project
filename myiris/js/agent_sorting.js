@@ -1,5 +1,5 @@
 let color_back=["#BD8C7D","#D1BFA7","#8E8E90","#49494B"];
-// This class allows to have an agent list and to sort them. 
+// This class allows to have an agent list and to sort them.
 class AgentList{
 
   constructor(args){
@@ -50,7 +50,8 @@ class AgentList{
      this.single_agent.selectAll("p")
 		     .data(build_string(agent).split("\n"))
 	 	     .transition()
-                     .text((d)=>{return (d);});
+         .duration(100)
+         .text((d)=>{return (d);});
 
   }
 
@@ -105,10 +106,14 @@ function build_string(agent){
    	const tasks = ['admin', 'clean', 'cook', 'shop'];
 	str += "Tasks prefs and skills: \n";
 	for(const type of tasks){
-		str+= "-"+preferences[type].task_name
-		if(preferences[type].task_name.length == 4){
-			str+=" ";//just to be all aligne...
-		}
+		switch(preferences[type].task_name){
+      case "cook" : str+="- 🍳";break;
+      case "clean":str+="- ✨";break;
+      case "admin":str+="- 🗄";break;
+      case "shop":str+="- 🛒";break;
+      default : break;
+    }
+
 		str+="(Done :"+preferences[type].completed+"). \n--Skill :"+int(preferences[type].skill_level)+" Preference : "+int(preferences[type].task_preference)+"\n";
 	}
 	str+="Others : \n";

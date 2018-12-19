@@ -34,6 +34,15 @@ function add_key_listeners(){
         }
     }else if(keyName == 'x'){
       save_current_state();
+    }else if(keyName == 'm'){
+      //check if menu is visible, if yes then close, else show.
+      if(visible){
+        close_menu();
+      }else{
+        //show the menu_
+        show_menu();
+      }
+
     }
 
   });

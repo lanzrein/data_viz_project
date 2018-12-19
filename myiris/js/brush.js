@@ -41,6 +41,7 @@ class Brush{
   this.context = this.svg.append("g")
                         .attr("class","brush")
                         .attr("transform","translate("+this.height+",0)")
+                        .on("click",brushing)
   //add axis..
   this.context.append("g")
               .attr("class","xaxis")

@@ -33,9 +33,6 @@
 
 
 <div id="pannel">
-  <div id="options">
-    <button id="menu_display" onclick="show_menu()">Custom test</button>
-  </div>
     <div id="left">
       <div id="sort_display_agents">
         <div id="sorting">
@@ -162,7 +159,6 @@
   //this is the code for the sliding window.
   $("#pannel").mouseenter(function(){
     //first animate it to move to the left..
-    console.log("enter")
     $("#pannel").animate({
       left : "0%"
     })
@@ -175,11 +171,10 @@
 
 
   });
-
+  //
   //when mouse leaves...
   $("#pannel").mouseleave(function(){
     //first animate it to move to the left..
-    console.log("exit")
     $("#pannel").animate({
       left : "-14%"
     },function(){

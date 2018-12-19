@@ -276,12 +276,7 @@ function pause_iris(){
     svg_b.style("visibility","visible");
     brush.update_brush(scatter_plots.xScale);
 
-
   }
-
-
-
-
   return;
 }
 
@@ -551,7 +546,7 @@ function line_plot_change(choice){
 
   //add color to the new one.
   d3.select('button#'+AGENT_BEHAVIORS[choice]).classed('selected',true);
-
+  
   //change current color.
   choosen_type = choice;
   //then we need to change
@@ -562,7 +557,4 @@ function line_plot_change(choice){
  */
 function show_all_line_plots(){
  //TODO if time allows....
-
-
-
 }

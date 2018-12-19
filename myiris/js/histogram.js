@@ -114,7 +114,7 @@ class Histogram{
      //add title
      this.svg.append("text")
                    .attr("class","type-title")
-                   .attr("font-size","10px")
+                   .attr("font-size","12px")
                    .attr("transform","translate("+(containerWidth*this.idx)+","+offset/2+")")
                    .text(translation[this.type]);
      //add the axis
