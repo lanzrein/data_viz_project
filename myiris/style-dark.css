@@ -52,7 +52,7 @@ button#capitalist{
 }
 /*****************************FOR THE SIDE PANNEL ***********************/
 #pannel {
-  width: 14%;
+  width: 13%;
   /* display : none; */
   background-color: 	#333333;
   fill : white;
@@ -91,7 +91,7 @@ button#capitalist{
 }
 #pannel #sort_display_agents{
   height: 43%;
-  margin: 1%;
+  /* margin: 1%; */
 }
 #pannel #left #sorting{
   height: 40%;
@@ -192,7 +192,16 @@ path.brute_force{
 }
 /*********************************/
 
+#fileModal,#myModal{
+  background-color: #cccccc;
+  color : #111111;
+  z-index: 5;
+}
 
+table{
+  border-style: solid;
+  border: 2px black ;
+}
 /*** for the current snapshot. */
 
 #currentsituation{
@@ -330,8 +339,8 @@ rect:hover{
 .modal {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  padding-top: 200px; /* Location of the box */
+  z-index: 5; /* Sit on top */
+  /* padding-top: 200px; /* Location of the box */ */
   left: 0;
   top: 0;
   width: 100%; /* Full width */

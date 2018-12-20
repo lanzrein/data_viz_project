@@ -10,9 +10,9 @@ class ScatterPlot {
 		//create the data.
 		this.init_data = {};
 		for(const type of outputs){
-			// if (type == 'brute_force' || type=='traded'){
-			// 	continue;
-			// }
+			if (type == 'brute_force' || type=='traded'){
+				continue;
+			}
 			this.init_data[type]  = args.data[type];
 		}
 		//setup the plot.

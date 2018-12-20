@@ -326,6 +326,11 @@ function restart_iris(parameters=null,customized=false){
   }
 
 
+  clear_plots();
+
+}
+
+function clear_plots(){
   //we need to clear the data array of scatter plots !
   data_per_agent = setup_data_per_agent();
   let idx = 0
@@ -338,10 +343,7 @@ function restart_iris(parameters=null,customized=false){
   //setup again..
   setup_iris();
 
-
 }
-
-
 //FOR SCATTER PLOTS HERE
 
 /*
@@ -502,10 +504,13 @@ function line_plot_click(ctx){
     traded : [],
     brute_force : []
   };
-
   for(const type of outputs){
     for(const idx in AGENT_BEHAVIORS){
-      data_by_type[type].push(data_per_agent[idx][type][tick]);
+      if(tick >= data_per_agent[idx][type].length){
+        data_by_type[type].push(0);
+      }else{
+        data_by_type[type].push(data_per_agent[idx][type][tick]);
+      }
     }
 
     update_histograms(forced=true);

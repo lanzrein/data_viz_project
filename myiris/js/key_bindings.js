@@ -44,6 +44,14 @@ function add_key_listeners(){
         show_menu();
       }
 
+    }else if(keyName == 'l'){
+      //show the loading menu
+
+      browse_fileload()
+    }else if(keyName =='h'){
+      //show the tutorial.
+      
+      browse_shortcuts();
     }
 
   });

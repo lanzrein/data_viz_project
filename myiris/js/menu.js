@@ -173,9 +173,14 @@ function drop_json(event){
           Object.setPrototypeOf(task,Task.prototype);
         }
 
+        alert("Successfully loaded the file !");
+        clear_plots();
+        close_menu();
+
       }catch(err){
         console.log(err)
         alert("Corrupted data");
+        return;
       }
     }
     fr.readAsText(file)

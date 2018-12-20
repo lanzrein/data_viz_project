@@ -72,7 +72,19 @@
 
 	  <!-- Modal content -->
 	  <div class="modal-content">
-	    <span class="close">&times;</span>
+	   <span class="close">&times;</span>
+     <h1> Tutorial on the iris model</h1>
+     <h2> Agent glossary </h2>
+     <p> The agent panel will be displayed by hovering your mouse on the side. You can scroll through the list and select a single agent. Below is a glossary of what each sign means. </p>
+     <ul>
+       <li>✨ : Clean</li>
+       <li>🍳 : Cook</li>
+       <li>🗄 : Admin</li>
+       <li>🛒 : Shop</li>
+       <li>💪 : Skill level</li>
+       <li>❤ : Preference for a task</li>
+     </ul>
+     <h2> Shortcuts table </h2>
 		 <table style="width:100%">
 		  <tr>
 		    <th>Shortcut</th>
@@ -95,7 +107,7 @@
 
    </div>
 
-  <div id="fileModal" class="modal">
+  <div id="fileModal" class="modal" ondrop='drop_json(event)' ondragover='allowDrop(event)'>
 
 	  <!-- Modal content -->
 	  <div class="modal-content">
@@ -227,7 +239,10 @@
       resize_viz();
     })
 
-  })
+  });
+
+  //display the popup on the visit.
+  $('document').ready(()=>{alert("Welcome to the iris model visualization. To display a short tutorial on shortcuts and a glossary. Please press the 'h' key on the keyboard");});
 
 
 
