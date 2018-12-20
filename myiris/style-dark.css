@@ -343,6 +343,13 @@ rect:hover{
 
 .info_short{
 	 text-align : center;
+	 color: green;
+}
+
+.info_head{
+	 text-align : center;
+	 color: black;
+	font-weight: bold;
 }
 
 .inner {
@@ -352,6 +359,14 @@ rect:hover{
 
 .drag {
 	text-align : center;
+	color : black;
+}
+
+.upload_btn{
+
+	float : right;
+	color : green;
+
 }
 
 
