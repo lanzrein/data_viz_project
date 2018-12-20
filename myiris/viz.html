@@ -22,7 +22,7 @@
   <script src="js/sketch.js"></script>
   <script src="js/menu.js"></script>
   <script src="js/brush.js"></script>
-  <script src="js/pannel.js"></script>
+  <script src="js/key_bindings.js"></script>
   <script src="js/agent_sorting.js"></script>
   <script src="js/modal.js"></script>
   <link id="stylesheet" rel="stylesheet" href="style-dark.css">
@@ -34,9 +34,6 @@
 
 
 <div id="pannel">
-  <div id="options">
-    <button id="menu_display" onclick="show_menu()">Custom test</button>
-  </div>
     <div id="left">
       <div id="sort_display_agents">
         <div id="sorting">
@@ -65,11 +62,10 @@
   <button id="perfectionist" onclick=line_plot_change(1)>Perfectionist</button>
   <button id="geniesser" onclick=line_plot_change(2)>Geniesser</button>
   <button id="capitalist" onclick=line_plot_change(3)>Capitalist</button>
-<<<<<<< HEAD
 
   <i class="fa fa-save" style="font-size:20px;right:0" onclick="save_current_state()"></i>
   <i class="fa fa-file" style="font-size:20px;right:0" onclick="browse_fileload()" ></i>
-  <i class="fa fa-question-circle" style="font-size:20px;right:0" onclick="browse_shortcuts()"></i>	 
+  <i class="fa fa-question-circle" style="font-size:20px;right:0" onclick="browse_shortcuts()"></i>
   <i class="fa fa-cog" style="font-size:20px;right:0" onclick="show_menu()"></i>
 
   <div id="myModal" class="modal">
@@ -79,8 +75,13 @@
 	    <span class="close">&times;</span>
 		 <table style="width:100%">
 		  <tr>
+<<<<<<< HEAD
 		    <th class="info_head"> Shortcut</th>
 		    <th class="info_head">Action</th> 
+=======
+		    <th>Shortcut</th>
+		    <th>Action</th>
+>>>>>>> 96f799c048971a79f4295d45cba5aca6db0fc35c
 		  </tr>
 		  <tr>
 		    <td class="info_short" >SPACE</td>
@@ -131,9 +132,12 @@
    </div>
 
 
+<<<<<<< HEAD
 =======
   <button id="overall" onclick="show_all_line_plots()">Overall view</button>
 >>>>>>> fdedf27341aad0c141f1efdc7974d9e3ea235ca1
+=======
+>>>>>>> 96f799c048971a79f4295d45cba5aca6db0fc35c
 </div>
   <div id="scatter"></div>
   <div id="brush"></div>
@@ -214,13 +218,13 @@
       <button id="getcurrent_val" onclick="get_current_values()"> Get values of current moment. </button>
 
     </div>
-
+    <div id="set_start">
     <button id="set_default" onclick="set_default_values()"> Set default values </button>
     <br>
 
     <button id="custom_start" onclick="custom_start()"> Start with set values ! </button>
     <button id="save_values" onclick="save_current_state()"> Save current state as JSON</button>
-
+  </div>
 
   </div>
 
@@ -228,7 +232,6 @@
   //this is the code for the sliding window.
   $("#pannel").mouseenter(function(){
     //first animate it to move to the left..
-    console.log("enter")
     $("#pannel").animate({
       left : "0%"
     })
@@ -241,11 +244,10 @@
 
 
   });
-
+  //
   //when mouse leaves...
   $("#pannel").mouseleave(function(){
     //first animate it to move to the left..
-    console.log("exit")
     $("#pannel").animate({
       left : "-14%"
     },function(){

@@ -10,9 +10,9 @@ class ScatterPlot {
 		//create the data.
 		this.init_data = {};
 		for(const type of outputs){
-			if (type == 'brute_force' || type=='traded'){
-				continue;
-			}
+			// if (type == 'brute_force' || type=='traded'){
+			// 	continue;
+			// }
 			this.init_data[type]  = args.data[type];
 		}
 		//setup the plot.
@@ -25,7 +25,8 @@ class ScatterPlot {
 		this.color = d3.scaleOrdinal(["#A92F41",
 		 							"#CCCCFF",
 									"#848375",
-	 								"#91C7A9"]);
+	 								"#91C7A9",
+								"#ff0000","#00ff00"]);
 
 
 		//axis.
@@ -166,7 +167,7 @@ class ScatterPlot {
 }
 
 
-//allows to parse time. not used. 
+//allows to parse time. not used.
 function parse_time(date){
 	//we need to modify the date slightly to get a proper string..
 	y = date["year"] + 2018;

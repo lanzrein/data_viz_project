@@ -3,6 +3,7 @@ const parameters = ["stress","fld","rt","aot","agent_cnt"];
 /**
  * Show the menu. If the sim is not paused , pause it.
  */
+ let visible = false;
 function show_menu(){
   //pause the simulation first so it doesnt run in the bg..
   if(!pause){
@@ -10,6 +11,7 @@ function show_menu(){
   }
   let menu = d3.select("#menu");
   menu.style("visibility", "visible");
+  visible = true;
   return;
 
 }
@@ -24,6 +26,7 @@ function close_menu(){
   }
   let menu = d3.select("#menu");
   menu.style("visibility","hidden");
+  visible = false;
   return ;
 }
 

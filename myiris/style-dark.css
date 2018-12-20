@@ -33,7 +33,8 @@ button{
     font-family: mono;
 }
 button.selected{
-  background-color: #3CB371;
+  border-radius: 2px;
+  border: dotted;
 }
 
 button#curious{
@@ -51,7 +52,7 @@ button#capitalist{
 }
 /*****************************FOR THE SIDE PANNEL ***********************/
 #pannel {
-  width : 15%;
+  width: 14%;
   /* display : none; */
   background-color: 	#333333;
   fill : white;
@@ -59,11 +60,10 @@ button#capitalist{
   left: -14%;
   border-right-style:solid;
   position: relative;
+  color : white;
+  padding: 0.5%;
 }
-#pannel #options{
-  height : 15%;
-  width : 100%;
-}
+
 
 
 #pannel button{
@@ -72,45 +72,52 @@ button#capitalist{
   font-size: 10px;
 }
 #pannel #left{
-  height: 85%;
-  width : 100%;
+  height: 98%;
+  width: 98%;
+  margin: 1%;
 }
 #pannel #single_agent{
-  height : 50%;
+  height: 48%;
   background-color: #778899;
   border-radius : 5px;
+  margin: 1%;
 }
 
 #pannel #single_agent p{
   margin : 0px;
-  font-size : 11px;
+  font-size : 12px;
 
 
 }
 #pannel #sort_display_agents{
-  height : 50%
+  height: 43%;
+  margin: 1%;
 }
 #pannel #left #sorting{
-  height : 30%;
+  height: 40%;
 }
 
 #pannel #agent_list{
+  width: 100%;
   overflow-y: scroll;
   overflow-x: hidden;
-  height : 70%;
+  position: relative;
+  height: 58%;
+  /* margin: 1%; */
 }
 
 #pannel #agent_list p{
   margin : 0px;
-  background-color: #00ff00;
+  /* background-color: #00ff00; */
   border-width: thin;
   border-style:solid;
 }
 
 /***********************************************/
 #main #buttons{
-  width : 100%;
-  height : 5%;
+  width: 98%;
+  height: 3%;
+  margin: 1%;
 }
 
 
@@ -160,6 +167,12 @@ path.stress{
 }
 path.aot{
   stroke : #91C7A9
+}
+path.traded{
+  stroke : #ff0000;
+}
+path.brute_force{
+  stroke: #00ff00;
 }
 /**********************************/
 /*******************BRUSH PART ***********************/
@@ -229,9 +242,9 @@ rect:hover{
 /*This is for the menu for customizing agent values */
 
 * {
-    -webkit-box-sizing: border-box;
+    /* -webkit-box-sizing: border-box; */
     -moz-box-sizing: border-box;
-    box-sizing: border-box;
+    /* box-sizing: border-box; */
 }
 
 #menu {
@@ -239,8 +252,8 @@ rect:hover{
   position : absolute;
   display : inline-block;
   background-color: #333333;
-  width : 80%;
-  height : 80%;
+  width : 100%;
+  height : 100%;
   z-index : 3;
   /* border */
   border : 2px  solid #000;
@@ -249,14 +262,15 @@ rect:hover{
 
 }
 #menu #container {
-  width : auto;
-  height: auto;
+  width: 100%;
+  height: 50%;
   color : inherit;
+  margin: 10px;
 }
 
 #menu p,h3{
     font-family : mono;
-    font-size : 11px;
+    font-size: 15px;
     line-height : 20px;
     color: white;
 }
@@ -278,27 +292,37 @@ rect:hover{
 
 
 #menu #container div{
-    width : 50%;
-    height: 25%;
-    float : left;
+    width: auto;
+    height: auto;
+    float: left;
     color: white;
-    font-size: 11px;
+    font-size: 14px;
+    margin: 10px;
+    border-radius: 3px;
+    border: 2px  solid #000;
 }
 #menu input {
-  width : 20%;
+  /* width : 20%; */
   height :25%;
   color : black;
+  margin: 2px;
+  border-style: outset;
 }
 #menu text{
   color : white;
 }
+
 #menu #tasks_spec p{
   color : white
 }
 
 #menu #save_values,#getcurrent_val{
-  right : 0px;
-  position : absolute;
+  float : right;
+}
+#menu #set_start,#tasks_spec{
+  margin : 1%;
+  width : 98%;
+  height : 8%;
 }
 
 
@@ -367,6 +391,12 @@ rect:hover{
 	float : right;
 	color : green;
 
+}
+
+.fa{
+  float : right;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 

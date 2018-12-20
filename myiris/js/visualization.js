@@ -276,12 +276,7 @@ function pause_iris(){
     svg_b.style("visibility","visible");
     brush.update_brush(scatter_plots.xScale);
 
-
   }
-
-
-
-
   return;
 }
 
@@ -387,9 +382,12 @@ function update_scatter(){
       if(medians != null){
         data_of_agent = data_per_agent[j]
         for (var key in data_of_agent) {
+          median_comp = undef_check(d3.mean(medians[key]));
+            if(key == "traded" || key =="brute_forced"){
+              // console.log("me"+medians[key]);
+              median_comp= undef_check(medians[key][medians[key].length-1]);
+            }
 
-
-            median_comp = undef_check(d3.mean(medians[key]))
 
             data_per_agent[j][key].push(median_comp);
 
@@ -562,7 +560,4 @@ function line_plot_change(choice){
  */
 function show_all_line_plots(){
  //TODO if time allows....
-
-
-
 }
