@@ -87,8 +87,9 @@
      <h2> Shortcuts table </h2>
 		 <table style="width:100%">
 		  <tr>
-		    <th>Shortcut</th>
-		    <th>Action</th>
+		    <th class="info_head"> Shortcut</th>
+		    <th class="info_head">Action</th> 
+
 		  </tr>
 		  <tr>
 		    <td class="info_short" >SPACE</td>
@@ -99,9 +100,28 @@
 		    <td class="info_short" >Restart</td>
 		  </tr>
 		  <tr>
-		    <td class="info_short" >S</td>
+		    <td class="info_short" >x</td>
 		    <td class="info_short" >Save</td>
 		  </tr>
+
+		  <tr>
+		    <td class="info_short" >d</td>
+		    <td class="info_short" >Move agent forward</td>
+		  </tr>
+		  <tr>
+		    <td class="info_short" >a</td>
+		    <td class="info_short" >Move agent backward</td>
+		  </tr>
+		  <tr>
+		    <td class="info_short" >w</td>
+		    <td class="info_short" >Fast forward model</td>
+		  </tr>
+
+		  <tr>
+		    <td class="info_short" >s</td>
+		    <td class="info_short" >Slow model</td>
+		  </tr>
+
 		</table>
 	  </div>
 
@@ -112,12 +132,13 @@
 	  <!-- Modal content -->
 	  <div class="modal-content">
 	    <span class="close">&times;</span>
-	    <div class='inner'>
-	    	<p class='drag'> Drag file here </p>
+	    <div class='inner' ondragover="handleDragOver(event)" ondrop="handleFileSelect(event)">
+	    	<p class='drag'> Drag File here </p>
 	    </div>
 	  </div>
 
    </div>
+
 
 
 </div>
