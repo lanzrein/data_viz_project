@@ -382,9 +382,12 @@ function update_scatter(){
       if(medians != null){
         data_of_agent = data_per_agent[j]
         for (var key in data_of_agent) {
+          median_comp = undef_check(d3.mean(medians[key]));
+            if(key == "traded" || key =="brute_forced"){
+              // console.log("me"+medians[key]);
+              median_comp= undef_check(medians[key][medians[key].length-1]);
+            }
 
-
-            median_comp = undef_check(d3.mean(medians[key]))
 
             data_per_agent[j][key].push(median_comp);
 
@@ -546,7 +549,7 @@ function line_plot_change(choice){
 
   //add color to the new one.
   d3.select('button#'+AGENT_BEHAVIORS[choice]).classed('selected',true);
-  
+
   //change current color.
   choosen_type = choice;
   //then we need to change

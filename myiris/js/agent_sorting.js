@@ -114,7 +114,7 @@ function build_string(agent){
       default : break;
     }
 
-		str+="(Done :"+preferences[type].completed+"). \n--Skill :"+int(preferences[type].skill_level)+" Preference : "+int(preferences[type].task_preference)+"\n";
+		str+="(Done :"+preferences[type].completed+"). \n--💪 :"+int(preferences[type].skill_level)+" ❤ : "+int(preferences[type].task_preference)+"\n";
 	}
 	str+="Others : \n";
 	//other things...

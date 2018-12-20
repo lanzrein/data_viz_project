@@ -7,6 +7,7 @@ function add_key_listeners(){
   //here we add all the key listeners.
   document.addEventListener('keypress', (event) => {
     const keyName = event.key;
+    console.log(keyName)
     if (keyName == ' '){
 
   	   pause_iris();

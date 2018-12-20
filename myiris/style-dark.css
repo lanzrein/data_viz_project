@@ -77,9 +77,10 @@ button#capitalist{
   margin: 1%;
 }
 #pannel #single_agent{
-  height : 60%;
+  height: 48%;
   background-color: #778899;
   border-radius : 5px;
+  margin: 1%;
 }
 
 #pannel #single_agent p{
@@ -166,6 +167,12 @@ path.stress{
 }
 path.aot{
   stroke : #91C7A9
+}
+path.traded{
+  stroke : #ff0000;
+}
+path.brute_force{
+  stroke: #00ff00;
 }
 /**********************************/
 /*******************BRUSH PART ***********************/
@@ -255,9 +262,10 @@ rect:hover{
 
 }
 #menu #container {
-  width : auto;
-  height: auto;
+  width: 100%;
+  height: 50%;
   color : inherit;
+  margin: 10px;
 }
 
 #menu p,h3{
@@ -284,9 +292,9 @@ rect:hover{
 
 
 #menu #container div{
-    width: 48%;
-    height: 10%;
-    float : left;
+    width: auto;
+    height: auto;
+    float: left;
     color: white;
     font-size: 14px;
     margin: 10px;
@@ -294,7 +302,7 @@ rect:hover{
     border: 2px  solid #000;
 }
 #menu input {
-  width : 20%;
+  /* width : 20%; */
   height :25%;
   color : black;
   margin: 2px;
@@ -303,13 +311,18 @@ rect:hover{
 #menu text{
   color : white;
 }
+
 #menu #tasks_spec p{
   color : white
 }
 
 #menu #save_values,#getcurrent_val{
-  right : 0px;
-  position : absolute;
+  float : right;
+}
+#menu #set_start,#tasks_spec{
+  margin : 1%;
+  width : 98%;
+  height : 8%;
 }
 
 
@@ -363,6 +376,12 @@ rect:hover{
 
 .drag {
 	text-align : center;
+}
+
+.fa{
+  float : right;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 
