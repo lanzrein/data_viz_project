@@ -43,7 +43,8 @@ function handleFileSelect(evt){
     evt.preventDefault();
 
     var files = evt.dataTransfer.files; // FileList object.
-    document.getElementsByClassName("drag")[0].innerHTML = '<p>' + files[0].name + '</p>';  
+    document.getElementsByClassName("drag")[0].innerHTML = '<p>' + files[0].name + '</p>';
+      
 
 }
 
